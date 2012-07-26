@@ -1,0 +1,667 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis projectname="" version="1.8.0-Lisboa">
+    <title></title>
+    <mapcanvas>
+        <units>meters</units>
+        <extent>
+            <xmin>2323242.952681</xmin>
+            <ymin>4878693.501584</ymin>
+            <xmax>2323252.925633</xmax>
+            <ymax>4878698.700154</ymax>
+        </extent>
+        <projections>1</projections>
+        <destinationsrs>
+            <spatialrefsys>
+                <proj4>+proj=tmerc +lat_0=0 +lon_0=15 +k=0.9996 +x_0=2520000 +y_0=0 +ellps=intl +towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68 +units=m +no_defs</proj4>
+                <srsid>969</srsid>
+                <srid>3004</srid>
+                <authid>EPSG:3004</authid>
+                <description>Monte Mario / Italy zone 2</description>
+                <projectionacronym>tmerc</projectionacronym>
+                <ellipsoidacronym>intl</ellipsoidacronym>
+                <geographicflag>false</geographicflag>
+            </spatialrefsys>
+        </destinationsrs>
+    </mapcanvas>
+    <legend updateDrawingOrder="false">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="pyunitastratigrafiche" showFeatureCount="0">
+            <filegroup open="false" hidden="false">
+                <legendlayerfile isInOverview="0" layerid="pyunitastratigrafiche20120717224845330" visible="1"/>
+            </filegroup>
+        </legendlayer>
+        <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="site_table" showFeatureCount="0">
+            <filegroup open="true" hidden="false">
+                <legendlayerfile isInOverview="0" layerid="site_table20120712231737133" visible="0"/>
+            </filegroup>
+        </legendlayer>
+        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="pyarchinit_siti" showFeatureCount="0">
+            <filegroup open="true" hidden="false">
+                <legendlayerfile isInOverview="0" layerid="pyarchinit_siti20120712231354622" visible="1"/>
+            </filegroup>
+        </legendlayer>
+        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="pyarchinit_ripartizioni_spaziali" showFeatureCount="0">
+            <filegroup open="true" hidden="false">
+                <legendlayerfile isInOverview="0" layerid="pyarchinit_ripartizioni_spaziali20120717214206967" visible="1"/>
+            </filegroup>
+        </legendlayer>
+        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="pyarchinit_punti_rif" showFeatureCount="0">
+            <filegroup open="true" hidden="false">
+                <legendlayerfile isInOverview="0" layerid="pyarchinit_punti_rif20120717214502253" visible="1"/>
+            </filegroup>
+        </legendlayer>
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="0" showFeatureCount="0">
+            <filegroup open="false" hidden="false">
+                <legendlayerfile isInOverview="0" layerid="020120712231040368" visible="0"/>
+            </filegroup>
+        </legendlayer>
+    </legend>
+    <mapcanvas>
+        <units>meters</units>
+        <extent>
+            <xmin>2323215.764532</xmin>
+            <ymin>4878682.160678</ymin>
+            <xmax>2323283.557038</xmax>
+            <ymax>4878702.498430</ymax>
+        </extent>
+        <projections>1</projections>
+        <destinationsrs>
+            <spatialrefsys>
+                <proj4>+proj=tmerc +lat_0=0 +lon_0=15 +k=0.9996 +x_0=2520000 +y_0=0 +ellps=intl +towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68 +units=m +no_defs</proj4>
+                <srsid>969</srsid>
+                <srid>3004</srid>
+                <authid>EPSG:3004</authid>
+                <description>Monte Mario / Italy zone 2</description>
+                <projectionacronym>tmerc</projectionacronym>
+                <ellipsoidacronym>intl</ellipsoidacronym>
+                <geographicflag>false</geographicflag>
+            </spatialrefsys>
+        </destinationsrs>
+    </mapcanvas>
+    <mapcanvas>
+        <units>meters</units>
+        <extent>
+            <xmin>2323215.764532</xmin>
+            <ymin>4878682.160678</ymin>
+            <xmax>2323283.557038</xmax>
+            <ymax>4878702.498430</ymax>
+        </extent>
+        <projections>1</projections>
+        <destinationsrs>
+            <spatialrefsys>
+                <proj4>+proj=tmerc +lat_0=0 +lon_0=15 +k=0.9996 +x_0=2520000 +y_0=0 +ellps=intl +towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68 +units=m +no_defs</proj4>
+                <srsid>969</srsid>
+                <srid>3004</srid>
+                <authid>EPSG:3004</authid>
+                <description>Monte Mario / Italy zone 2</description>
+                <projectionacronym>tmerc</projectionacronym>
+                <ellipsoidacronym>intl</ellipsoidacronym>
+                <geographicflag>false</geographicflag>
+            </spatialrefsys>
+        </destinationsrs>
+    </mapcanvas>
+    <projectlayers layercount="6">
+        <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+            <id>020120712231040368</id>
+            <datasource>http://servizigis.regione.emilia-romagna.it/wms/ctr5</datasource>
+            <title></title>
+            <abstract></abstract>
+            <layername>0</layername>
+            <srs>
+                <spatialrefsys>
+                    <proj4>+proj=tmerc +lat_0=0 +lon_0=15 +k=0.9996 +x_0=2520000 +y_0=0 +ellps=intl +towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68 +units=m +no_defs</proj4>
+                    <srsid>969</srsid>
+                    <srid>3004</srid>
+                    <authid>EPSG:3004</authid>
+                    <description>Monte Mario / Italy zone 2</description>
+                    <projectionacronym>tmerc</projectionacronym>
+                    <ellipsoidacronym>intl</ellipsoidacronym>
+                    <geographicflag>false</geographicflag>
+                </spatialrefsys>
+            </srs>
+            <transparencyLevelInt>255</transparencyLevelInt>
+            <customproperties/>
+            <provider>wms</provider>
+            <rasterproperties>
+                <wmsSublayer>
+                    <name>0</name>
+                    <style></style>
+                </wmsSublayer>
+                <wmsFormat>image/png</wmsFormat>
+                <mDrawingStyle>SingleBandColorDataStyle</mDrawingStyle>
+                <mColorShadingAlgorithm>UndefinedShader</mColorShadingAlgorithm>
+                <mInvertColor boolean="false"/>
+                <mRedBandName>Not Set</mRedBandName>
+                <mGreenBandName>Not Set</mGreenBandName>
+                <mBlueBandName>Not Set</mBlueBandName>
+                <mGrayBandName>Banda 1</mGrayBandName>
+                <mStandardDeviations>0</mStandardDeviations>
+                <mUserDefinedRGBMinimumMaximum boolean="false"/>
+                <mRGBMinimumMaximumEstimated boolean="true"/>
+                <mUserDefinedGrayMinimumMaximum boolean="false"/>
+                <mGrayMinimumMaximumEstimated boolean="true"/>
+                <mContrastEnhancementAlgorithm>NoEnhancement</mContrastEnhancementAlgorithm>
+                <contrastEnhancementMinMaxValues>
+                    <minMaxEntry>
+                        <min>-1.79769e+308</min>
+                        <max>1.79769e+308</max>
+                    </minMaxEntry>
+                </contrastEnhancementMinMaxValues>
+                <mNoDataValue mValidNoDataValue="false">0.000000</mNoDataValue>
+            </rasterproperties>
+        </maplayer>
+        <maplayer minimumScale="0" maximumScale="1e+08" geometry="Point" type="vector" hasScaleBasedVisibilityFlag="0">
+            <id>pyarchinit_punti_rif20120717214502253</id>
+            <datasource>dbname='pyarchinit' host=127.0.0.1 port=5432 user='postgres' password='alajolla39' sslmode=allow key='gid' srid=-1 type=POINT table="pyarchinit_punti_rif" (the_geom) sql=</datasource>
+            <title></title>
+            <abstract></abstract>
+            <layername>pyarchinit_punti_rif</layername>
+            <srs>
+                <spatialrefsys>
+                    <proj4>+proj=tmerc +lat_0=0 +lon_0=15 +k=0.9996 +x_0=2520000 +y_0=0 +ellps=intl +towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68 +units=m +no_defs</proj4>
+                    <srsid>969</srsid>
+                    <srid>3004</srid>
+                    <authid>EPSG:3004</authid>
+                    <description>Monte Mario / Italy zone 2</description>
+                    <projectionacronym>tmerc</projectionacronym>
+                    <ellipsoidacronym>intl</ellipsoidacronym>
+                    <geographicflag>false</geographicflag>
+                </spatialrefsys>
+            </srs>
+            <transparencyLevelInt>255</transparencyLevelInt>
+            <provider encoding="System">postgres</provider>
+            <vectorjoins/>
+            <renderer-v2 attr="def_punto" symbollevels="0" type="categorizedSymbol">
+                <categories>
+                    <category symbol="0" value="Picchettatura" label="Picchettatura"/>
+                    <category symbol="1" value="Punto di sezione" label="Punto di sezione"/>
+                    <category symbol="2" value="Quota 0 slm" label="Quota 0 slm"/>
+                </categories>
+                <symbols>
+                    <symbol outputUnit="MM" alpha="1" type="marker" name="0">
+                        <layer pass="0" class="SimpleMarker" locked="0">
+                            <prop k="angle" v="0"/>
+                            <prop k="color" v="255,255,255,255"/>
+                            <prop k="color_border" v="0,0,0,255"/>
+                            <prop k="name" v="circle"/>
+                            <prop k="offset" v="0,0"/>
+                            <prop k="size" v="4"/>
+                        </layer>
+                        <layer pass="0" class="SimpleMarker" locked="0">
+                            <prop k="angle" v="0"/>
+                            <prop k="color" v="255,0,0,255"/>
+                            <prop k="color_border" v="0,0,0,255"/>
+                            <prop k="name" v="cross"/>
+                            <prop k="offset" v="0,0"/>
+                            <prop k="size" v="7"/>
+                        </layer>
+                    </symbol>
+                    <symbol outputUnit="MM" alpha="1" type="marker" name="1">
+                        <layer pass="0" class="SimpleMarker" locked="0">
+                            <prop k="angle" v="0"/>
+                            <prop k="color" v="102,167,93,255"/>
+                            <prop k="color_border" v="255,0,4,255"/>
+                            <prop k="name" v="cross"/>
+                            <prop k="offset" v="0,0"/>
+                            <prop k="size" v="6"/>
+                        </layer>
+                    </symbol>
+                    <symbol outputUnit="MM" alpha="1" type="marker" name="2">
+                        <layer pass="0" class="SimpleMarker" locked="0">
+                            <prop k="angle" v="0"/>
+                            <prop k="color" v="255,0,0,255"/>
+                            <prop k="color_border" v="0,0,0,255"/>
+                            <prop k="name" v="circle"/>
+                            <prop k="offset" v="0,0"/>
+                            <prop k="size" v="4"/>
+                        </layer>
+                        <layer pass="0" class="SimpleMarker" locked="0">
+                            <prop k="angle" v="0"/>
+                            <prop k="color" v="255,0,0,255"/>
+                            <prop k="color_border" v="0,0,0,255"/>
+                            <prop k="name" v="cross"/>
+                            <prop k="offset" v="0,0"/>
+                            <prop k="size" v="4"/>
+                        </layer>
+                    </symbol>
+                </symbols>
+                <source-symbol>
+                    <symbol outputUnit="MM" alpha="1" type="marker" name="0">
+                        <layer pass="0" class="SimpleMarker" locked="0">
+                            <prop k="angle" v="0"/>
+                            <prop k="color" v="214,14,141,255"/>
+                            <prop k="color_border" v="0,0,0,255"/>
+                            <prop k="name" v="circle"/>
+                            <prop k="offset" v="0,0"/>
+                            <prop k="size" v="2"/>
+                        </layer>
+                    </symbol>
+                </source-symbol>
+                <colorramp type="gradient" name="[source]">
+                    <prop k="color1" v="247,251,255,255"/>
+                    <prop k="color2" v="8,48,107,255"/>
+                    <prop k="stops" v="0.13;222,235,247,255:0.26;198,219,239,255:0.39;158,202,225,255:0.52;107,174,214,255:0.65;66,146,198,255:0.78;33,113,181,255:0.9;8,81,156,255"/>
+                </colorramp>
+                <rotation field=""/>
+                <sizescale field=""/>
+            </renderer-v2>
+            <customproperties/>
+            <displayfield>gid</displayfield>
+            <label>0</label>
+            <labelattributes>
+                <label fieldname="" text="Etichetta"/>
+                <family fieldname="" name="MS Shell Dlg 2"/>
+                <size fieldname="" units="pt" value="12"/>
+                <bold fieldname="" on="0"/>
+                <italic fieldname="" on="0"/>
+                <underline fieldname="" on="0"/>
+                <strikeout fieldname="" on="0"/>
+                <color fieldname="" red="0" blue="0" green="0"/>
+                <x fieldname=""/>
+                <y fieldname=""/>
+                <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+                <angle fieldname="" value="0" auto="0"/>
+                <alignment fieldname="" value="center"/>
+                <buffercolor fieldname="" red="255" blue="255" green="255"/>
+                <buffersize fieldname="" units="pt" value="1"/>
+                <bufferenabled fieldname="" on=""/>
+                <multilineenabled fieldname="" on=""/>
+                <selectedonly on=""/>
+            </labelattributes>
+            <edittypes>
+                <edittype type="0" name="area"/>
+                <edittype type="0" name="def_punto"/>
+                <edittype type="0" name="gid"/>
+                <edittype type="0" name="id_punto"/>
+                <edittype type="0" name="quota"/>
+                <edittype type="3" name="sito">
+                    <valuepair key="Scavo archeologico" value="Scavo archeologico"/>
+                </edittype>
+                <edittype type="0" name="unita_misu"/>
+                <edittype type="0" name="unita_misura"/>
+            </edittypes>
+            <editform>.</editform>
+            <editforminit></editforminit>
+            <annotationform>.</annotationform>
+            <attributeactions/>
+            <overlay display="false" type="diagram">
+                <renderer item_interpretation="linear">
+                    <diagramitem size="0" value="0"/>
+                    <diagramitem size="0" value="0"/>
+                </renderer>
+                <factory sizeUnits="MM" type="Pie">
+                    <wellknownname>Pie</wellknownname>
+                    <classificationfield>0</classificationfield>
+                </factory>
+                <scalingAttribute>0</scalingAttribute>
+            </overlay>
+        </maplayer>
+        <maplayer minimumScale="0" maximumScale="1e+08" geometry="Polygon" type="vector" hasScaleBasedVisibilityFlag="0">
+            <id>pyarchinit_ripartizioni_spaziali20120717214206967</id>
+            <datasource>dbname='pyarchinit' host=127.0.0.1 port=5432 user='postgres' password='alajolla39' sslmode=allow key='gid' srid=-1 type=POLYGON table="pyarchinit_ripartizioni_spaziali" (the_geom) sql=</datasource>
+            <title></title>
+            <abstract></abstract>
+            <layername>pyarchinit_ripartizioni_spaziali</layername>
+            <srs>
+                <spatialrefsys>
+                    <proj4>+proj=tmerc +lat_0=0 +lon_0=15 +k=0.9996 +x_0=2520000 +y_0=0 +ellps=intl +towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68 +units=m +no_defs</proj4>
+                    <srsid>969</srsid>
+                    <srid>3004</srid>
+                    <authid>EPSG:3004</authid>
+                    <description>Monte Mario / Italy zone 2</description>
+                    <projectionacronym>tmerc</projectionacronym>
+                    <ellipsoidacronym>intl</ellipsoidacronym>
+                    <geographicflag>false</geographicflag>
+                </spatialrefsys>
+            </srs>
+            <transparencyLevelInt>255</transparencyLevelInt>
+            <provider encoding="System">postgres</provider>
+            <vectorjoins/>
+            <renderer-v2 symbollevels="0" type="singleSymbol">
+                <symbols>
+                    <symbol outputUnit="MM" alpha="1" type="fill" name="0">
+                        <layer pass="0" class="SimpleFill" locked="0">
+                            <prop k="color" v="102,167,93,255"/>
+                            <prop k="color_border" v="255,0,4,255"/>
+                            <prop k="offset" v="0,0"/>
+                            <prop k="style" v="no"/>
+                            <prop k="style_border" v="dash dot"/>
+                            <prop k="width_border" v="0.5"/>
+                        </layer>
+                    </symbol>
+                </symbols>
+                <rotation field=""/>
+                <sizescale field=""/>
+            </renderer-v2>
+            <customproperties/>
+            <displayfield>gid</displayfield>
+            <label>0</label>
+            <labelattributes>
+                <label fieldname="" text="Etichetta"/>
+                <family fieldname="" name="MS Shell Dlg 2"/>
+                <size fieldname="" units="pt" value="12"/>
+                <bold fieldname="" on="0"/>
+                <italic fieldname="" on="0"/>
+                <underline fieldname="" on="0"/>
+                <strikeout fieldname="" on="0"/>
+                <color fieldname="" red="0" blue="0" green="0"/>
+                <x fieldname=""/>
+                <y fieldname=""/>
+                <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+                <angle fieldname="" value="0" auto="0"/>
+                <alignment fieldname="" value="center"/>
+                <buffercolor fieldname="" red="255" blue="255" green="255"/>
+                <buffersize fieldname="" units="pt" value="1"/>
+                <bufferenabled fieldname="" on=""/>
+                <multilineenabled fieldname="" on=""/>
+                <selectedonly on=""/>
+            </labelattributes>
+            <edittypes>
+                <edittype type="0" name="ID_ripartizione"/>
+                <edittype type="0" name="descrizione"/>
+                <edittype type="0" name="gid"/>
+                <edittype type="3" name="sito">
+                    <valuepair key="Scavo archeologico" value="Scavo archeologico"/>
+                </edittype>
+                <edittype type="0" name="tipologia_ripartizione"/>
+            </edittypes>
+            <editform>.</editform>
+            <editforminit></editforminit>
+            <annotationform>.</annotationform>
+            <attributeactions/>
+            <overlay display="false" type="diagram">
+                <renderer item_interpretation="linear">
+                    <diagramitem size="0" value="0"/>
+                    <diagramitem size="0" value="0"/>
+                </renderer>
+                <factory sizeUnits="MM" type="Pie">
+                    <wellknownname>Pie</wellknownname>
+                    <classificationfield>0</classificationfield>
+                </factory>
+                <scalingAttribute>0</scalingAttribute>
+            </overlay>
+        </maplayer>
+        <maplayer minimumScale="0" maximumScale="1e+08" geometry="Point" type="vector" hasScaleBasedVisibilityFlag="0">
+            <id>pyarchinit_siti20120712231354622</id>
+            <datasource>dbname='pyarchinit' host=127.0.0.1 port=5432 user='postgres' password='alajolla39' sslmode=allow key='gid' srid=-1 type=POINT table="pyarchinit_siti" (the_geom) sql=</datasource>
+            <title></title>
+            <abstract></abstract>
+            <layername>pyarchinit_siti</layername>
+            <srs>
+                <spatialrefsys>
+                    <proj4>+proj=tmerc +lat_0=0 +lon_0=15 +k=0.9996 +x_0=2520000 +y_0=0 +ellps=intl +towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68 +units=m +no_defs</proj4>
+                    <srsid>969</srsid>
+                    <srid>3004</srid>
+                    <authid>EPSG:3004</authid>
+                    <description>Monte Mario / Italy zone 2</description>
+                    <projectionacronym>tmerc</projectionacronym>
+                    <ellipsoidacronym>intl</ellipsoidacronym>
+                    <geographicflag>false</geographicflag>
+                </spatialrefsys>
+            </srs>
+            <transparencyLevelInt>255</transparencyLevelInt>
+            <provider encoding="System">postgres</provider>
+            <vectorjoins/>
+            <renderer-v2 symbollevels="0" type="singleSymbol">
+                <symbols>
+                    <symbol outputUnit="MM" alpha="1" type="marker" name="0">
+                        <layer pass="0" class="SimpleMarker" locked="0">
+                            <prop k="angle" v="0"/>
+                            <prop k="color" v="255,137,34,255"/>
+                            <prop k="color_border" v="0,0,0,255"/>
+                            <prop k="name" v="circle"/>
+                            <prop k="offset" v="0,0"/>
+                            <prop k="size" v="7"/>
+                        </layer>
+                        <layer pass="0" class="SimpleMarker" locked="0">
+                            <prop k="angle" v="0"/>
+                            <prop k="color" v="255,0,0,255"/>
+                            <prop k="color_border" v="0,0,0,255"/>
+                            <prop k="name" v="cross"/>
+                            <prop k="offset" v="0,0"/>
+                            <prop k="size" v="2"/>
+                        </layer>
+                    </symbol>
+                </symbols>
+                <rotation field=""/>
+                <sizescale field=""/>
+            </renderer-v2>
+            <customproperties/>
+            <displayfield>gid</displayfield>
+            <label>0</label>
+            <labelattributes>
+                <label fieldname="" text="Etichetta"/>
+                <family fieldname="" name="MS Shell Dlg 2"/>
+                <size fieldname="" units="pt" value="12"/>
+                <bold fieldname="" on="0"/>
+                <italic fieldname="" on="0"/>
+                <underline fieldname="" on="0"/>
+                <strikeout fieldname="" on="0"/>
+                <color fieldname="" red="0" blue="0" green="0"/>
+                <x fieldname=""/>
+                <y fieldname=""/>
+                <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+                <angle fieldname="" value="0" auto="0"/>
+                <alignment fieldname="" value="center"/>
+                <buffercolor fieldname="" red="255" blue="255" green="255"/>
+                <buffersize fieldname="" units="pt" value="1"/>
+                <bufferenabled fieldname="" on=""/>
+                <multilineenabled fieldname="" on=""/>
+                <selectedonly on=""/>
+            </labelattributes>
+            <edittypes>
+                <edittype type="0" name="gid"/>
+                <edittype type="0" name="link"/>
+                <edittype type="3" name="siti">
+                    <valuepair key="Scavo archeologico" value="Scavo archeologico"/>
+                </edittype>
+            </edittypes>
+            <editform>.</editform>
+            <editforminit></editforminit>
+            <annotationform>.</annotationform>
+            <attributeactions/>
+            <overlay display="false" type="diagram">
+                <renderer item_interpretation="linear">
+                    <diagramitem size="0" value="0"/>
+                    <diagramitem size="0" value="0"/>
+                </renderer>
+                <factory sizeUnits="MM" type="Pie">
+                    <wellknownname>Pie</wellknownname>
+                    <classificationfield>0</classificationfield>
+                </factory>
+                <scalingAttribute>0</scalingAttribute>
+            </overlay>
+        </maplayer>
+        <maplayer minimumScale="0" maximumScale="1e+08" geometry="Polygon" type="vector" hasScaleBasedVisibilityFlag="0">
+            <id>pyunitastratigrafiche20120717224845330</id>
+            <datasource>dbname='pyarchinit' host=127.0.0.1 port=5432 user='postgres' password='alajolla39' sslmode=allow key='gid' srid=-1 type=MULTIPOLYGON table="pyunitastratigrafiche" (the_geom) sql="stratigraph_index_us" = 2</datasource>
+            <title></title>
+            <abstract></abstract>
+            <layername>pyunitastratigrafiche</layername>
+            <srs>
+                <spatialrefsys>
+                    <proj4>+proj=tmerc +lat_0=0 +lon_0=15 +k=0.9996 +x_0=2520000 +y_0=0 +ellps=intl +towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68 +units=m +no_defs</proj4>
+                    <srsid>969</srsid>
+                    <srid>3004</srid>
+                    <authid>EPSG:3004</authid>
+                    <description>Monte Mario / Italy zone 2</description>
+                    <projectionacronym>tmerc</projectionacronym>
+                    <ellipsoidacronym>intl</ellipsoidacronym>
+                    <geographicflag>false</geographicflag>
+                </spatialrefsys>
+            </srs>
+            <transparencyLevelInt>255</transparencyLevelInt>
+            <provider encoding="System">postgres</provider>
+            <vectorjoins/>
+            <renderer-v2 symbollevels="0" type="singleSymbol">
+                <symbols>
+                    <symbol outputUnit="MM" alpha="1" type="fill" name="0">
+                        <layer pass="0" class="SimpleFill" locked="0">
+                            <prop k="color" v="216,0,3,255"/>
+                            <prop k="color_border" v="0,145,255,255"/>
+                            <prop k="offset" v="0,0"/>
+                            <prop k="style" v="no"/>
+                            <prop k="style_border" v="solid"/>
+                            <prop k="width_border" v="0.08"/>
+                        </layer>
+                    </symbol>
+                </symbols>
+                <rotation field=""/>
+                <sizescale field=""/>
+            </renderer-v2>
+            <customproperties/>
+            <displayfield>gid</displayfield>
+            <label>0</label>
+            <labelattributes>
+                <label fieldname="" text="Etichetta"/>
+                <family fieldname="" name="MS Shell Dlg 2"/>
+                <size fieldname="" units="pt" value="12"/>
+                <bold fieldname="" on="0"/>
+                <italic fieldname="" on="0"/>
+                <underline fieldname="" on="0"/>
+                <strikeout fieldname="" on="0"/>
+                <color fieldname="" red="0" blue="0" green="0"/>
+                <x fieldname=""/>
+                <y fieldname=""/>
+                <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+                <angle fieldname="" value="0" auto="0"/>
+                <alignment fieldname="" value="center"/>
+                <buffercolor fieldname="" red="255" blue="255" green="255"/>
+                <buffersize fieldname="" units="pt" value="1"/>
+                <bufferenabled fieldname="" on=""/>
+                <multilineenabled fieldname="" on=""/>
+                <selectedonly on=""/>
+            </labelattributes>
+            <edittypes>
+                <edittype type="0" name="area_s"/>
+                <edittype type="0" name="data"/>
+                <edittype type="0" name="disegnatore"/>
+                <edittype type="0" name="gid"/>
+                <edittype type="0" name="rilievo_originale"/>
+                <edittype type="3" name="scavo_s">
+                    <valuepair key="Scavo archeologico" value="Scavo archeologico"/>
+                </edittype>
+                <edittype type="3" name="stratigraph_index_us">
+                    <valuepair key="Caratterizzazione di strato" value="1"/>
+                    <valuepair key="Limiti US" value="2"/>
+                </edittype>
+                <edittype type="0" name="tipo_us_s"/>
+                <edittype type="0" name="us_s"/>
+            </edittypes>
+            <editform></editform>
+            <editforminit></editforminit>
+            <annotationform></annotationform>
+            <attributeactions/>
+            <overlay display="false" type="diagram">
+                <renderer item_interpretation="linear">
+                    <diagramitem size="0" value="0"/>
+                    <diagramitem size="0" value="0"/>
+                </renderer>
+                <factory sizeUnits="MM" type="Pie">
+                    <wellknownname>Pie</wellknownname>
+                    <classificationfield>0</classificationfield>
+                </factory>
+                <scalingAttribute>0</scalingAttribute>
+            </overlay>
+        </maplayer>
+        <maplayer minimumScale="0" maximumScale="1e+08" geometry="No geometry" type="vector" hasScaleBasedVisibilityFlag="0">
+            <id>site_table20120712231737133</id>
+            <datasource>dbname='pyarchinit' host=127.0.0.1 port=5432 user='postgres' password='alajolla39' sslmode=allow key='id_sito' table="site_table" sql=</datasource>
+            <title></title>
+            <abstract></abstract>
+            <layername>site_table</layername>
+            <srs>
+                <spatialrefsys>
+                    <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+                    <srsid>3452</srsid>
+                    <srid>4326</srid>
+                    <authid>EPSG:4326</authid>
+                    <description>WGS 84</description>
+                    <projectionacronym>longlat</projectionacronym>
+                    <ellipsoidacronym>WGS84</ellipsoidacronym>
+                    <geographicflag>true</geographicflag>
+                </spatialrefsys>
+            </srs>
+            <transparencyLevelInt>255</transparencyLevelInt>
+            <customproperties/>
+            <provider encoding="System">postgres</provider>
+            <vectorjoins/>
+            <editform>.</editform>
+            <editforminit></editforminit>
+            <annotationform>.</annotationform>
+            <attributeactions/>
+        </maplayer>
+    </projectlayers>
+    <properties>
+        <WMSServiceAbstract type="QString"></WMSServiceAbstract>
+        <WMSOnlineResource type="QString"></WMSOnlineResource>
+        <WMSContactPerson type="QString"></WMSContactPerson>
+        <Identify>
+            <disabledLayers type="QStringList"/>
+        </Identify>
+        <WMSContactPhone type="QString"></WMSContactPhone>
+        <SpatialRefSys>
+            <ProjectCRSProj4String type="QString">+proj=tmerc +lat_0=0 +lon_0=15 +k=0.9996 +x_0=2520000 +y_0=0 +ellps=intl +towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68 +units=m +no_defs</ProjectCRSProj4String>
+            <ProjectCrs type="QString">EPSG:4326</ProjectCrs>
+            <ProjectCRSID type="int">969</ProjectCRSID>
+            <ProjectionsEnabled type="int">1</ProjectionsEnabled>
+        </SpatialRefSys>
+        <Paths>
+            <Absolute type="bool">false</Absolute>
+        </Paths>
+        <Gui>
+            <SelectionColorBluePart type="int">0</SelectionColorBluePart>
+            <CanvasColorGreenPart type="int">255</CanvasColorGreenPart>
+            <CanvasColorRedPart type="int">255</CanvasColorRedPart>
+            <SelectionColorRedPart type="int">255</SelectionColorRedPart>
+            <SelectionColorAlphaPart type="int">255</SelectionColorAlphaPart>
+            <SelectionColorGreenPart type="int">255</SelectionColorGreenPart>
+            <CanvasColorBluePart type="int">255</CanvasColorBluePart>
+        </Gui>
+        <WMSContactMail type="QString"></WMSContactMail>
+        <WFSLayers type="QStringList"/>
+        <Digitizing>
+            <LayerSnappingList type="QStringList">
+                <value>pyarchinit_punti_rif20120717214502253</value>
+                <value>pyarchinit_ripartizioni_spaziali20120717214206967</value>
+                <value>pyarchinit_siti20120712231354622</value>
+                <value>pyunitastratigrafiche20120717224845330</value>
+            </LayerSnappingList>
+            <LayerSnappingEnabledList type="QStringList">
+                <value>disabled</value>
+                <value>disabled</value>
+                <value>disabled</value>
+                <value>disabled</value>
+            </LayerSnappingEnabledList>
+            <AvoidIntersectionsList type="QStringList">
+                <value>pyunitastratigrafiche20120717224845330</value>
+            </AvoidIntersectionsList>
+            <LayerSnappingToleranceUnitList type="QStringList">
+                <value>0</value>
+                <value>0</value>
+                <value>0</value>
+                <value>0</value>
+            </LayerSnappingToleranceUnitList>
+            <LayerSnapToList type="QStringList">
+                <value>to_vertex</value>
+                <value>to_vertex</value>
+                <value>to_vertex</value>
+                <value>to_vertex</value>
+            </LayerSnapToList>
+            <TopologicalEditing type="int">1</TopologicalEditing>
+            <LayerSnappingToleranceList type="QStringList">
+                <value>0.000000</value>
+                <value>0.000000</value>
+                <value>0.000000</value>
+                <value>0.000000</value>
+            </LayerSnappingToleranceList>
+        </Digitizing>
+        <PositionPrecision>
+            <DecimalPlaces type="int">2</DecimalPlaces>
+            <Automatic type="bool">true</Automatic>
+        </PositionPrecision>
+        <WMSAddWktGeometry type="bool">false</WMSAddWktGeometry>
+        <WMSContactOrganization type="QString"></WMSContactOrganization>
+        <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
+        <WMSServiceTitle type="QString"></WMSServiceTitle>
+    </properties>
+</qgis>
