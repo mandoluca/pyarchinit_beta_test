@@ -360,7 +360,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 			srs = QgsCoordinateReferenceSystem(self.SRS, QgsCoordinateReferenceSystem.PostgisCrsId)
 
-			uri.setDataSource("public", "pyarchinit_us_view", "the_geom", cont_per_string)
+			uri.setDataSource("public", "pyarchinit_us_view", "the_geom", cont_per_string, "gid")
 			layerUS = QgsVectorLayer(uri.uri(), "Unita' Stratigrafiche", "postgres")
 
 			if  layerUS.isValid() == True:
@@ -369,8 +369,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayer(layerUS, True)
-
-			uri.setDataSource("public", "pyarchinit_quote_view", "the_geom", cont_per_string)
+, 
+			uri.setDataSource("public", "pyarchinit_quote_view", "the_geom", cont_per_string, "gid")
 			layerQUOTE = QgsVectorLayer(uri.uri(), "Quote Unita' Stratigrafiche", "postgres")
 
 			if layerQUOTE.isValid() == True:
@@ -385,7 +385,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 					#f.write(str(e))
 					#f.close()
 
-			uri.setDataSource("public", "pyarchinit_pyuscarlinee_view", "the_geom", cont_per_string)
+			uri.setDataSource("public", "pyarchinit_pyuscarlinee_view", "the_geom", cont_per_string, "gid")
 			layerCA = QgsVectorLayer(uri.uri(), "Caratterizzazioni US linee", "postgres")
 
 			if layerCA.isValid() == True:
