@@ -47,3 +47,6 @@ Modifica del sistema di esportazione in pdf in corso per ceramica a vernice nera
 ottimizzare il sistema di esportazione delle immagini
 personalizzare il sistema di etichettatura del PDF in base al tipo di reperto schedato
 
+
+Da fare Scheda US
+Controllo record modificato come per Scheda Inventario Materiali
