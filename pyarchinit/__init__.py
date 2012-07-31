@@ -31,7 +31,7 @@ def description():
   return "Under Testing - Use for testing only - PyArchInit it's tool to manage archaeological dataset - Only Mac Os X and Linux tested - Now work under Windows with logging turned off"
 
 def version():
-  return "Version 0.20120723"
+  return "Version 0.20120731"
 
 def plugin_type():
   return QgisPlugin.UI # UI plugin
