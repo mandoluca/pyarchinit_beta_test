@@ -28,6 +28,8 @@ import PyQt4.QtGui
 from qgis.core import *
 from qgis.gui import *
 
+from settings import *
+
 #from ui_tester import Ui_tester
 # create the dialog for zoom to point
 
@@ -310,9 +312,17 @@ class Print_utility:
 
 
 	def open_connection(self):
+		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
+		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
+		conf = open(file_path, "r")
+		con_sett = conf.read()
+		conf.close()        
+		
 		self.uri = QgsDataSourceURI()
-		self.uri.setConnection('address','5432', 'pyarchinit', 'postgres', 'miapass')	
-
+		
+		settings = Settings(con_sett)
+		settings.set_configuration()
+		self.uri.setConnection(settings.HOST, settings.PORT, settings.DATABASE, settings.USER, settings.PASSWORD)
 
 	def charge_layer_postgis(self, sito, area, us):
 		self.open_connection()
@@ -347,8 +357,6 @@ class Print_utility:
 			return 0
 			#QMessageBox.warning(self, "Messaggio", "Geometria inesistente", QMessageBox.Ok)
 
-
-
 		gidstr = ("sito_l = '%s' and area_l = '%s' and us_l = '%d'") % (sito, area, us)
 
 		self.uri.setDataSource("public", "pyarchinit_pyuscarlinee_view", "the_geom", gidstr, 'gid')
@@ -376,7 +384,7 @@ class Print_utility:
 			QgsMapLayerRegistry.instance().addMapLayer(self.layerQuote, True)
 
 
-		gidstr = "sito = 'Proprieta Biasini, Bellaria' AND def_punto = 'Griglia a 2 metri'"
+		gidstr = ("sito = '%s' AND def_punto = 'Griglia'") % (sito)
 
 		self.uri.setDataSource("public", "pyarchinit_punti_rif", "the_geom", gidstr)
 		self.layerGriglia = QgsVectorLayer(self.uri.uri(), "Quote", "postgres")
