@@ -613,7 +613,7 @@
             </font>
            </property>
            <property name="text">
-            <string>N° Inventairio</string>
+            <string>N° Inventario</string>
            </property>
           </widget>
          </item>
@@ -1567,6 +1567,9 @@
              </item>
              <item row="1" column="2">
               <widget class="QComboBox" name="comboBox_lavato">
+               <property name="editable">
+                <bool>true</bool>
+               </property>
                <item>
                 <property name="text">
                  <string>Si</string>

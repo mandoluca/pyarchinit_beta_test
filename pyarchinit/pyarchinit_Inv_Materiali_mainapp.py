@@ -242,10 +242,10 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 				self.enable_button(1)
 			else:
-                                QMessageBox.warning(self, "ATTENZIONE", "Non e' stata realizzata alcuna modifica.",  QMessageBox.Ok)
-		else:
-			if self.data_error_check() == 0:
-				test_insert = self.insert_new_rec()
+                QMessageBox.warning(self, "ATTENZIONE", "Non e' stata realizzata alcuna modifica.",  QMessageBox.Ok)
+        else:
+            if self.data_error_check() == 0:
+                test_insert = self.insert_new_rec()
 				if test_insert == 1:
 					self.empty_fields()
 					self.SORT_STATUS = "n"
@@ -268,24 +268,24 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		data_list = []
 		for i in range(len(self.DATA_LIST)):
 			data_list.append([
-                        str(self.DATA_LIST[i].id_invmat), 							#1 - id_invmat
-                        str(self.DATA_LIST[i].sito),								#2 - sito
-			int(self.DATA_LIST[i].numero_inventario),						#3 - numero_inventario
-			str(self.DATA_LIST[i].tipo_reperto),							#4 - tipo_reperto
-			str(self.DATA_LIST[i].criterio_schedatura),						#5 - criterio_schedatura
-                        self.DATA_LIST[i].definizione,								#6 - definizione
-                        unicode(self.DATA_LIST[i].descrizione),							#7 - descrizione
-                        str(self.DATA_LIST[i].area),								#8 - area
-                        str(self.DATA_LIST[i].us),                                                              #9 - us
-                        str(self.DATA_LIST[i].lavato),                                                          #10 - lavato
-                        str(self.DATA_LIST[i].nr_cassa), 							#11 - nr_cassa
-			str(self.DATA_LIST[i].luogo_conservazione),						#12 - luogo_conservazione
-			str(self.DATA_LIST[i].stato_conservazione),						#13 - stato_conservazione
-			str(self.DATA_LIST[i].datazione_reperto),						#14 - datazione_reperto
-			str(self.DATA_LIST[i].elementi_reperto),						#15 - elementi_reperto
-                        str(self.DATA_LIST[i].misurazioni),                                                     #16 - misurazioni
-                        str(self.DATA_LIST[i].rif_biblio),                                                      #17 - rif_biblio
-                        str(self.DATA_LIST[i].tecnologie)							#18 - misurazioni
+            str(self.DATA_LIST[i].id_invmat), 							#1 - id_invmat
+            str(self.DATA_LIST[i].sito),								#2 - sito
+			int(self.DATA_LIST[i].numero_inventario),					#3 - numero_inventario
+			str(self.DATA_LIST[i].tipo_reperto),						#4 - tipo_reperto
+			str(self.DATA_LIST[i].criterio_schedatura),				#5 - criterio_schedatura
+            self.DATA_LIST[i].definizione,								#6 - definizione
+            unicode(self.DATA_LIST[i].descrizione),					#7 - descrizione
+            str(self.DATA_LIST[i].area),								#8 - area
+            str(self.DATA_LIST[i].us),                                 #9 - us
+            str(self.DATA_LIST[i].lavato),                             #10 - lavato
+            str(self.DATA_LIST[i].nr_cassa), 							#11 - nr_cassa
+			str(self.DATA_LIST[i].luogo_conservazione),			    #12 - luogo_conservazione
+			str(self.DATA_LIST[i].stato_conservazione),				#13 - stato_conservazione
+			str(self.DATA_LIST[i].datazione_reperto),					#14 - datazione_reperto
+			str(self.DATA_LIST[i].elementi_reperto),					#15 - elementi_reperto
+            str(self.DATA_LIST[i].misurazioni),                        #16 - misurazioni
+            str(self.DATA_LIST[i].rif_biblio),                         #17 - rif_biblio
+            str(self.DATA_LIST[i].tecnologie)							#18 - misurazioni
 		])
 		return data_list
 
@@ -351,22 +351,22 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			data = self.DB_MANAGER.insert_values_reperti(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1, 		#0 - IDsito
                         str(self.comboBox_sito.currentText()), 						#1 - Sito
-                        int(self.lineEdit_num_inv.text()),						#2 - num_inv
-                        str(self.comboBox_tipo_reperto.currentText()), 					#3 - tipo_reperto
-			str(self.comboBox_criterio_schedatura.currentText()),				#4 - criterio
+                        int(self.lineEdit_num_inv.text()),						        #2 - num_inv
+                        str(self.comboBox_tipo_reperto.currentText()), 				#3 - tipo_reperto
+                        str(self.comboBox_criterio_schedatura.currentText()),			#4 - criterio
                         str(self.comboBox_definizione.currentText()), 					#5 - definizione
-			unicode(self.textEdit_descrizione_reperto.toPlainText()),			#6 - descrizione
-                        area,										#7 - area
-                        us,										#8 - us
-                        str(self.comboBox_lavato.currentText()),					#9 - lavato
-                        nr_cassa,									#10 - nr cassa
+                        unicode(self.textEdit_descrizione_reperto.toPlainText()),		#6 - descrizione
+                        area,										                    #7 - area
+                        us,										                        #8 - us
+                        str(self.comboBox_lavato.currentText()),					    #9 - lavato
+                        nr_cassa,									                    #10 - nr cassa
                         str(self.lineEdit_luogo_conservazione.text()),					#11 - luogo conservazione
-                        str(self.comboBox_conservazione.currentText()),					#12 - stato di conservazione
-                        str(self.lineEdit_datazione_rep.text()),					#13 - datazione reperto
-                        str(elementi_reperto),								#14 - elementi reperto
-                        str(misurazioni),								#15 - misurazioni
-                        str(rif_biblio), 								#16 - rif biblio
-                        str(tecnologie)									#17 - tecnologie
+                        str(self.comboBox_conservazione.currentText()),				#12 - stato di conservazione
+                        str(self.lineEdit_datazione_rep.text()),					    #13 - datazione reperto
+                        str(elementi_reperto),								            #14 - elementi reperto
+                        str(misurazioni),								                #15 - misurazioni
+                        str(rif_biblio), 								                #16 - rif biblio
+                        str(tecnologie)									                #17 - tecnologie
 			)
 
 			try:
@@ -948,9 +948,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 		check_str = str(self.DATA_LIST_REC_CORR) + " " + str(self.DATA_LIST_REC_TEMP)
                 
-		f = open('test_check.txt', 'w')
-		f.write(str(check_str))
-		f.close()
+		#ff = open('test_check.txt', 'w')
+		#ff.write(str(check_str))
+		#ff.close()
 
 		if self.DATA_LIST_REC_CORR == self.DATA_LIST_REC_TEMP:
 			return 0

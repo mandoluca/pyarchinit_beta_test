@@ -105,9 +105,9 @@ class Print_utility:
 
 
 	def test_bbox(self):
-		f = open("/test_type.txt", "w")
-		f.write(str(type(self.layerUS)))
-		f.close()
+		#f = open("/test_type.txt", "w")
+		#ff.write(str(type(self.layerUS)))
+		#ff.close()
 
 		self.layerUS.select( [] ) # recuperi tutte le geometrie senza attributi
 		featPoly = QgsFeature() # crei una feature vuota per il poligono
@@ -224,9 +224,9 @@ class Print_utility:
 		scaleBarItem.setFrame(False)
 		c.addItem(scaleBarItem)
 		
-		f = open("/test_scaleBar.txt", "w")
-		f.write(str(dir(scaleBarItem)))
-		f.close()
+		#ff = open("/test_scaleBar.txt", "w")
+		#ff.write(str(dir(scaleBarItem)))
+		#ff.close()
 
 
 		"""
@@ -340,9 +340,9 @@ class Print_utility:
 
 		self.layerUS = QgsVectorLayer(self.uri.uri(), "US", "postgres")
 		
-		f = open("/test_layer.txt", "w")
-		f.write(str(self.layerUS.featureCount()))
-		f.close()
+		#ff = open("/test_layer.txt", "w")
+		#ff.write(str(self.layerUS.featureCount()))
+		#ff.close()
 		
 
 		if self.layerUS.isValid() == True:
