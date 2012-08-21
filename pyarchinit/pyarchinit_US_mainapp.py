@@ -46,8 +46,8 @@ from  pyarchinit_pyqgis import Pyarchinit_pyqgis, Order_layers
 from  sortpanelmain import SortPanelMain
 from  pyarchinit_db_manager import *
 from  pyarchinit_exp_USsheet_pdf import *
-from delegateComboBox import *
-from imageViewer import ImageViewer
+from  delegateComboBox import *
+from  imageViewer import ImageViewer
 
 class pyarchinit_US(QDialog, Ui_DialogUS):
 	MSG_BOX_TITLE = "PyArchInit - Scheda US"
@@ -647,7 +647,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			rapporti_stratigrafici = eval(sing_rec.rapporti)
 			for sing_rapp in rapporti_stratigrafici:
 				try:
-					if sing_rapp[0] == 'Taglia' or  sing_rapp[0] == 'Copre' or  sing_rapp[0] == 'Si appoggia a' or  sing_rapp[0] == 'Riempie' or sing_rapp[0] == 'Si lega a' or  sing_rapp[0] == 'Uguale a':
+					if sing_rapp[0] == 'Taglia' or  sing_rapp[0] == 'Copre' or  sing_rapp[0] == 'Si appoggia a' or  sing_rapp[0] == 'Riempie':  #or sing_rapp[0] == 'Si lega a' or  sing_rapp[0] == 'Uguale a'
 						if sing_rapp[1] != '':
 							harris_rapp = (us, str(sing_rapp[1]))
 							data.append(harris_rapp)
@@ -794,7 +794,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 				self.enable_button(1)
 			else:
-				QMessageBox.warning(self, "ATTENZIONE", "Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
+				QMessageBox.warning(self, "ATTENZIONE", "Non Ã¨ stata realizzata alcuna modifica.",  QMessageBox.Ok)
 		else:
 			if self.data_error_check() == 0:
 				test_insert = self.insert_new_rec()
@@ -955,8 +955,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			str(self.comboBox_colore.currentText()),			#23 - colore
 			str(self.comboBox_consistenza.currentText()),		#24 - consistenza
 			str(self.lineEdit_struttura.text()),				#25 - struttura
-			str(self.lineEdit_codice_periodo.text()),			#26 - continuit�  periodo
-			order_layer,										#27 - continuit�  periodo
+			str(self.lineEdit_codice_periodo.text()),			#26 - continuitÃ  periodo
+			order_layer,										#27 - continuitÃ  periodo
 			str(documentazione))								#28 - documentazione
 			try:
 				self.DB_MANAGER.insert_data_session(data)

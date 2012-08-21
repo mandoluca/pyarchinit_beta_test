@@ -9,7 +9,6 @@
     copyright            : (C) 2008 by Luca Mandolesi
     email                : mandoluca at gmail.com
  ***************************************************************************/
-
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,6 +19,7 @@
  ***************************************************************************/
 """
 import sys, os
+
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import PyQt4.QtGui
@@ -87,6 +87,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayer(layerUS, True)
 
+			"""
+			Sistema abolito
 			uri.setDataSource('','pyarchinit_caratterizzazioni_view', 'Geometry', gidstr, "gid")
 			layerCA=QgsVectorLayer(uri.uri(), 'pyarchinit_caratterizzazioni_view', 'spatialite')
 
@@ -95,13 +97,12 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'previewCAstyle.qml')
 				layerCA.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayer(layerCA, True)
-
+			"""
 			uri.setDataSource('','pyarchinit_quote_view', 'Geometry', gidstr, "gid")
 			layerQUOTE=QgsVectorLayer(uri.uri(), 'pyarchinit_quote_view', 'spatialite')
 			if  layerQUOTE.isValid() == True:
 				QgsMapLayerRegistry.instance().addMapLayer(layerQUOTE, True)
-				
-
+			
 			uri.setDataSource('','pyarchinit_pyuscarlinee_view', 'Geometry', gidstr, "gid")
 			layerQUOTE=QgsVectorLayer(uri.uri(), 'pyarchinit_pyuscarlinee_view', 'spatialite')
 			if  layerQUOTE.isValid() == True:
@@ -119,7 +120,6 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				for i in range(len(data)):
 					gidstr += " OR id_us = " + str(data[i])
 
-
 			srs = QgsCoordinateReferenceSystem(self.SRS, QgsCoordinateReferenceSystem.PostgisCrsId)
 
 			uri.setDataSource("public", "pyarchinit_us_view", "the_geom", gidstr, "gid")
@@ -132,6 +132,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayer(layerUS, True)
 
+			"""
+			sistema abolito 
 			uri.setDataSource("public", "pyarchinit_uscaratterizzazioni_view", "the_geom", gidstr, "gid")
 			layerCA = QgsVectorLayer(uri.uri(), "Caratterizzazioni US", "postgres")
 			
@@ -141,13 +143,13 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'previewCAstyle.qml')
 				layerCA.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayer(layerCA, True)
-
+			"""
 			uri.setDataSource("public", "pyarchinit_quote_view", "the_geom", gidstr, "gid")
 			layerQUOTE = QgsVectorLayer(uri.uri(), "Quote Unita' Stratigrafiche", "postgres")
 
 			if layerQUOTE.isValid() == True:
 				layerQUOTE.setCrs(srs)
-				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'previewQUOTEstyle.qml')
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'stile_quote.qml')
 				layerQUOTE.loadNamedStyle(style_path)
 				try:
 					QgsMapLayerRegistry.instance().addMapLayer(layerQUOTE, True)
@@ -205,14 +207,17 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayer(layerUS, True)
 
+			"""
 			uri.setDataSource('','pyarchinit_caratterizzazioni_view', 'Geometry', gidstr, "gid")
 			layerCA=QgsVectorLayer(uri.uri(), 'pyarchinit_caratterizzazioni_view', 'spatialite')
+
 
 			if  layerCA.isValid() == True:
 				CALayerId = layerCA.getLayerID()
 				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'previewCAstyle.qml')
 				layerCA.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayer(layerCA, True)
+			"""
 
 			uri.setDataSource('','pyarchinit_quote_view', 'Geometry', gidstr, "gid")
 			layerQUOTE=QgsVectorLayer(uri.uri(), 'pyarchinit_quote_view', 'spatialite')
@@ -267,7 +272,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 			if layerQUOTE.isValid() == True:
 				layerQUOTE.setCrs(srs)
-				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'previewQUOTEstyle.qml')
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'stile_quote.qml')
 				layerQUOTE.loadNamedStyle(style_path)
 				try:
 					QgsMapLayerRegistry.instance().addMapLayer(layerQUOTE, True)
@@ -279,14 +284,14 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 			uri.setDataSource("public", "pyarchinit_pyuscarlinee_view", "the_geom", gidstr, "gid")
 			layerCA = QgsVectorLayer(uri.uri(), "Caratterizzazioni US linee", "postgres")
-
+			"""
 			if layerCA.isValid() == True:
 				layerCA.setCrs(srs)
 				CALayerId = layerCA.getLayerID()
 				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'caratterizzazioni_linee.qml')
 				layerCA.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayer(layerCA, True)
-
+			"""
 	def charge_vector_layers_periodo(self, cont_per):
 		self.cont_per = str(cont_per)
 		#Clean Qgis Map Later Registry
@@ -369,13 +374,13 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayer(layerUS, True)
-, 
+
 			uri.setDataSource("public", "pyarchinit_quote_view", "the_geom", cont_per_string, "gid")
 			layerQUOTE = QgsVectorLayer(uri.uri(), "Quote Unita' Stratigrafiche", "postgres")
 
 			if layerQUOTE.isValid() == True:
 				layerQUOTE.setCrs(srs)
-				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'previewQUOTEstyle.qml')
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'stile_quote.qml')
 				layerQUOTE.loadNamedStyle(style_path)
 				try:
 					QgsMapLayerRegistry.instance().addMapLayer(layerQUOTE, True)
@@ -386,14 +391,14 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 					#f.close()
 
 			uri.setDataSource("public", "pyarchinit_pyuscarlinee_view", "the_geom", cont_per_string, "gid")
-			layerCA = QgsVectorLayer(uri.uri(), "Caratterizzazioni US linee", "postgres")
+			layerCAL = QgsVectorLayer(uri.uri(), "Caratterizzazioni US linee", "postgres")
 
-			if layerCA.isValid() == True:
-				layerCA.setCrs(srs)
-				CALayerId = layerCA.getLayerID()
+			if layerCAL.isValid() == True:
+				layerCAL.setCrs(srs)
+				CALayerId = layerCAL.getLayerID()
 				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'caratterizzazioni_linee.qml')
-				layerCA.loadNamedStyle(style_path)
-				QgsMapLayerRegistry.instance().addMapLayer(layerCA, True)
+				layerCAL.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayer(layerCAL, True)
 
 
 	"""
@@ -445,6 +450,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			layerToSet.append(QgsMapCanvasLayer(layerUS, True, False))
 
 		#layerCA
+		"""
 		uri.setDataSource("public", "pyarchinit_uscaratterizzazioni_view", "the_geom", gidstr, "id_us")
 		layerCA = QgsVectorLayer(uri.uri(), "Caratterizzazioni US", "postgres")
 
@@ -453,25 +459,27 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			layerCA.loadNamedStyle(style_path)
 			QgsMapLayerRegistry.instance().addMapLayer(layerCA, False)
 			layerToSet.append(QgsMapCanvasLayer(layerCA, True, False))
+		"""
 
 		#layerQuote
 		uri.setDataSource("public", "pyarchinit_quote_view", "the_geom", gidstr, "id_us")
 		layerQUOTE = QgsVectorLayer(uri.uri(), "Quote", "postgres")
 
 		if layerQUOTE.isValid() == True:
-			style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'previewQUOTEstyle.qml')
+			style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'stile_quote.qml')
 			layerQUOTE.loadNamedStyle(style_path)
 			QgsMapLayerRegistry.instance().addMapLayer(layerQUOTE, False)
 			layerToSet.append(QgsMapCanvasLayer(layerQUOTE, True, False))
 
-		uri.setDataSource("public", "pyarchinit_pyuscarlinee_view", "the_geom", gidstr, "id_us")
-		layerQUOTE = QgsVectorLayer(uri.uri(), "Caratterizzazioni linee", "postgres")
+			uri.setDataSource("public", "pyarchinit_pyuscarlinee_view", "the_geom", cont_per_string, "gid")
+			layerCAL = QgsVectorLayer(uri.uri(), "Caratterizzazioni US linee", "postgres")
 
-		if layerQUOTE.isValid() == True:
-			#style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'previewQUOTEstyle.qml')
-			#layerQUOTE.loadNamedStyle(style_path)
-			QgsMapLayerRegistry.instance().addMapLayer(layerQUOTE, False)
-			layerToSet.append(QgsMapCanvasLayer(layerQUOTE, True, False))
+			if layerCAL.isValid() == True:
+				layerCAL.setCrs(srs)
+				CALayerId = layerCAL.getLayerID()
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'caratterizzazioni_linee.qml')
+				layerCAL.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayer(layerCAL, True)
 
 		return layerToSet
 
@@ -525,10 +533,11 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 		return value_list
 
 class Order_layers:
-	lista_us = [] #lista che contiene tutte le US singole prese dai singoli rapporti stratigrafici
-	diz_order_layers = {} #contiene una serie di chiavi valori dove la chiave e' il livello di ordinamento e il valore l'US relativa
-	max_value_key = -1 #contiene l'indice progressivo dei livelli del dizionario
-	tuple_to_removing = [] #contiene le tuple da rimuovere dai rapporti stratigrafici man mano che si passa ad un livello successivo
+
+	LISTA_US = [] #lista che contiene tutte le US singole prese dai singoli rapporti stratigrafici
+	DIZ_ORDER_LAYERS = {} #contiene una serie di chiavi valori dove la chiave e' il livello di ordinamento e il valore l'US relativa
+	MAX_VALUE_KEYS = -1 #contiene l'indice progressivo dei livelli del dizionario
+	TUPLE_TO_REMOVING = [] #contiene le tuple da rimuovere dai rapporti stratigrafici man mano che si passa ad un livello successivo
 
 	"""variabili di controllo di paradossi nei rapporti stratigrafici"""
 	status = 0 #contiene lo stato della lunghezza della lista dei rapporti stratigrafici
@@ -537,34 +546,36 @@ class Order_layers:
 
 	def __init__(self, lr):
 		self.lista_rapporti = lr #istanzia la classe con una lista di tuple rappresentanti i rapporti stratigrafici
-		self.lista_rapporti.sort()  #ordina la lista dei rapporti stratigrafici
+		#f = open('C:\\test_matrix_1.txt', 'w') #to delete
+		#f.write(str(self.lista_rapporti))
+		#f.close()
+		self.lista_rapporti.sort() #ordina la lista dei rapporti stratigrafici
 		self.status = len(self.lista_rapporti) #assegna la lunghezza della lista dei rapporti per verificare se cambia nel corso del loop
 
 	def main(self):
 		#esegue la funzione per creare la lista valori delle US dai singoli rapporti stratigrafici
 		self.add_values_to_lista_us()
 		#finche la lista US contiene valori la funzione bool ritorna True e il ciclo while prosegue
-		while bool(self.lista_us) == True:
+		while bool(self.LISTA_US) == True:
 				#viene eseguito il ciclo per ogni US contenuto nella lista delle US
 				self.loop_on_lista_us()
-		return self.diz_order_layers
-
+		return self.DIZ_ORDER_LAYERS
 		#self.print_values():
 
 	def loop_on_lista_us(self):
 		#se il valore di stop_while rimane vuoto (ovvero non vi sono paradossi stratigrafici) parte la ricerca del livello da assegnare all'US
 		if self.stop_while == '':
-			for i in self.lista_us:
-				if self.check_position(i) == 1: #se la funzione è check_position ritorna 1 significa che e' stata trovata l'US che va nel prossimo livello e in seguito viene rimossa
-					self.lista_us.remove(i)
+			for i in self.LISTA_US:
+				if self.check_position(i) == 1:#se la funzione check_position ritorna 1 significa che e' stata trovata l'US che va nel prossimo livello e in seguito viene rimossa
+					self.LISTA_US.remove(i)
 				else:
 					#se il valore ritornato e' 0 significa che e' necessario passare all'US successiva in lista US e la lista delle tuple da rimuovere e' svuotata
 					self.tuple_to_removing = []
-					#print "gigi"
 				#se il valore di status non cambia significa che non e' stata trovata l'US da rimuovere. Se cio' accade per + di 4000 volte e' possibile che vi sia un paradosso e lo script va in errore
 				if self.status == len(self.lista_rapporti):
 					self.check_status += 1
-					if self.check_status > 4000:
+					print self.check_status
+					if self.check_status > 20:
 						self.stop_while = 'stop'
 				else:
 					#se entro le 4000 ricerche il valore cambia il check status torna a 0 e lo script va avanti
@@ -577,54 +588,63 @@ class Order_layers:
 	def add_values_to_lista_us(self):
 		#crea la lista valori delle US dai singoli rapporti stratigrafici
 		for i in self.lista_rapporti:
-			if self.lista_us.__contains__(i[0]) == False:
-				self.lista_us.append(i[0])
-			if self.lista_us.__contains__(i[1]) == False:
-				self.lista_us.append(i[1])
+			if i[0] == i[1]:
+				pass
+			else:
+				if self.LISTA_US.__contains__(i[0]) == False:
+					self.LISTA_US.append(i[0])
+				if self.LISTA_US.__contains__(i[1]) == False:
+					self.LISTA_US.append(i[1])
 
 	def check_position(self, n):
 		#riceve un numero di US dalla lista_US
 		num_us = n
 		#assegna 0 alla variabile check
 		check = 0
-		#inizia l'iterazione sulla lista rapporti
+		#inizia l'iterazione sUlla lista rapporti
 		for i in self.lista_rapporti:
 			#se la tupla assegnata a i contiene in prima posizione il numero di US, ovvero e' un'US che viene dopo le altre nella sequenza, check diventa 1 e non si ha un nuovo livello stratigrafico
 			if i[1] == num_us:
 				check = 1
 			#se invece il valore e' sempre e solo in posizione 1, ovvero e' in cima ai rapporti stratigrafici viene assegnata la tupla di quei rapporti stratigrafici per essere rimossa in seguito
 			elif i[0] == num_us:
-				self.tuple_to_removing.append(i)
+				self.TUPLE_TO_REMOVING.append(i)
+				#f = open('C:\\test_matrix_3.txt', 'w') #to delete
+				#testo = str(i)
+				#f.write(str(testo))
+				#f.close()
 		#se alla fine dell'iterazione check e' rimasto 0, significa che quell'US e' in cima ai rapporti stratigrafici e si passa all'assegnazione di un nuovo livello stratigrafico nel dizionario
 		if check == 0:
 			#viene eseguita la funzione di aggiunta valori al dizionario passandogli il numero di US
 			self.add_key_value_to_diz(num_us)
 			#vengono rimosse tutte le tuple in cui e' presente l'us assegnata al dizionario e la lista di tuple viene svuotata
-			for i in self.tuple_to_removing:
+			for i in self.TUPLE_TO_REMOVING:
+				#f = open('C:\\test_matrix_2.txt', 'w') #to delete
+				#testo = str(self.lista_rapporti) + ", ", str(i)
+				#f.write(str(testo))
+				#f.close()
 				self.lista_rapporti.remove(i)
-			self.tuple_to_removing = []
+			self.TUPLE_TO_REMOVING = []
 			#la funzione ritorna il valore 1
 			return 1
 
 	def add_key_value_to_diz(self, n):
 		self.num_us_value = n #numero di US da inserire nel dizionario
-		self.max_value_key += 1 #il valore globale del numero di chiave aumenta di 1
-		self.diz_order_layers[self.max_value_key] = self.num_us_value #viene assegnata una nuova coppia di chiavi-valori
-
-
+		self.MAX_VALUE_KEYS += 1 #il valore globale del numero di chiave aumenta di 1
+		self.DIZ_ORDER_LAYERS[self.MAX_VALUE_KEYS] = self.num_us_value #viene assegnata una nuova coppia di chiavi-valori
+	"""
 	def print_values(self):
-		print "dizionario_valori per successione stratigrafica: ", self.diz_order_layers
+		print "dizionario_valori per successione stratigrafica: ",self.DIZ_ORDER_LAYERS
 		print "ordine di successione delle US: "
-		for k in self.diz_order_layers.keys():
+		for k in self.DIZ_ORDER_LAYERS.keys():
 			print k
-
+	"""
 class MyError(Exception):
 		def __init__(self, value):
 			self.value = value
 		def __str__(self):
 			return repr(self.value)
-"""
-lista_rapporti = [(1, 2), (2, 3), (2, 4), (4, 5)]
-OL = ORDER_LAYERS(lista_rapporti)
-OL.main()
-"""
+
+##lista_rapporti = [(1,1),(3,5),(4,6), (6,8)]
+##OL = Order_layers(lista_rapporti)
+##print OL.main()a

@@ -60,15 +60,24 @@ class HARRIS_MATRIX_EXP:
 						label=i[2],
 						font_color = 'Blue')
 
+		G.tred()
+
 
 		Matrix_path = ('%s%s%s') % (self.HOME, os.sep, "pyarchinit_Matrix_folder")
-		filename_svg = ('%s%s%s') % (Matrix_path, os.sep, 'Harris_matrix.svg')
-		filename_png = ('%s%s%s') % (Matrix_path, os.sep, 'Harris_matrix.png')
 
-		G.tred()
-		#G.write('/file.dot')
-		G.draw(filename_svg, prog='dot')
-		G.draw(filename_png, prog='dot')
+		f = open('C:\\test.txt', 'w')
+		f.write(str(os.name))
+		f.close()
+
+		if os.name == 'posix':
+			filename_svg = ('%s%s%s') % (Matrix_path, os.sep, 'Harris_matrix.svg')
+			filename_png = ('%s%s%s') % (Matrix_path, os.sep, 'Harris_matrix.png')
+			G.draw(filename_svg, prog='dot')
+			G.draw(filename_png, prog='dot')
+		elif os.name == 'nt':
+			filename_dot = ('%s%s%s') % (Matrix_path, os.sep, 'Harris_matrix.dot')
+			G.write(filename_dot)
+
 
 
 

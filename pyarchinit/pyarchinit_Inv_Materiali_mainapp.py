@@ -242,10 +242,10 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 				self.enable_button(1)
 			else:
-				QMessageBox.warning(self, "ATTENZIONE", "Non e' stata realizzata alcuna modifica.",  QMessageBox.Ok)
-        	else:
-            		if self.data_error_check() == 0:
-                		test_insert = self.insert_new_rec()
+                                QMessageBox.warning(self, "ATTENZIONE", "Non e' stata realizzata alcuna modifica.",  QMessageBox.Ok)
+		else:
+			if self.data_error_check() == 0:
+				test_insert = self.insert_new_rec()
 				if test_insert == 1:
 					self.empty_fields()
 					self.SORT_STATUS = "n"
@@ -257,13 +257,13 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 
-			self.setComboBoxEditable(['self.comboBox_sito'], 1)
-			self.setComboBoxEnable(['self.comboBox_sito'], 'False')
-			self.setComboBoxEnable(['self.lineEdit_num_inv'], 'False')
+				self.setComboBoxEditable(['self.comboBox_sito'], 1)
+				self.setComboBoxEnable(['self.comboBox_sito'], 'False')
+				self.setComboBoxEnable(['self.lineEdit_num_inv'], 'False')
 
-			self.fill_fields(self.REC_CORR)
-			self.enable_button(1)
-
+				self.fill_fields(self.REC_CORR)
+				self.enable_button(1)
+				
 	def generate_list_pdf(self):
 		data_list = []
 		for i in range(len(self.DATA_LIST)):
