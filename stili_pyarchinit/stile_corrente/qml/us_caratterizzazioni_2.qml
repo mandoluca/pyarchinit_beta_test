@@ -40,14 +40,24 @@
       <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Strato di terra e sabbia')" symbol="34" scalemindenom="0" label="Strato di terra e sabbia"/>
       <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Struttura in muratura')" symbol="35" scalemindenom="0" label="Struttura in muratura"/>
       <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Taglio')" symbol="36" scalemindenom="0" label="Taglio"/>
-      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Elemento in pietra')" symbol="37" scalemindenom="0" label="Elemento in pietra"/>
-      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Strato di terra e carbone')" symbol="38" scalemindenom="0" label="Strato di terra e carbone"/>
-      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Strato di terra e pietre')" symbol="39" scalemindenom="0" label="Strato di terra e pietre"/>
-      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2 AND definizione_stratigrafica = 'Riempimento di argilla')" symbol="40" scalemindenom="0" label="Riempimento di argilla"/>
-      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2 AND definizione_stratigrafica = 'Riempimento di argilla concotta')" symbol="41" scalemindenom="0" label="Riempimento di argilla concotta"/>
-      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2 AND definizione_stratigrafica = 'Riempimento di carboni e cenere')" symbol="42" scalemindenom="0" label="Riempimento di carbone e cenere"/>
-      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 1) AND (tipo_us_s = 'tegola')" symbol="43" scalemindenom="0" label="Tegola"/>
-      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 1) AND (tipo_us_s = 'anfora' OR tipo_us_s = 'anfora_testa' OR tipo_us_s = 'anfora_fondo')" symbol="44" scalemindenom="0" label="Anfora"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Strato di terra e macerie')" symbol="37" scalemindenom="0" label="Strato di terra e macerie"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Strato di malta e ciottoli')" symbol="38" scalemindenom="0" label="Strato di ciottoli e malta"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Strato di intonaco')" symbol="39" scalemindenom="0" label="Strato di intonaco"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Strato di concotto')" symbol="40" scalemindenom="0" label="Strato di concotto"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Strato di ciottoli')" symbol="41" scalemindenom="0" label="Strato di ciottoli"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Reperto ceramico')" symbol="42" scalemindenom="0" label="Reperto ceramico"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 1) AND (tipo_us_s = 'calce')" symbol="43" scalemindenom="0" label="Calce"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 1) AND (tipo_us_s = 'pavimentazione a mosaico')" symbol="44" scalemindenom="0" label="Pavimentazione a mosaico"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 1) AND (tipo_us_s = 'anfora') or (tipo_us_s = 'anfora fondo') or (tipo_us_s = 'anfora testa')" symbol="45" scalemindenom="0" label="Anfora"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 1) AND (tipo_us_s = 'cocciopesto')" symbol="46" scalemindenom="0" label="Cocciopesto"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 1) AND (tipo_us_s = 'dolio')" symbol="47" scalemindenom="0" label="Dolio"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 1) AND (tipo_us_s = 'esagonetta')" symbol="48" scalemindenom="0" label="Esagonetta"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 1) AND (tipo_us_s = 'intonaco')" symbol="49" scalemindenom="0" label="Intonaco"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 1) AND (tipo_us_s = 'pelta')" symbol="50" scalemindenom="0" label="Pelta"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 1) AND (tipo_us_s = 'rep. osteologico umano')" symbol="51" scalemindenom="0" label="Rep. osteologico umano"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 1) AND (tipo_us_s = 'tegola')" symbol="52" scalemindenom="0" label="Tegola"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Riempimento di argilla')" symbol="53" scalemindenom="0" label="Riempimento di argilla"/>
+      <rule scalemaxdenom="0" description="" filter="(stratigraph_index_us = 2) AND (definizione_stratigrafica = 'Riempimento di argilla concotta')" symbol="54" scalemindenom="0" label="Riempimento di argilla concotta"/>
     </rules>
     <symbols>
       <symbol outputUnit="MM" alpha="1" type="fill" name="0">
@@ -61,7 +71,7 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/argilla.svg"/>
+          <prop k="svgFile" v="/Volumes/adarteshare/pyarchinit/stili_qgis/stile_corrente/archaeology/argilla.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
@@ -88,44 +98,52 @@
       <symbol outputUnit="MM" alpha="1" type="fill" name="11">
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/pietrisco.svg"/>
+          <prop k="svgFile" v="/Volumes/adarteshare/pyarchinit/stili_qgis/stile_corrente/archaeology/pietrisco.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="12">
         <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="15,13,13,255"/>
-          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="color" v="216,0,3,255"/>
+          <prop k="color_border" v="0,145,255,255"/>
           <prop k="offset" v="0,0"/>
           <prop k="style" v="no"/>
           <prop k="style_border" v="solid"/>
-          <prop k="width_border" v="0.26"/>
+          <prop k="width_border" v="0.08"/>
         </layer>
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="13">
         <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="212,212,106,255"/>
+          <prop k="color" v="212,202,190,255"/>
           <prop k="color_border" v="0,0,0,255"/>
           <prop k="offset" v="0,0"/>
           <prop k="style" v="solid"/>
-          <prop k="style_border" v="solid"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="255,245,226,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="no"/>
           <prop k="width_border" v="0.26"/>
         </layer>
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="14">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="color" v="59,71,67,255"/>
-          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="color_border" v="222,168,93,255"/>
           <prop k="offset" v="0,0"/>
           <prop k="style" v="no"/>
           <prop k="style_border" v="solid"/>
           <prop k="width_border" v="0.26"/>
         </layer>
       </symbol>
-      <symbol outputUnit="MM" alpha="1" type="fill" name="15">
+      <symbol outputUnit="MM" alpha="0.5411764705882354" type="fill" name="15">
         <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="127,191,202,255"/>
-          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="color" v="114,202,189,138"/>
+          <prop k="color_border" v="0,0,0,138"/>
           <prop k="offset" v="0,0"/>
           <prop k="style" v="solid"/>
           <prop k="style_border" v="solid"/>
@@ -134,11 +152,11 @@
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="16">
         <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="212,212,106,255"/>
+          <prop k="color" v="148,132,122,255"/>
           <prop k="color_border" v="0,0,0,255"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="style" v="no"/>
-          <prop k="style_border" v="solid"/>
+          <prop k="offset" v="2,2"/>
+          <prop k="style" v="dense4"/>
+          <prop k="style_border" v="no"/>
           <prop k="width_border" v="0.26"/>
         </layer>
       </symbol>
@@ -163,7 +181,7 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/argilla.svg"/>
+          <prop k="svgFile" v="/Volumes/adarteshare/pyarchinit/stili_qgis/stile_corrente/archaeology/argilla.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
@@ -178,7 +196,7 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/concotto.svg"/>
+          <prop k="svgFile" v="/concotto.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
@@ -203,7 +221,7 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/calce_intonaco.svg"/>
+          <prop k="svgFile" v="/calce_intonaco.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
@@ -218,7 +236,7 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/carbone.svg"/>
+          <prop k="svgFile" v="/carbone.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
@@ -233,7 +251,7 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/cenere.svg"/>
+          <prop k="svgFile" v="/cenere.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
@@ -258,7 +276,7 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/malta.svg"/>
+          <prop k="svgFile" v="/Volumes/adarteshare/pyarchinit/stili_qgis/stile_corrente/archaeology/malta.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
@@ -283,7 +301,7 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/malta.svg"/>
+          <prop k="svgFile" v="/Volumes/adarteshare/pyarchinit/stili_qgis/stile_corrente/archaeology/malta.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
@@ -298,7 +316,7 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/pietrisco.svg"/>
+          <prop k="svgFile" v="/Volumes/adarteshare/pyarchinit/stili_qgis/stile_corrente/archaeology/pietrisco.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
@@ -313,7 +331,7 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/sabbia.svg"/>
+          <prop k="svgFile" v="/sabbia.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
@@ -328,13 +346,13 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/sabbia.svg"/>
+          <prop k="svgFile" v="/sabbia.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="3">
         <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="244,196,61,255"/>
+          <prop k="color" v="242,150,44,255"/>
           <prop k="color_border" v="0,0,0,255"/>
           <prop k="offset" v="0,0"/>
           <prop k="style" v="solid"/>
@@ -399,7 +417,7 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/malta.svg"/>
+          <prop k="svgFile" v="/Volumes/adarteshare/pyarchinit/stili_qgis/stile_corrente/archaeology/malta.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
@@ -414,16 +432,16 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/sabbia.svg"/>
+          <prop k="svgFile" v="/sabbia.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="35">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="color" v="250,205,149,255"/>
-          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="color_border" v="233,181,122,255"/>
           <prop k="offset" v="0,0"/>
-          <prop k="style" v="solid"/>
+          <prop k="style" v="no"/>
           <prop k="style_border" v="solid"/>
           <prop k="width_border" v="0.26"/>
         </layer>
@@ -440,24 +458,6 @@
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="37">
         <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="154,154,154,255"/>
-          <prop k="color_border" v="0,0,0,255"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="style" v="solid"/>
-          <prop k="style_border" v="solid"/>
-          <prop k="width_border" v="0.26"/>
-        </layer>
-        <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="72,72,72,255"/>
-          <prop k="color_border" v="0,0,0,255"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="style" v="b_diagonal"/>
-          <prop k="style_border" v="solid"/>
-          <prop k="width_border" v="0.26"/>
-        </layer>
-      </symbol>
-      <symbol outputUnit="MM" alpha="1" type="fill" name="38">
-        <layer pass="0" class="SimpleFill" locked="0">
           <prop k="color" v="168,126,66,255"/>
           <prop k="color_border" v="0,0,0,255"/>
           <prop k="offset" v="0,0"/>
@@ -467,13 +467,18 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/carbone.svg"/>
+          <prop k="svgFile" v="/sabbia.svg"/>
+          <prop k="width" v="20"/>
+        </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="svgFile" v="/calce_intonaco.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
-      <symbol outputUnit="MM" alpha="1" type="fill" name="39">
+      <symbol outputUnit="MM" alpha="1" type="fill" name="38">
         <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="170,85,0,255"/>
+          <prop k="color" v="173,184,187,255"/>
           <prop k="color_border" v="0,0,0,255"/>
           <prop k="offset" v="0,0"/>
           <prop k="style" v="solid"/>
@@ -482,14 +487,37 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/pietrisco.svg"/>
+          <prop k="svgFile" v="/malta.svg"/>
+          <prop k="width" v="20"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="fill" name="39">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="255,255,255,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="svgFile" v="/calce_intonaco.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="4">
         <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="161,163,169,255"/>
+          <prop k="color" v="154,154,154,255"/>
           <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="-2,-2"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="192,192,192,255"/>
+          <prop k="color_border" v="154,154,154,255"/>
           <prop k="offset" v="0,0"/>
           <prop k="style" v="solid"/>
           <prop k="style_border" v="solid"/>
@@ -497,21 +525,6 @@
         </layer>
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="40">
-        <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="168,148,94,255"/>
-          <prop k="color_border" v="0,0,0,255"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="style" v="solid"/>
-          <prop k="style_border" v="solid"/>
-          <prop k="width_border" v="0.26"/>
-        </layer>
-        <layer pass="0" class="SVGFill" locked="0">
-          <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/argilla.svg"/>
-          <prop k="width" v="20"/>
-        </layer>
-      </symbol>
-      <symbol outputUnit="MM" alpha="1" type="fill" name="41">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="color" v="169,76,50,255"/>
           <prop k="color_border" v="0,0,0,255"/>
@@ -522,13 +535,46 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/concotto.svg"/>
+          <prop k="svgFile" v="/concotto.svg"/>
           <prop k="width" v="20"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="fill" name="41">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="57,57,57,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="-2,-2"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="115,115,115,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="svgFile" v="/pietrisco.svg"/>
+          <prop k="width" v="150"/>
         </layer>
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="42">
         <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="220,222,231,255"/>
+          <prop k="color" v="242,150,44,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="fill" name="43">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="207,200,185,255"/>
           <prop k="color_border" v="0,0,0,255"/>
           <prop k="offset" v="0,0"/>
           <prop k="style" v="solid"/>
@@ -537,11 +583,99 @@
         </layer>
         <layer pass="0" class="SVGFill" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="svgFile" v="/layers/carbone.svg"/>
+          <prop k="svgFile" v="/pietrisco.svg"/>
           <prop k="width" v="20"/>
         </layer>
       </symbol>
-      <symbol outputUnit="MM" alpha="1" type="fill" name="43">
+      <symbol outputUnit="MM" alpha="1" type="fill" name="44">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="255,255,255,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.05"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="170,170,170,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="cross"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.05"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="191,191,191,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="4,2"/>
+          <prop k="style" v="cross"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.05"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="171,171,171,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="-2,-3"/>
+          <prop k="style" v="cross"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="fill" name="45">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="182,162,145,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="2,2"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="255,231,210,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.08"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="fill" name="46">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="192,114,98,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="fill" name="47">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="175,108,31,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="2,2"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="240,151,7,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="182,121,0,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="diagonal_x"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="fill" name="48">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="color" v="175,108,31,255"/>
           <prop k="color_border" v="0,0,0,255"/>
@@ -567,24 +701,129 @@
           <prop k="width_border" v="0.26"/>
         </layer>
       </symbol>
-      <symbol outputUnit="MM" alpha="1" type="fill" name="44">
+      <symbol outputUnit="MM" alpha="1" type="fill" name="49">
         <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="240,151,7,255"/>
+          <prop k="color" v="241,234,230,255"/>
           <prop k="color_border" v="0,0,0,255"/>
           <prop k="offset" v="0,0"/>
           <prop k="style" v="solid"/>
           <prop k="style_border" v="solid"/>
           <prop k="width_border" v="0.26"/>
         </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="svgFile" v="/calce_intonaco.svg"/>
+          <prop k="width" v="20"/>
+        </layer>
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="5">
         <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="242,150,44,255"/>
+          <prop k="color" v="175,108,31,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="2,2"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="240,151,7,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="fill" name="50">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="175,108,31,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="2,2"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="240,151,7,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="dense5"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="fill" name="51">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="212,202,190,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="255,245,226,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="fill" name="52">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="175,108,31,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="2,2"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="240,151,7,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="156,133,80,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="dense4"/>
+          <prop k="style_border" v="no"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="fill" name="53">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="168,148,94,255"/>
           <prop k="color_border" v="0,0,0,255"/>
           <prop k="offset" v="0,0"/>
           <prop k="style" v="solid"/>
           <prop k="style_border" v="solid"/>
           <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="svgFile" v="/layers/argilla.svg"/>
+          <prop k="width" v="20"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="fill" name="54">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="169,76,50,255"/>
+          <prop k="color_border" v="0,0,0,255"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="svgFile" v="/concotto.svg"/>
+          <prop k="width" v="20"/>
         </layer>
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="6">
@@ -599,9 +838,17 @@
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="7">
         <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="color" v="242,109,14,255"/>
+          <prop k="color" v="195,107,36,255"/>
           <prop k="color_border" v="0,0,0,255"/>
           <prop k="offset" v="0,0"/>
+          <prop k="style" v="solid"/>
+          <prop k="style_border" v="solid"/>
+          <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="color" v="252,176,70,255"/>
+          <prop k="color_border" v="195,107,36,255"/>
+          <prop k="offset" v="2,2"/>
           <prop k="style" v="solid"/>
           <prop k="style_border" v="solid"/>
           <prop k="width_border" v="0.26"/>
@@ -615,6 +862,11 @@
           <prop k="style" v="solid"/>
           <prop k="style_border" v="solid"/>
           <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="svgFile" v="/malta.svg"/>
+          <prop k="width" v="20"/>
         </layer>
       </symbol>
       <symbol outputUnit="MM" alpha="1" type="fill" name="9">
@@ -805,6 +1057,30 @@
           <prop k="width" v="0.26"/>
         </layer>
       </symbol>
+      <symbol outputUnit="MM" alpha="1" type="line" name="@37@1">
+        <layer pass="0" class="SimpleLine" locked="0">
+          <prop k="capstyle" v="square"/>
+          <prop k="color" v="0,0,0,255"/>
+          <prop k="customdash" v="5;2"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0"/>
+          <prop k="penstyle" v="solid"/>
+          <prop k="use_custom_dash" v="0"/>
+          <prop k="width" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="line" name="@37@2">
+        <layer pass="0" class="SimpleLine" locked="0">
+          <prop k="capstyle" v="square"/>
+          <prop k="color" v="0,0,0,255"/>
+          <prop k="customdash" v="5;2"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0"/>
+          <prop k="penstyle" v="solid"/>
+          <prop k="use_custom_dash" v="0"/>
+          <prop k="width" v="0.26"/>
+        </layer>
+      </symbol>
       <symbol outputUnit="MM" alpha="1" type="line" name="@38@1">
         <layer pass="0" class="SimpleLine" locked="0">
           <prop k="capstyle" v="square"/>
@@ -841,7 +1117,7 @@
           <prop k="width" v="0.26"/>
         </layer>
       </symbol>
-      <symbol outputUnit="MM" alpha="1" type="line" name="@41@1">
+      <symbol outputUnit="MM" alpha="1" type="line" name="@41@2">
         <layer pass="0" class="SimpleLine" locked="0">
           <prop k="capstyle" v="square"/>
           <prop k="color" v="0,0,0,255"/>
@@ -853,7 +1129,55 @@
           <prop k="width" v="0.26"/>
         </layer>
       </symbol>
-      <symbol outputUnit="MM" alpha="1" type="line" name="@42@1">
+      <symbol outputUnit="MM" alpha="1" type="line" name="@43@1">
+        <layer pass="0" class="SimpleLine" locked="0">
+          <prop k="capstyle" v="square"/>
+          <prop k="color" v="0,0,0,255"/>
+          <prop k="customdash" v="5;2"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0"/>
+          <prop k="penstyle" v="solid"/>
+          <prop k="use_custom_dash" v="0"/>
+          <prop k="width" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="line" name="@49@1">
+        <layer pass="0" class="SimpleLine" locked="0">
+          <prop k="capstyle" v="square"/>
+          <prop k="color" v="0,0,0,255"/>
+          <prop k="customdash" v="5;2"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0"/>
+          <prop k="penstyle" v="solid"/>
+          <prop k="use_custom_dash" v="0"/>
+          <prop k="width" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="line" name="@53@1">
+        <layer pass="0" class="SimpleLine" locked="0">
+          <prop k="capstyle" v="square"/>
+          <prop k="color" v="0,0,0,255"/>
+          <prop k="customdash" v="5;2"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0"/>
+          <prop k="penstyle" v="solid"/>
+          <prop k="use_custom_dash" v="0"/>
+          <prop k="width" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="line" name="@54@1">
+        <layer pass="0" class="SimpleLine" locked="0">
+          <prop k="capstyle" v="square"/>
+          <prop k="color" v="0,0,0,255"/>
+          <prop k="customdash" v="5;2"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0"/>
+          <prop k="penstyle" v="solid"/>
+          <prop k="use_custom_dash" v="0"/>
+          <prop k="width" v="0.26"/>
+        </layer>
+      </symbol>
+      <symbol outputUnit="MM" alpha="1" type="line" name="@8@1">
         <layer pass="0" class="SimpleLine" locked="0">
           <prop k="capstyle" v="square"/>
           <prop k="color" v="0,0,0,255"/>
@@ -869,12 +1193,12 @@
   </renderer-v2>
   <customproperties/>
   <displayfield>gid</displayfield>
-  <label>1</label>
-  <labelfield>struttura</labelfield>
+  <label>0</label>
+  <labelfield>us_s</labelfield>
   <labelattributes>
-    <label fieldname="struttura" text="Etichetta"/>
+    <label fieldname="us_s" text="Etichetta"/>
     <family fieldname="" name="Lucida Grande"/>
-    <size fieldname="" units="pt" value="14"/>
+    <size fieldname="" units="pt" value="9"/>
     <bold fieldname="" on="0"/>
     <italic fieldname="" on="0"/>
     <underline fieldname="" on="0"/>
@@ -896,9 +1220,11 @@
     <edittype type="0" name="area"/>
     <edittype type="0" name="area_s"/>
     <edittype type="0" name="cont_per"/>
+    <edittype type="0" name="data"/>
     <edittype type="0" name="definizione_interpretativa"/>
     <edittype type="0" name="definizione_stratigrafica"/>
     <edittype type="0" name="descrizione"/>
+    <edittype type="0" name="disegnatore"/>
     <edittype type="0" name="fase_finale"/>
     <edittype type="0" name="fase_iniziale"/>
     <edittype type="0" name="gid"/>
@@ -908,6 +1234,7 @@
     <edittype type="0" name="periodo_finale"/>
     <edittype type="0" name="periodo_iniziale"/>
     <edittype type="0" name="rapporti"/>
+    <edittype type="0" name="rilievo_orginale"/>
     <edittype type="0" name="scavo_s"/>
     <edittype type="0" name="sito"/>
     <edittype type="0" name="stratigraph_index_us"/>
@@ -918,6 +1245,6 @@
   </edittypes>
   <editform></editform>
   <editforminit></editforminit>
-  <annotationform>.</annotationform>
+  <annotationform>/</annotationform>
   <attributeactions/>
 </qgis>
