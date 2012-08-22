@@ -525,9 +525,9 @@ class Pyarchinit_db_management:
 		#field_value_string = ", ".join([table + ".%s.like(%s)" % (k, v) for k, v in params.items()])
 		
 		"""
-		f = open('/test_query.txt', "w")
-		f.write(str(field_value_string))
-		f.close()
+		#f = open('/test_query.txt', "w")
+		#f.write(str(field_value_string))
+		#f.close()
 		
 		query_str = "session.query(" + table + ").filter(and_(" + field_value_string + ")).all()"
 		#self.connection()
