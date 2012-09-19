@@ -50,3 +50,7 @@ personalizzare il sistema di etichettatura del PDF in base al tipo di reperto sc
 
 Da fare Scheda US
 Controllo record modificato come per Scheda Inventario Materiali
+
+2012/09/19
+
+Persiste il problema della creazione nuovo record in Periodizzazione: dopo aver salvato il record viene impostato a video il sito errato
