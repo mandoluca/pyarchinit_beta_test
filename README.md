@@ -53,4 +53,5 @@ Controllo record modificato come per Scheda Inventario Materiali
 
 2012/09/19
 
-Persiste il problema della creazione nuovo record in Periodizzazione: dopo aver salvato il record viene impostato a video il sito errato
+Persiste il problema della creazione nuovo record in Periodizzazione: dopo aver salvato il record viene impostato a video il sito errato.
+Modificare lo script del fillfields
