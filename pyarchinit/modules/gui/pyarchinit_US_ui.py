@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_US_ui.ui'
 #
-# Created: Thu Jun 28 13:51:25 2012
+# Created: Mon Oct  1 16:08:52 2012
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -599,6 +599,10 @@ class Ui_DialogUS(object):
         item = QtGui.QTableWidgetItem()
         self.tableWidget_rapporti.setHorizontalHeaderItem(1, item)
         self.verticalLayout_14.addWidget(self.tableWidget_rapporti)
+        self.pushButton_go_to_us = QtGui.QPushButton(self.tab_2)
+        self.pushButton_go_to_us.setMaximumSize(QtCore.QSize(150, 16777215))
+        self.pushButton_go_to_us.setObjectName("pushButton_go_to_us")
+        self.verticalLayout_14.addWidget(self.pushButton_go_to_us)
         self.gridLayout_17.addLayout(self.verticalLayout_14, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tab_2, "")
         self.tab_3 = QtGui.QWidget()
@@ -1029,7 +1033,7 @@ class Ui_DialogUS(object):
         self.gridLayout_18.addLayout(self.gridLayout_10, 0, 1, 1, 1)
 
         self.retranslateUi(DialogUS)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(DialogUS)
 
     def retranslateUi(self, DialogUS):
@@ -1122,6 +1126,7 @@ class Ui_DialogUS(object):
         self.pushButton_remove_row_rapporti.setText(QtGui.QApplication.translate("DialogUS", "rimuovi riga", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget_rapporti.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("DialogUS", "Tipo di rapporto", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget_rapporti.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("DialogUS", "US", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_go_to_us.setText(QtGui.QApplication.translate("DialogUS", "Vai all\'US", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("DialogUS", "Periodizzazione - Rapporti Stratigrafici", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBox_formazione.setItemText(0, QtGui.QApplication.translate("DialogUS", "Antropico", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBox_formazione.setItemText(1, QtGui.QApplication.translate("DialogUS", "Naturale", None, QtGui.QApplication.UnicodeUTF8))
