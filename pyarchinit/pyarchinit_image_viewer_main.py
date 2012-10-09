@@ -68,6 +68,10 @@ class Main(QDialog, Ui_DialogImageViewer):
 	ID_TABLE_THUMB = "id_media_thumb"
 	
 	UTILITY = Utility()
+	
+	DATA = ''
+	NUM_DATA_BEGIN = 0
+	NUM_DATA_END = 25
 
 	def __init__(self):
 		QtGui.QMainWindow.__init__(self)
@@ -81,7 +85,8 @@ class Main(QDialog, Ui_DialogImageViewer):
 		self.iconListWidget.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
 		self.connect(self.iconListWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"),self.openWide_image)
 		self.setWindowTitle("pyArchInit - Media Manager")
-		self.open_images()
+		self.charge_data()
+		self.view_num_rec()
 
 	def customize_gui(self):
 		self.tableWidgetTags_US.setColumnWidth(0,300)
@@ -359,19 +364,38 @@ class Main(QDialog, Ui_DialogImageViewer):
 
 		return lista
 
-	def open_images(self):
-		data = self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS_thumb))
-		
-		for i in range(len(data)):
-			item = QListWidgetItem(str(data[i].id_media))
+	def charge_data(self):
+		self.DATA = self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS_thumb))
+		self.open_images()
 
-			#data_for_thumb = self.db_search_check(self.MAPPER_TABLE_CLASS_thumb, 'id_media', id_media) # recupera i valori della thumb in base al valore id_media del file originale
-		
-			thumb_path = data[i].filepath
-			item.setData(QtCore.Qt.UserRole,thumb_path)
-			icon = QIcon(thumb_path) #os.path.join('%s/%s' % (directory.toUtf8(), image)))
-			item.setIcon(icon)
-			self.iconListWidget.addItem(item)
+	def open_images(self):
+		self.iconListWidget.clear()
+
+		data_len = len(self.DATA)
+
+		if 	self.NUM_DATA_BEGIN >= data_len:
+			#Sono già state visualizzate tutte le immagini
+			self.NUM_DATA_BEGIN = 0
+			self.NUM_DATA_END = 25
+
+		elif self.NUM_DATA_BEGIN <= data_len:
+			#indica che non sono state visualizzate tutte le immagini
+
+			data = self.DATA[self.NUM_DATA_BEGIN:self.NUM_DATA_END]
+			for i in range(len(data)):
+				item = QListWidgetItem(str(data[i].id_media))
+
+				#data_for_thumb = self.db_search_check(self.MAPPER_TABLE_CLASS_thumb, 'id_media', id_media) # recupera i valori della thumb in base al valore id_media del file originale
+
+				thumb_path = data[i].filepath
+				item.setData(QtCore.Qt.UserRole,thumb_path)
+				icon = QIcon(thumb_path) #os.path.join('%s/%s' % (directory.toUtf8(), image)))
+				item.setIcon(icon)
+				self.iconListWidget.addItem(item)
+				
+				f = open('C:/Users/Windows/test_icon_list.txt', 'w')
+				f.write(str(dir(item)))
+				f.close()
 
 	#Button utility
 	def on_pushButton_chose_dir_pressed(self):
@@ -395,7 +419,50 @@ class Main(QDialog, Ui_DialogImageViewer):
 				self.insert_mediaTous_rec(us_data[0], us_data[1], us_data[2], us_data[3], media_data[0].id_media, media_data[0].filepath)
 
 	def on_pushButton_openMedia_pressed(self):
-		self.open_images()
+		self.charge_data()
+		self.view_num_rec()
+	
+	def on_pushButton_next_rec_pressed(self):
+		if self.NUM_DATA_BEGIN < len(self.DATA):
+			self.NUM_DATA_BEGIN += 25
+			self.NUM_DATA_END += 25
+			self.view_num_rec()
+			self.open_images()
+	
+	def on_pushButton_prev_rec_pressed(self):
+
+		if self.NUM_DATA_BEGIN > 0:
+			self.NUM_DATA_BEGIN -= 25
+			self.NUM_DATA_END -= 25
+			self.view_num_rec()
+			self.open_images()
+
+	def on_pushButton_first_rec_pressed(self):
+			self.NUM_DATA_BEGIN = 0
+			self.NUM_DATA_END = 25
+			self.view_num_rec()
+			self.open_images()
+
+	def on_pushButton_last_rec_pressed(self):
+			self.NUM_DATA_BEGIN =  len(self.DATA)-25
+			self.NUM_DATA_END = len(self.DATA)
+			self.view_num_rec()
+			self.open_images()
+
+	def view_num_rec(self):
+		num_data_begin = self.NUM_DATA_BEGIN
+		num_data_begin +=1
+		
+		num_data_end = self.NUM_DATA_END
+		if self.NUM_DATA_END < len(self.DATA):
+			pass
+		else:
+			num_data_end = len(self.DATA)
+			
+	
+		self.label_num_tot_immagini.setText(str(len(self.DATA)))
+		img_visualizzate_txt = ('%s %d - a %d') % ("Da",num_data_begin,num_data_end )
+		self.label_img_visualizzate.setText(img_visualizzate_txt)
 
 
 if __name__ == "__main__":

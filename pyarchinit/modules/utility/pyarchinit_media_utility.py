@@ -8,8 +8,8 @@ Copyright (c) 2010 __MyCompanyName__. All rights reserved.
 
 
 import os, sys 
-from Image import *
-import Image
+#from Image import *
+#import Image
 import PIL.Image as Image
 from pyarchinit_conn_strings  import *
 
