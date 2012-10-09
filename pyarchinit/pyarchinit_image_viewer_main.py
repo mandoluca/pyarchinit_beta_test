@@ -84,15 +84,15 @@ class Main(QDialog, Ui_DialogImageViewer):
 		self.open_images()
 
 	def customize_gui(self):
-		self.tableWidgetTags.setColumnWidth(0,300)
-		self.tableWidgetTags.setColumnWidth(1,50)
-		self.tableWidgetTags.setColumnWidth(2,50)
+		self.tableWidgetTags_US.setColumnWidth(0,300)
+		self.tableWidgetTags_US.setColumnWidth(1,50)
+		self.tableWidgetTags_US.setColumnWidth(2,50)
 
 		valuesSites = self.charge_sito_list()
 		self.delegateSites = ComboBoxDelegate()
 		self.delegateSites.def_values(valuesSites)
 		self.delegateSites.def_editable('False')
-		self.tableWidgetTags.setItemDelegateForColumn(0,self.delegateSites)
+		self.tableWidgetTags_US.setItemDelegateForColumn(0,self.delegateSites)
 
 		self.charge_sito_list()
 
@@ -327,7 +327,7 @@ class Main(QDialog, Ui_DialogImageViewer):
 
 
 	def generate_US(self):
-		tags_list = self.table2dict('self.tableWidgetTags')
+		tags_list = self.table2dict('self.tableWidgetTags_US')
 		record_us_list = []
 		for sing_tags in tags_list:
 				search_dict = {'sito'  : "'"+str(sing_tags[0])+"'",
@@ -377,13 +377,13 @@ class Main(QDialog, Ui_DialogImageViewer):
 	def on_pushButton_chose_dir_pressed(self):
 		self.getDirectory()
 
-	def on_pushButton_addRow_pressed(self):
-		self.insert_new_row('self.tableWidgetTags')
+	def on_pushButton_addRow_US_pressed(self):
+		self.insert_new_row('self.tableWidgetTags_US')
 
-	def on_pushButton_removeRow_pressed(self):
-		self.remove_row('self.tableWidgetTags')
+	def on_pushButton_removeRow_US_pressed(self):
+		self.remove_row('self.tableWidgetTags_US')
 
-	def on_pushButton_assignTags_pressed(self):
+	def on_pushButton_assignTags_US_pressed(self):
 		items_selected = self.iconListWidget.selectedItems()
 		us_list = self.generate_US()
 
