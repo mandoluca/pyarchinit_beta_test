@@ -84,9 +84,123 @@ class Main(QDialog, Ui_DialogImageViewer):
 		self.iconListWidget.SelectionMode()
 		self.iconListWidget.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
 		self.connect(self.iconListWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"),self.openWide_image)
+		#self.connect(self.iconListWidget, SIGNAL("itemClicked(QListWidgetItem *)"),self.open_tags)
+		self.connect(self.iconListWidget, SIGNAL("itemSelectionChanged()"),self.open_tags)
 		self.setWindowTitle("pyArchInit - Media Manager")
 		self.charge_data()
 		self.view_num_rec()
+		
+	def on_toolButton_tags_on_off_clicked(self):
+		items = self.iconListWidget.selectedItems()
+		if len(items) > 0:
+			QMessageBox.warning(self, "Errore", "Vai Gigi 1",  QMessageBox.Ok)
+			self.open_tags()
+
+
+	def open_tags(self):
+		if self.toolButton_tags_on_off.isChecked() == True:
+			items = self.iconListWidget.selectedItems()
+			items_list = []
+			mediaToUS_list = []
+			for item in items:
+				id_orig_item = item.text() #return the name of original file
+				search_dict = {'id_media' : "'"+str(id_orig_item)+"'"}
+				u = Utility()
+				search_dict = u.remove_empty_items_fr_dict(search_dict)
+				res_media = self.DB_MANAGER.query_bool(search_dict, "MEDIA")
+			
+##			if bool(items) == True:
+##				res_media = []
+##				for item in items:
+##					res_media = []
+##					id_orig_item = item.text() #return the name of original file
+##					search_dict = {'id_media' : "'"+str(id_orig_item)+"'"}
+##					u = Utility()
+##					search_dict = u.remove_empty_items_fr_dict(search_dict)
+##					res_media = self.DB_MANAGER.query_bool(search_dict, "MEDIA")
+				
+				if bool(res_media) == True:
+
+					for sing_media in res_media:
+						search_dict = {'id_media' : "'"+str(id_orig_item)+"'"}
+						u = Utility()
+						search_dict = u.remove_empty_items_fr_dict(search_dict)
+						res_mediaToUS = self.DB_MANAGER.query_bool(search_dict, "MEDIATOUS")
+
+					if bool(res_mediaToUS) == True:
+						categoria_tag = 'US'
+						id_MediaToUS = str(res_mediaToUS[0].id_mediaToUs)
+						US_string = ( 'Sito: %s - Area: %s - US: %d') % (res_mediaToUS[0].sito, res_mediaToUS[0].area, res_mediaToUS[0].us)
+
+						mediaToUS_list.append([categoria_tag, id_MediaToUS,US_string])
+	
+		if bool(mediaToUS_list) == True:
+			tags_row_count = self.tableWidget_tags.rowCount()
+			for i in range(tags_row_count):
+				self.tableWidget_tags.removeRow(0)
+
+			self.tableInsertData('self.tableWidget_tags', str(mediaToUS_list))
+		
+		if bool(items) == False:
+			tags_row_count = self.tableWidget_tags.rowCount()
+			for i in range(tags_row_count):
+				self.tableWidget_tags.removeRow(0)
+
+		items = []
+	
+	
+	def tableInsertData(self, t, d):
+		"""Set the value into alls Grid"""
+		self.table_name = t
+		self.data_list = eval(d)
+		self.data_list.sort()
+
+		#column table count
+		table_col_count_cmd = ("%s.columnCount()") % (self.table_name)
+		table_col_count = eval(table_col_count_cmd)
+
+		#clear table
+		table_clear_cmd = ("%s.clearContents()") % (self.table_name)
+		eval(table_clear_cmd)
+
+		for i in range(table_col_count):
+			table_rem_row_cmd = ("%s.removeRow(%d)") % (self.table_name, i)
+			eval(table_rem_row_cmd)
+
+		#for i in range(len(self.data_list)):
+			#self.insert_new_row(self.table_name)
+		
+		for row in range(len(self.data_list)):
+			cmd = ('%s.insertRow(%s)') % (self.table_name, row)
+			eval(cmd)
+			for col in range(len(self.data_list[row])):
+				#item = self.comboBox_sito.setEditText(self.data_list[0][col]
+				item = QTableWidgetItem(self.data_list[row][col])
+				exec_str = ('%s.setItem(%d,%d,item)') % (self.table_name,row,col)
+				eval(exec_str)
+				
+				
+
+			
+
+				
+##				dlg = ImageViewer(self)
+##				id_orig_item = item.text() #return the name of original file
+##
+##				search_dict = {'id_media' : "'"+str(id_orig_item)+"'"}
+##
+##				u = Utility()
+##				search_dict = u.remove_empty_items_fr_dict(search_dict)
+##
+##				try:
+##					res = self.DB_MANAGER.query_bool(search_dict, "MEDIA")
+##					file_path = str(res[0].filepath)
+##				except Exception, e:
+##					QMessageBox.warning(self, "Errore", "Attenzione 1 file: "+ str(e),  QMessageBox.Ok)
+##
+##				dlg.show_image(unicode(file_path)) #item.data(QtCore.Qt.UserRole).toString()))
+##				dlg.exec_()
+		
 
 	def customize_gui(self):
 		self.tableWidgetTags_US.setColumnWidth(0,300)
@@ -458,8 +572,7 @@ class Main(QDialog, Ui_DialogImageViewer):
 			pass
 		else:
 			num_data_end = len(self.DATA)
-			
-	
+
 		self.label_num_tot_immagini.setText(str(len(self.DATA)))
 		img_visualizzate_txt = ('%s %d - a %d') % ("Da",num_data_begin,num_data_end )
 		self.label_img_visualizzate.setText(img_visualizzate_txt)
