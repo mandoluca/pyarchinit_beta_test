@@ -55,3 +55,7 @@ Controllo record modificato come per Scheda Inventario Materiali
 
 Persiste il problema della creazione nuovo record in Periodizzazione: dopo aver salvato il record viene impostato a video il sito errato.
 Modificare lo script del fillfields
+
+2012/10/15
+
+Inventario Materiali: la gui presenta la lista a tendina del sito in modalità aperta, che permette di lasciare vuoto il campo e creare ID duplicati. Aggiungere un controllo sul campo sito e mettere in modalità non editabile il campo sito.
