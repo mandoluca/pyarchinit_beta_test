@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_image_viewer_dialog.ui'
 #
-# Created: Wed Oct 10 16:30:52 2012
+# Created: Sun Oct 14 15:09:54 2012
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -426,8 +426,8 @@ class Ui_DialogImageViewer(object):
         self.pushButton_openMedia.setText(QtGui.QApplication.translate("DialogImageViewer", "Apri Immagini", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_chose_dir.setText(QtGui.QApplication.translate("DialogImageViewer", "Carica le immagini nel DB", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("DialogImageViewer", "Tags", None, QtGui.QApplication.UnicodeUTF8))
-        self.tableWidget_tags.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("DialogImageViewer", "Categoria Tag", None, QtGui.QApplication.UnicodeUTF8))
-        self.tableWidget_tags.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("DialogImageViewer", "ID tag", None, QtGui.QApplication.UnicodeUTF8))
+        self.tableWidget_tags.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("DialogImageViewer", "ID tag", None, QtGui.QApplication.UnicodeUTF8))
+        self.tableWidget_tags.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("DialogImageViewer", "Categoria Tag", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget_tags.horizontalHeaderItem(2).setText(QtGui.QApplication.translate("DialogImageViewer", "Tag", None, QtGui.QApplication.UnicodeUTF8))
         self.toolButton_tags_on_off.setToolTip(QtGui.QApplication.translate("DialogImageViewer", "Attiva/disattiva la visualizzazione dei tags", None, QtGui.QApplication.UnicodeUTF8))
         self.toolButton_tags_on_off.setText(QtGui.QApplication.translate("DialogImageViewer", "Tags viewer on/off", None, QtGui.QApplication.UnicodeUTF8))

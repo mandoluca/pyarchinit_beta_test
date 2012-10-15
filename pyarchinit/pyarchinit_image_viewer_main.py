@@ -59,8 +59,8 @@ class Main(QDialog, Ui_DialogImageViewer):
 	TABLE_NAME = 'media_table'
 	MAPPER_TABLE_CLASS = "MEDIA"
 	ID_TABLE = "id_media"
-	MAPPER_TABLE_CLASS_mediatous = 'MEDIATOUS'
-	ID_TABLE_mediatous = 'id_mediaToUs'
+	MAPPER_TABLE_CLASS_mediatoentity = 'MEDIATOENTITY'
+	ID_TABLE_mediatoentity = 'id_mediaToEntity'
 	NOME_SCHEDA = "Scheda Media Manager"
 	
 	TABLE_THUMB_NAME = 'media_thumb_table'
@@ -101,7 +101,10 @@ class Main(QDialog, Ui_DialogImageViewer):
 		self.delegateSites = ComboBoxDelegate()
 		self.delegateSites.def_values(valuesSites)
 		self.delegateSites.def_editable('False')
+		
 		self.tableWidgetTags_US.setItemDelegateForColumn(0,self.delegateSites)
+		
+		self.tableWidgetTags_MAT.setItemDelegateForColumn(0,self.delegateSites)
 
 		self.charge_sito_list()
 
@@ -245,23 +248,31 @@ class Main(QDialog, Ui_DialogImageViewer):
 			return 0
 
 
-	def insert_mediaTous_rec(self, id_us, sito, area, us, id_media, filepath):
-		self.id_us = id_us
-		self.sito = sito
-		self.area = area
-		self.us = us
+	def insert_mediaToEntity_rec(self, id_entity, entity_type, table_name, id_media, filepath, media_name):
+		"""
+		id_mediaToEntity,
+		id_entity,
+		entity_type,
+		table_name,
+		id_media,
+		filepath,
+		media_name"""
+		self.id_entity = id_entity
+		self.entity_type = entity_type
+		self.table_name = table_name
 		self.id_media = id_media
 		self.filepath = filepath
+		self.media_name = media_name
 
 		try:
-			data = self.DB_MANAGER.insert_media2us_values(
-			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS_mediatous, self.ID_TABLE_mediatous)+1,
-			int(self.id_us), 											#1 - id_us
-			str(self.sito), 												#2 - sito
-			str(self.area), 												#3 - area
-			int(self.us), 												#4 - us
-			int(self.id_media),										#5 - id_media
-			str(self.filepath))											#6 - filepath
+			data = self.DB_MANAGER.insert_media2entity_values(
+			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS_mediatoentity, self.ID_TABLE_mediatoentity)+1,
+			int(self.id_entity), 													#1 - id_entity
+			str(self.entity_type), 												#2 - entity_type
+			str(self.table_name), 												#3 - table_name
+			int(self.id_media), 													#4 - us
+			str(self.filepath),														#5 - filepath
+			str(self.media_name))												#6 - media_name
 			try:
 				self.DB_MANAGER.insert_data_session(data)
 				return 1
@@ -347,9 +358,22 @@ class Main(QDialog, Ui_DialogImageViewer):
 
 		us_list = []
 		for r in record_us_list:
-			us_list.append([r[0].id_us, r[0].sito, r[0].area, r[0].us])
+			us_list.append([r[0].id_us, 'US', 'us_table'])
 		return us_list
 
+	def generate_Reperti(self):
+		tags_list = self.table2dict('self.tableWidgetTags_MAT')
+		record_rep_list = []
+		for sing_tags in tags_list:
+				search_dict = {'sito'  : "'"+str(sing_tags[0])+"'",
+								'numero_inventario': "'"+str(sing_tags[1])+"'"
+								}
+				record_rep_list.append(self.DB_MANAGER.query_bool(search_dict, 'INVENTARIO_MATERIALI'))
+
+		rep_list = []
+		for r in record_rep_list:
+			rep_list.append([r[0].id_invmat, 'REPERTO', 'inventario_materiali_table'])
+		return rep_list
 
 	def table2dict(self, n):
 		self.tablename = n
@@ -412,6 +436,15 @@ class Main(QDialog, Ui_DialogImageViewer):
 		self.remove_row('self.tableWidgetTags_US')
 
 	def on_pushButton_assignTags_US_pressed(self):
+		"""
+		id_mediaToEntity,
+		id_entity,
+		entity_type,
+		table_name,
+		id_media,
+		filepath,
+		media_name
+		"""
 		items_selected = self.iconListWidget.selectedItems()
 		us_list = self.generate_US()
 
@@ -420,7 +453,29 @@ class Main(QDialog, Ui_DialogImageViewer):
 				id_orig_item = item.text() #return the name of original file
 				search_dict = {'id_media' : "'"+str(id_orig_item)+"'"}
 				media_data = self.DB_MANAGER.query_bool(search_dict, 'MEDIA')
-				self.insert_mediaTous_rec(us_data[0], us_data[1], us_data[2], us_data[3], media_data[0].id_media, media_data[0].filepath)
+
+				self.insert_mediaToEntity_rec(us_data[0], us_data[1], us_data[2], media_data[0].id_media, media_data[0].filepath, media_data[0].filename)
+
+	def on_pushButton_assignTags_MAT_pressed(self):
+		"""
+		id_mediaToEntity,
+		id_entity,
+		entity_type,
+		table_name,
+		id_media,
+		filepath,
+		media_name
+		"""
+		items_selected = self.iconListWidget.selectedItems()
+		reperti_list = self.generate_Reperti()
+
+		for item in items_selected:
+			for reperti_data in reperti_list:
+				id_orig_item = item.text() #return the name of original file
+				search_dict = {'id_media' : "'"+str(id_orig_item)+"'"}
+				media_data = self.DB_MANAGER.query_bool(search_dict, 'MEDIA')
+
+				self.insert_mediaToEntity_rec(reperti_data[0], reperti_data[1], reperti_data[2], media_data[0].id_media, media_data[0].filepath, media_data[0].filename)
 
 	def on_pushButton_openMedia_pressed(self):
 		self.charge_data()
@@ -477,14 +532,13 @@ class Main(QDialog, Ui_DialogImageViewer):
 		if self.toolButton_tags_on_off.isChecked() == True:
 			items = self.iconListWidget.selectedItems()
 			items_list = []
-			mediaToUS_list = []
+			mediaToEntity_list = []
 			for item in items:
 				id_orig_item = item.text() #return the name of original file
 				search_dict = {'id_media' : "'"+str(id_orig_item)+"'"}
 				u = Utility()
 				search_dict = u.remove_empty_items_fr_dict(search_dict)
 				res_media = self.DB_MANAGER.query_bool(search_dict, "MEDIA")
-			
 ##			if bool(items) == True:
 ##				res_media = []
 ##				for item in items:
@@ -494,30 +548,41 @@ class Main(QDialog, Ui_DialogImageViewer):
 ##					u = Utility()
 ##					search_dict = u.remove_empty_items_fr_dict(search_dict)
 ##					res_media = self.DB_MANAGER.query_bool(search_dict, "MEDIA")
-				
 				if bool(res_media) == True:
 
 					for sing_media in res_media:
 						search_dict = {'id_media' : "'"+str(id_orig_item)+"'"}
 						u = Utility()
 						search_dict = u.remove_empty_items_fr_dict(search_dict)
-						res_mediaToUS = self.DB_MANAGER.query_bool(search_dict, "MEDIATOUS")
+						res_mediaToEntity = self.DB_MANAGER.query_bool(search_dict, "MEDIATOENTITY")
 
-					if bool(res_mediaToUS) == True:
-						categoria_tag = 'US'
-						id_MediaToUS = str(res_mediaToUS[0].id_mediaToUs)
-##						#if entyity id_MediaToUS = str(res_mediaToUS[0].entyitytype è su US allora cerca in US altrienti su trreperti
-						US_string = ( 'Sito: %s - Area: %s - US: %d') % (res_mediaToUS[0].sito, res_mediaToUS[0].area, res_mediaToUS[0].us)
-##						#else
-
-						mediaToUS_list.append([categoria_tag, id_MediaToUS,US_string])
+					if bool(res_mediaToEntity) == True:
+						for sing_res_media in res_mediaToEntity:
+							if sing_res_media.entity_type == 'US':
+								search_dict = {'id_us' : "'"+str(sing_res_media.id_entity)+"'"}
+								u = Utility()
+								search_dict = u.remove_empty_items_fr_dict(search_dict)
+								us_data = self.DB_MANAGER.query_bool(search_dict, "US")
+							
+								US_string = ( 'Sito: %s - Area: %s - US: %d') % (us_data[0].sito, us_data[0].area, us_data[0].us)
+	##				#else
+								mediaToEntity_list.append([str(sing_res_media.id_entity),sing_res_media.entity_type,US_string])
+							elif sing_res_media.entity_type == 'REPERTO':
+								search_dict = {'id_invmat' : "'"+str(sing_res_media.id_entity)+"'"}
+								u = Utility()
+								search_dict = u.remove_empty_items_fr_dict(search_dict)
+								rep_data = self.DB_MANAGER.query_bool(search_dict, "INVENTARIO_MATERIALI")
+							
+								Rep_string = ( 'Sito: %s - N. Inv.: %d') % (rep_data[0].sito, rep_data[0].numero_inventario)
+	##				#else
+								mediaToEntity_list.append([str(sing_res_media.id_entity),sing_res_media.entity_type,Rep_string])	
 	
-			if bool(mediaToUS_list) == True:
+			if bool(mediaToEntity_list) == True:
 				tags_row_count = self.tableWidget_tags.rowCount()
 				for i in range(tags_row_count):
 					self.tableWidget_tags.removeRow(0)
 
-				self.tableInsertData('self.tableWidget_tags', str(mediaToUS_list))
+				self.tableInsertData('self.tableWidget_tags', str(mediaToEntity_list))
 			
 			if bool(items) == False:
 				tags_row_count = self.tableWidget_tags.rowCount()

@@ -388,9 +388,9 @@ class Pyarchinit_db_management:
 
 		return media_thumb
 
-	def insert_media2us_values(self, *arg):
-		"""Istanzia la classe MEDIATOUS da pyarchinit_db_mapper"""
-		mediatous = MEDIATOUS(arg[0],
+	def insert_media2entity_values(self, *arg):
+		"""Istanzia la classe MEDIATOENTITY da pyarchinit_db_mapper"""
+		mediatoentity = MEDIATOENTITY(arg[0],
 				arg[1],
 				arg[2],
 				arg[3],
@@ -398,7 +398,7 @@ class Pyarchinit_db_management:
 				arg[5],
 				arg[6])
 
-		return mediatous
+		return mediatoentity
 
 	def insert_values_tafonomia(self, *arg):
 		"""Istanzia la classe TAFONOMIA da pyarchinit_db_mapper"""

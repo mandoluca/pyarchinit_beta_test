@@ -372,8 +372,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			""" if has geometry column load to map canvas """
 
 			rec_list =  self.ID_TABLE + " = " + str(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))
-			search_dict = {'id_us'  : "'"+str(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))+"'"}
-			record_us_list = self.DB_MANAGER.query_bool(search_dict, 'MEDIATOUS')
+			search_dict = {'id_entity'  : "'"+str(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))+"'", 'entity_type' : "'US'"}
+			record_us_list = self.DB_MANAGER.query_bool(search_dict, 'MEDIATOENTITY')
 			for i in record_us_list:
 				search_dict = {'id_media' : "'"+str(i.id_media)+"'"}
 
@@ -1116,7 +1116,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def on_pushButton_next_rec_pressed(self):
 		if self.records_equal_check() == 1:
 			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-
 		self.REC_CORR = self.REC_CORR+1
 		if self.REC_CORR >= self.REC_TOT:
 			self.REC_CORR = self.REC_CORR-1

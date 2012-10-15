@@ -47,6 +47,8 @@ from  sortpanelmain import SortPanelMain
 
 from  pyarchinit_exp_Findssheet_pdf import *
 
+from  imageViewer import ImageViewer
+
 class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	MSG_BOX_TITLE = "PyArchInit - Scheda Inventario Materiali"
 	DATA_LIST = []
@@ -124,6 +126,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 		QDialog.__init__(self)
 		self.setupUi(self)
+		self.customize_gui()
 		self.currentLayerId = None
 		try:
 			self.on_pushButton_connect_pressed()
@@ -161,6 +164,76 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			else:
 				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 		self.charge_list()
+		
+	def customize_gui(self):
+		#media prevew system
+		self.iconListWidget = QtGui.QListWidget(self)
+		self.iconListWidget.setFrameShape(QtGui.QFrame.StyledPanel)
+		self.iconListWidget.setFrameShadow(QtGui.QFrame.Sunken)
+		self.iconListWidget.setLineWidth(2)
+		self.iconListWidget.setMidLineWidth(2)
+		self.iconListWidget.setProperty("showDropIndicator", False)
+		self.iconListWidget.setIconSize(QtCore.QSize(150, 150))
+		self.iconListWidget.setMovement(QtGui.QListView.Snap)
+		self.iconListWidget.setResizeMode(QtGui.QListView.Adjust)
+		self.iconListWidget.setLayoutMode(QtGui.QListView.Batched)
+		self.iconListWidget.setGridSize(QtCore.QSize(160, 160))
+		self.iconListWidget.setViewMode(QtGui.QListView.IconMode)
+		self.iconListWidget.setUniformItemSizes(True)
+		self.iconListWidget.setBatchSize(1000)
+		self.iconListWidget.setObjectName("iconListWidget")
+		self.iconListWidget.SelectionMode()
+		self.iconListWidget.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
+		self.connect(self.iconListWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"),self.openWide_image)
+		self.tabWidget.addTab(self.iconListWidget, "Media")
+
+	def loadMediaPreview(self, mode = 0):
+		self.iconListWidget.clear()
+		if mode == 0:
+			""" if has geometry column load to map canvas """
+
+			rec_list =  self.ID_TABLE + " = " + str(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))
+			search_dict = {'id_entity'  : "'"+str(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))+"'", 'entity_type' : "'REPERTO'"}
+			record_us_list = self.DB_MANAGER.query_bool(search_dict, 'MEDIATOENTITY')
+			for i in record_us_list:
+				search_dict = {'id_media' : "'"+str(i.id_media)+"'"}
+
+				u = Utility()
+				search_dict = u.remove_empty_items_fr_dict(search_dict)
+				mediathumb_data = self.DB_MANAGER.query_bool(search_dict, "MEDIA_THUMB")
+				thumb_path = str(mediathumb_data[0].filepath)
+
+				item = QListWidgetItem(str(i.id_media))
+
+				item.setData(QtCore.Qt.UserRole,str(i.id_media))
+				icon = QIcon(thumb_path)
+				item.setIcon(icon)
+				self.iconListWidget.addItem(item)
+		elif mode == 1:
+			self.iconListWidget.clear()
+
+
+	def openWide_image(self):
+		items = self.iconListWidget.selectedItems()
+		for item in items:
+			dlg = ImageViewer(self)
+			id_orig_item = item.text() #return the name of original file
+
+			search_dict = {'id_media' : "'"+str(id_orig_item)+"'"}
+
+			u = Utility()
+			search_dict = u.remove_empty_items_fr_dict(search_dict)
+
+			try:
+				res = self.DB_MANAGER.query_bool(search_dict, "MEDIA")
+				file_path = str(res[0].filepath)
+			except Exception, e:
+				QMessageBox.warning(self, "Errore", "Attenzione 1 file: "+ str(e),  QMessageBox.Ok)
+
+			dlg.show_image(unicode(file_path)) #item.data(QtCore.Qt.UserRole).toString()))
+			dlg.exec_()
+
+
 	def charge_list(self):
 		sito_vl = self.UTILITY.tup_2_list_III(self.DB_MANAGER.group_by('site_table', 'sito', 'SITE'))
 
@@ -210,6 +283,12 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 		self.fill_fields()
 
+	def on_toolButtonPreviewMedia_toggled(self):
+		if self.toolButtonPreviewMedia.isChecked() == True:
+			QMessageBox.warning(self, "Messaggio", "Modalita' Preview Media Reperti attivata. Le immagini dei Reperti saranno visualizzate nella sezione Media", QMessageBox.Ok)
+			self.loadMediaPreview()
+		else:
+			self.loadMediaPreview(1)
 
 	def on_pushButton_new_rec_pressed(self):
 		if self.records_equal_check() == 1:
@@ -242,7 +321,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 				self.enable_button(1)
 			else:
-                                QMessageBox.warning(self, "ATTENZIONE", "Non e' stata realizzata alcuna modifica.",  QMessageBox.Ok)
+				QMessageBox.warning(self, "ATTENZIONE", "Non e' stata realizzata alcuna modifica.",  QMessageBox.Ok)
 		else:
 			if self.data_error_check() == 0:
 				test_insert = self.insert_new_rec()
@@ -426,27 +505,37 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 		self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 		self.label_sort.setText(self.SORTED_ITEMS["n"])
+		if self.toolButtonPreviewMedia.isChecked() == True:
+			self.loadMediaPreview(1)
 
 	#records surf functions
 	def on_pushButton_first_rec_pressed(self):
 		if self.records_equal_check() == 1:
 			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			if self.toolButtonPreviewMedia.isChecked() == True:
+				self.loadMediaPreview(1)		
 		try:
 			self.empty_fields()
 			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 			self.fill_fields(0)
 			self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+			if self.toolButtonPreviewMedia.isChecked() == True:
+				self.loadMediaPreview(0)
 		except Exception, e:
 			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_last_rec_pressed(self):
 		if self.records_equal_check() == 1:
 			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			if self.toolButtonPreviewMedia.isChecked() == True:
+				self.loadMediaPreview(0)		
 		try:
 			self.empty_fields()
 			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
 			self.fill_fields(self.REC_CORR)
 			self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+			if self.toolButtonPreviewMedia.isChecked() == True:
+				self.loadMediaPreview(0)
 		except Exception, e:
 			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
@@ -463,6 +552,8 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				self.empty_fields()
 				self.fill_fields(self.REC_CORR)
 				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+				if self.toolButtonPreviewMedia.isChecked() == True:
+					self.loadMediaPreview(0)
 			except Exception, e:
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
@@ -479,6 +570,8 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				self.empty_fields()
 				self.fill_fields(self.REC_CORR)
 				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+				if self.toolButtonPreviewMedia.isChecked() == True:
+					self.loadMediaPreview(0)
 			except Exception, e:
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 

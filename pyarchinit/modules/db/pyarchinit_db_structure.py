@@ -393,7 +393,7 @@ class Media_thumb_table:
 
 	metadata.create_all(engine)
 
-class Media_to_US_table:
+class Media_to_Entity_table:
 	# connection string postgres"
 	internal_connection = Connection()
 
@@ -403,17 +403,17 @@ class Media_to_US_table:
 	metadata = MetaData(engine)
 
 	# define tables
-	media_to_us_table = Table('media_to_us_table', metadata,
-	Column('id_mediaToUs', Integer, primary_key=True),
-	Column('id_us', Integer),
-	Column('sito', Text),
-	Column('area', String(4)),
-	Column('us', Integer),
+	media_to_entity_table = Table('media_to_entity_table', metadata,
+	Column('id_mediaToEntity', Integer, primary_key=True),
+	Column('id_entity', Integer),
+	Column('entity_type', Text),
+	Column('table_name', Text),
 	Column('id_media', Integer),
 	Column('filepath', Text),
+	Column('media_name', Text),
 
 	# explicit/composite unique constraint.  'name' is optional.
-    UniqueConstraint('id_media','id_us', name='ID_mediaToUs_unico')
+    UniqueConstraint('id_entity','entity_type','id_media', name='ID_mediaToEntity_unico')
 	)
 
 	metadata.create_all(engine)

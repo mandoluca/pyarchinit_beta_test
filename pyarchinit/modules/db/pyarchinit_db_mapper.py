@@ -22,7 +22,7 @@
 import sqlalchemy
 from sqlalchemy import *
 from sqlalchemy.orm import mapper
-from pyarchinit_db_structure import US_table, UT_table, US_table_toimp, Site_table, Periodizzazione_table, Inventario_materiali_table, Struttura_table, Media_table, Media_thumb_table,Media_to_US_table, Tafonomia_table, Inventario_materiali_table_toimp, Pyarchinit_thesaurus_sigle, SCHEDAIND_table, DETSESSO_table, DETETA_table, Archeozoology_table
+from pyarchinit_db_structure import US_table, UT_table, US_table_toimp, Site_table, Periodizzazione_table, Inventario_materiali_table, Struttura_table, Media_table, Media_thumb_table,Media_to_Entity_table, Tafonomia_table, Inventario_materiali_table_toimp, Pyarchinit_thesaurus_sigle, SCHEDAIND_table, DETSESSO_table, DETETA_table, Archeozoology_table
 
 
 class US(object):
@@ -697,38 +697,38 @@ class MEDIA_THUMB(object):
 mapper(MEDIA_THUMB, Media_thumb_table.media_thumb_table)
 
 
-class MEDIATOUS(object):
+class MEDIATOENTITY(object):
 	#def __init__"
 	def __init__(self,
-	id_mediaToUs,
-	id_us,
-	sito,
-	area,
-	us,
+	id_mediaToEntity,
+	id_entity,
+	entity_type,
+	table_name,
 	id_media,
-	filepath
+	filepath,
+	media_name
 	):
-		self.id_mediaToUs = id_mediaToUs #0
-		self.id_us = id_us
-		self.sito = sito
-		self.area = area
-		self.us = us
+		self.id_mediaToEntity = id_mediaToEntity #0
+		self.id_entity = id_entity
+		self.entity_type = entity_type
+		self.table_name = table_name
 		self.id_media = id_media
 		self.filepath = filepath
+		self.media_name = media_name
 
 	#def __repr__"
 	def __repr__(self):
-		return "<MEDIATOUS('%d', '%d', '%s', '%s', '%d', '%d', '%s')>" % (
-		self.id_mediaToUs,
-		self.id_us,
-		self.sito,
-		self.area,
-		self.us,
+		return "<MEDIATOENTITY('%d', '%d', '%s', '%s', '%d', '%s', '%s')>" % (
+		self.id_mediaToEntity,
+		self.id_entity,
+		self.entity_type,
+		self.table_name,
 		self.id_media,
-		self.filepath
+		self.filepath,
+		self.media_name
 		)
 #mapper
-mapper(MEDIATOUS, Media_to_US_table.media_to_us_table)
+mapper(MEDIATOENTITY, Media_to_Entity_table.media_to_entity_table)
 
 
 class TAFONOMIA(object):
