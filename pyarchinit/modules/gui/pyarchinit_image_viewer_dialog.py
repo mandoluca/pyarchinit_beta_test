@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_image_viewer_dialog.ui'
 #
-# Created: Sun Oct 14 15:09:54 2012
+# Created: Fri Oct 19 22:21:46 2012
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -28,22 +28,6 @@ class Ui_DialogImageViewer(object):
         self.gridLayout = QtGui.QGridLayout(self.layoutWidget)
         self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.iconListWidget = QtGui.QListWidget(self.layoutWidget)
-        self.iconListWidget.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.iconListWidget.setFrameShadow(QtGui.QFrame.Sunken)
-        self.iconListWidget.setLineWidth(2)
-        self.iconListWidget.setMidLineWidth(2)
-        self.iconListWidget.setProperty(_fromUtf8("showDropIndicator"), False)
-        self.iconListWidget.setIconSize(QtCore.QSize(150, 150))
-        self.iconListWidget.setMovement(QtGui.QListView.Snap)
-        self.iconListWidget.setResizeMode(QtGui.QListView.Adjust)
-        self.iconListWidget.setLayoutMode(QtGui.QListView.Batched)
-        self.iconListWidget.setGridSize(QtCore.QSize(160, 160))
-        self.iconListWidget.setViewMode(QtGui.QListView.IconMode)
-        self.iconListWidget.setUniformItemSizes(True)
-        self.iconListWidget.setBatchSize(1000)
-        self.iconListWidget.setObjectName(_fromUtf8("iconListWidget"))
-        self.gridLayout.addWidget(self.iconListWidget, 1, 0, 1, 4)
         self.label_img_visualizzate = QtGui.QLabel(self.layoutWidget)
         self.label_img_visualizzate.setText(_fromUtf8(""))
         self.label_img_visualizzate.setObjectName(_fromUtf8("label_img_visualizzate"))
@@ -66,6 +50,25 @@ class Ui_DialogImageViewer(object):
         self.label_4.setFont(font)
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.gridLayout.addWidget(self.label_4, 0, 2, 1, 1)
+        self.iconListWidget = QtGui.QListWidget(self.layoutWidget)
+        self.iconListWidget.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.iconListWidget.setFrameShadow(QtGui.QFrame.Sunken)
+        self.iconListWidget.setLineWidth(2)
+        self.iconListWidget.setMidLineWidth(2)
+        self.iconListWidget.setProperty(_fromUtf8("showDropIndicator"), False)
+        self.iconListWidget.setSelectionMode(QtGui.QAbstractItemView.NoSelection)
+        self.iconListWidget.setIconSize(QtCore.QSize(150, 150))
+        self.iconListWidget.setTextElideMode(QtCore.Qt.ElideMiddle)
+        self.iconListWidget.setMovement(QtGui.QListView.Snap)
+        self.iconListWidget.setResizeMode(QtGui.QListView.Adjust)
+        self.iconListWidget.setLayoutMode(QtGui.QListView.Batched)
+        self.iconListWidget.setGridSize(QtCore.QSize(154, 154))
+        self.iconListWidget.setViewMode(QtGui.QListView.IconMode)
+        self.iconListWidget.setModelColumn(0)
+        self.iconListWidget.setUniformItemSizes(False)
+        self.iconListWidget.setBatchSize(1000)
+        self.iconListWidget.setObjectName(_fromUtf8("iconListWidget"))
+        self.gridLayout.addWidget(self.iconListWidget, 1, 0, 1, 4)
         self.gridLayout_2.addWidget(self.splitter, 0, 0, 1, 1)
         self.tabWidget = QtGui.QTabWidget(DialogImageViewer)
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
@@ -404,7 +407,7 @@ class Ui_DialogImageViewer(object):
         self.gridLayout_2.addWidget(self.tabWidget, 0, 1, 1, 1)
 
         self.retranslateUi(DialogImageViewer)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(DialogImageViewer)
 
     def retranslateUi(self, DialogImageViewer):

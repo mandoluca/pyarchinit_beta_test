@@ -64,7 +64,9 @@ from pyarchinit_Deteta_mainapp import pyarchinit_Deteta
 from pyarchinit_Tafonomia_mainapp import pyarchinit_Tafonomia
 from pyarchinit_Archeozoology_mainapp import pyarchinit_Archeozoology
 from pyarchinit_UT_mainapp import pyarchinit_UT
+from pyarchinit_images_directory_export_mainapp import pyarchinit_Images_directory_export
 
+from pyarchinitplugindialog import PyarchinitPluginDialog
 
 class PyArchInitPlugin:
 	def __init__(self, iface):
@@ -80,9 +82,9 @@ class PyArchInitPlugin:
 			localeFullName = QSettings().value( "locale/userLocale", QVariant( "" ) ).toString()
 
 		if QFileInfo( userPluginPath ).exists():
-                        translationPath = userPluginPath + "/i18n/pyarchinit_plugin_" + localeFullName + ".qm"
+			translationPath = userPluginPath + "/i18n/pyarchinit_plugin_" + localeFullName + ".qm"
 		else:
-                        translationPath = systemPluginPath + "/i18n/pyarchinit_plugin_" + localeFullName + ".qm"
+			translationPath = systemPluginPath + "/i18n/pyarchinit_plugin_" + localeFullName + ".qm"
 
 		self.localePath = translationPath
 		if QFileInfo( self.localePath ).exists():
@@ -92,6 +94,13 @@ class PyArchInitPlugin:
 
 
 	def initGui(self):
+		self.action = QAction(QIcon(":/plugins/pyarchinit/icons/pai_us.png"), "pyArchInit Main Panel", self.iface.mainWindow())
+		QObject.connect(self.action, SIGNAL("triggered()"), self.showHideDockWidget)
+		
+		# dock widget
+		self.dockWidget = PyarchinitPluginDialog(self.iface)
+		self.iface.addDockWidget(Qt.LeftDockWidgetArea, self.dockWidget)
+		
 		icon_site = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconSite.png'))
 		self.actionSite = QAction(QIcon(icon_site), "Scheda di Sito", self.iface.mainWindow())
 		self.actionSite.setWhatsThis("Scheda di Sito")
@@ -171,6 +180,11 @@ class PyArchInitPlugin:
 		self.actionUT.setWhatsThis("pyArchInit UT")
 		QObject.connect(self.actionUT, SIGNAL("triggered()"), self.runUT)
 
+		icon_Directory_export = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','directoryExp.png'))
+		self.actionImages_Directory_export = QAction(QIcon(icon_Directory_export), "pyArchInit Images Directories Export", self.iface.mainWindow())
+		self.actionImages_Directory_export.setWhatsThis("pyArchInit Images Directories Export")
+		QObject.connect(self.actionImages_Directory_export, SIGNAL("triggered()"),self.runImages_directory_export)
+
 		#MENU
 		self.menu=QMenu("pyArchInit")
 
@@ -188,7 +202,7 @@ class PyArchInitPlugin:
 		self.menu.addSeparator()
 		self.menu.addActions([self.actionUpd, self.actionGisTimeController])
 		self.menu.addSeparator()
-		self.menu.addActions([self.actionimageViewer])
+		self.menu.addActions([self.actionimageViewer, self.actionImages_Directory_export])
 		self.menu.addSeparator()
 		self.menu.addActions([self.actionConf])
 		self.menu.addSeparator()
@@ -218,6 +232,7 @@ class PyArchInitPlugin:
 		self.toolBar.addAction(self.actionUpd)
 		self.toolBar.addSeparator()
 		self.toolBar.addAction(self.actionimageViewer)
+		self.toolBar.addAction(self.actionImages_Directory_export)
 		self.toolBar.addSeparator()
 		self.toolBar.addAction(self.actionConf)
 		self.toolBar.addSeparator()
@@ -237,6 +252,7 @@ class PyArchInitPlugin:
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionGisTimeController)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionUpd)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionimageViewer)
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionImages_Directory_export)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionConf)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionInfo)
 
@@ -321,6 +337,11 @@ class PyArchInitPlugin:
 		pluginUT.show()
 		self.pluginGui = pluginUT # save
 
+	def runImages_directory_export(self):
+		pluginImage_directory_export = pyarchinit_Images_directory_export()
+		pluginImage_directory_export.show()
+		self.pluginGui = pluginImage_directory_export # save
+
 	def unload(self):
 		# Remove the plugin
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionSite)
@@ -336,6 +357,7 @@ class PyArchInitPlugin:
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionUT)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionUpd)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionimageViewer)
+		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionImages_Directory_export)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionConf)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionGisTimeController)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionInfo)
@@ -353,9 +375,16 @@ class PyArchInitPlugin:
 		self.iface.removeToolBarIcon(self.actionUT)
 		self.iface.removeToolBarIcon(self.actionUpd)
 		self.iface.removeToolBarIcon(self.actionimageViewer)
+		self.iface.removeToolBarIcon(self.actionImages_Directory_export)
 		self.iface.removeToolBarIcon(self.actionGisTimeController)
 		self.iface.removeToolBarIcon(self.actionConf)
 		self.iface.removeToolBarIcon(self.actionInfo)
 
 		# remove tool bar
 		del self.toolBar
+
+	def showHideDockWidget(self):
+		if self.dockWidget.isVisible():
+			self.dockWidget.hide()
+		else:
+			self.dockWidget.show()

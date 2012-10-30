@@ -1336,6 +1336,10 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		today = now.strftime("%d-%m-%Y")
 		return today
 
+	def yearstrfdate(self):
+		now = date.today()
+		year = now.strftime("%Y")
+		return year
 
 	def table2dict(self, n):
 		self.tablename = n
@@ -1420,7 +1424,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.comboBox_fas_fin.setEditText("") 						#11 - fase finale
 		self.comboBox_scavato.setEditText("")						#12 - scavato
 		self.lineEdit_attivita.clear()								#13 - attivita
-		self.lineEdit_anno.clear()									#14 - anno scavo
+		#self.lineEdit_anno.clear()									#14 - anno scavo
+		self.lineEdit_anno.setText(self.yearstrfdate())
 		self.comboBox_metodo.setEditText("Stratigrafico")			#15 - metodo
 		for i in range(inclusi_row_count):
 			self.tableWidget_inclusi.removeRow(0) 					

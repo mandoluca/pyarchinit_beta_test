@@ -126,7 +126,7 @@ class Main(QDialog, Ui_DialogImageViewer):
 	def getDirectory(self):
 		directory = QtGui.QFileDialog.getExistingDirectory(self, "Scegli una directory", "Seleziona una directory:", QtGui.QFileDialog.ShowDirsOnly)
 		for image in sorted(os.listdir(directory.toUtf8())):
-			if image.endswith(".png") or image.endswith(".PNG") or image.endswith(".JPG") or image.endswith(".jpg") or image.endswith(".jpeg") or image.endswith(".JPEG") or image.endswith(".tiff") or image.endswith(".TIFF") or image.endswith(".tiff") or image.endswith(".TIFF"):
+			if image.endswith(".png") or image.endswith(".PNG") or image.endswith(".JPG") or image.endswith(".jpg") or image.endswith(".jpeg") or image.endswith(".JPEG") or image.endswith(".tif") or image.endswith(".TIF") or image.endswith(".tiff") or image.endswith(".TIFF"):
 
 				filename, filetype = image.split(".")[0], image.split(".")[1]		#db definisce nome immagine originale
 				filepath = directory.toUtf8()+'/'+filename+"."+filetype 			#db definisce il path immagine originale
@@ -158,7 +158,7 @@ class Main(QDialog, Ui_DialogImageViewer):
 
 					#visualizza le immagini nella gui
 					item = QListWidgetItem(str(media_max_num_id))
-					item.setData(QtCore.Qt.UserRole,filepath_thumb)
+					item.setData(QtCore.Qt.UserRole,str(media_max_num_id))
 					icon = QIcon(filepath_thumb) #os.path.join('%s/%s' % (directory.toUtf8(), image)))
 					item.setIcon(icon)
 					self.iconListWidget.addItem(item)
@@ -395,9 +395,12 @@ class Main(QDialog, Ui_DialogImageViewer):
 	def charge_data(self):
 		self.DATA = self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS_thumb))
 		self.open_images()
+	
+	def clear_thumb_images(self):
+		self.iconListWidget.clear()
 
 	def open_images(self):
-		self.iconListWidget.clear()
+		self.clear_thumb_images()
 
 		data_len = len(self.DATA)
 
@@ -416,15 +419,12 @@ class Main(QDialog, Ui_DialogImageViewer):
 				#data_for_thumb = self.db_search_check(self.MAPPER_TABLE_CLASS_thumb, 'id_media', id_media) # recupera i valori della thumb in base al valore id_media del file originale
 
 				thumb_path = data[i].filepath
-				item.setData(QtCore.Qt.UserRole,thumb_path)
+				#QMessageBox.warning(self, "Errore",str(thumb_path),  QMessageBox.Ok)
+				item.setData(QtCore.Qt.UserRole,str(data[i].media_filename))
 				icon = QIcon(thumb_path) #os.path.join('%s/%s' % (directory.toUtf8(), image)))
 				item.setIcon(icon)
 				self.iconListWidget.addItem(item)
 				
-				f = open('C:/Users/Windows/test_icon_list.txt', 'w')
-				f.write(str(dir(item)))
-				f.close()
-
 	#Button utility
 	def on_pushButton_chose_dir_pressed(self):
 		self.getDirectory()
@@ -525,7 +525,7 @@ class Main(QDialog, Ui_DialogImageViewer):
 	def on_toolButton_tags_on_off_clicked(self):
 		items = self.iconListWidget.selectedItems()
 		if len(items) > 0:
-			QMessageBox.warning(self, "Errore", "Vai Gigi 1",  QMessageBox.Ok)
+			#QMessageBox.warning(self, "Errore", "Vai Gigi 1",  QMessageBox.Ok)
 			self.open_tags()
 
 	def open_tags(self):

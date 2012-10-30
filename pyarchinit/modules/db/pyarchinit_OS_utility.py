@@ -38,7 +38,12 @@ class pyarchinit_OS_Utility:
 			else:
 				# There was an error on creation, so make sure we know about it
 				raise
-				
+
+	def copy_file_img(self, f, d):
+		file_path = f
+		destination = d
+		shutil.copy(file_path, destination)
+
 	def copy_file(self, f, d):
 		file_path = f
 		destination = d
