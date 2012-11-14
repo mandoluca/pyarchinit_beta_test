@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-# -*- coding: utf-8 -*-
+# -*- coding: utf 8 -*-
 """
 /***************************************************************************
         pyArchInit Plugin  - A QGIS plugin to manage archaeological dataset
@@ -11,12 +11,12 @@
  ***************************************************************************/
 
 /***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
+ *                                                                         											*
+ *   This program is free software; you can redistribute it and/or modify 						    *
+ *   it under the terms of the GNU General Public License as published by  						*
+ *   the Free Software Foundation; either version 2 of the License, or    							*
+ *   (at your option) any later version.                                  									*
+ *                                                                         											*
  ***************************************************************************/
 """
 import sys, os
@@ -27,7 +27,6 @@ import PyQt4.QtGui
 
 from qgis.core import *
 from qgis.gui import *
-
 
 from datetime import date
 from psycopg2 import *
@@ -147,16 +146,79 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.setupUi(self)
 		
 		self.customize_GUI() #call for GUI customizations
+
 		self.currentLayerId = None
 		try:
 			self.on_pushButton_connect_pressed()
 		except:
 			pass
-		
+
 		#SIGNALS & SLOTS Functions
-		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_list)
-		self.connect(self.comboBox_per_iniz, SIGNAL("currentIndexChanged(int)"), self.charge_fase_iniz_list)
-		self.connect(self.comboBox_per_fin, SIGNAL("currentIndexChanged(int)"), self.charge_fase_fin_list)
+		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_iniz_list)
+		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_fin_list)
+
+		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_periodo_iniz_list)
+		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_periodo_fin_list)
+
+		self.connect(self.comboBox_per_iniz, SIGNAL("editTextChanged (const QString&)"), self.charge_fase_iniz_list)
+		#self.connect(self.comboBox_per_iniz, SIGNAL("currentIndexChanged(int)"), self.charge_fase_iniz_list)
+		
+		#self.connect(self.comboBox_per_fin, SIGNAL("editTextChanged (const QString&)"), self.charge_fase_fin_list)
+		#self.connect(self.comboBox_per_fin, SIGNAL("currentIndexChanged(int)"), self.charge_fase_fin_list)
+
+		sito = str(self.comboBox_sito.currentText())
+		self.comboBox_sito.setEditText(sito)
+		self.charge_periodo_iniz_list()
+		self.charge_periodo_fin_list()
+
+	def charge_periodo_iniz_list(self):
+		search_dict = {
+		'sito'  : "'"+str(self.comboBox_sito.currentText())+"'"
+		}
+	
+		periodo_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
+
+		periodo_list = []
+
+		for i in range(len(periodo_vl)):
+			periodo_list.append(str(periodo_vl[i].periodo))
+		try:
+			periodo_vl.remove('')
+		except:
+			pass
+		
+		self.comboBox_per_iniz.clear()
+		self.comboBox_per_iniz.addItems(self.UTILITY.remove_dup_from_list(periodo_list))
+		
+		if self.STATUS_ITEMS[self.BROWSE_STATUS] == "Trova":
+			self.comboBox_per_iniz.setEditText("")
+		elif self.STATUS_ITEMS[self.BROWSE_STATUS] == "Usa":
+			self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
+
+
+	def charge_periodo_fin_list(self):
+		search_dict = {
+		'sito'  : "'"+str(self.comboBox_sito.currentText())+"'"
+		}
+	
+		periodo_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')   
+		periodo_list = []
+
+		for i in range(len(periodo_vl)):
+			periodo_list.append(str(periodo_vl[i].periodo))
+		try:
+			periodo_vl.remove('')
+		except:
+			pass
+		
+		self.comboBox_per_fin.clear()
+		self.comboBox_per_fin.addItems(self.UTILITY.remove_dup_from_list(periodo_list))
+		
+		if self.STATUS_ITEMS[self.BROWSE_STATUS] == "Trova":
+			self.comboBox_per_fin.setEditText("")
+		elif self.STATUS_ITEMS[self.BROWSE_STATUS] == "Usa":
+			self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
+
 
 	def on_pushButton_go_to_us_pressed(self):
 		table_name = "self.tableWidget_rapporti"
@@ -262,6 +324,19 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 		self.pushButton_sort.setEnabled(n)
 
+		self.pushButton_sort.setEnabled(n)
+
+		self.pushButton_insert_row_rapporti.setEnabled(n)
+		self.pushButton_remove_row_rapporti.setEnabled(n) 
+
+		self.pushButton_insert_row_inclusi.setEnabled(n)		
+		self.pushButton_remove_row_inclusi.setEnabled(n)
+
+		self.pushButton_insert_row_campioni.setEnabled(n)		
+		self.pushButton_remove_row_campioni.setEnabled(n)
+
+		self.pushButton_insert_row_documentazione.setEnabled(n)		
+		self.pushButton_remove_row_documentazione.setEnabled(n)
 
 	def on_pushButton_connect_pressed(self):
 		from pyarchinit_conn_strings import *
@@ -280,7 +355,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.label_sort.setText(self.SORTED_ITEMS["n"])
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-				self.charge_list()
+				self.charge_list_sito_def_strat()
 				self.fill_fields()
 			else:
 				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
@@ -327,17 +402,16 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.tabWidget.addTab(self.iconListWidget, "Media")
 
 		#comboBox customizations
-		self.setComboBoxEditable(["self.comboBox_per_iniz"],1)
-		self.setComboBoxEditable(["self.comboBox_fas_iniz"],1)
 		self.setComboBoxEditable(["self.comboBox_per_fin"],1)
 		self.setComboBoxEditable(["self.comboBox_fas_fin"],1)
-		
+		self.setComboBoxEditable(["self.comboBox_per_iniz"],1)
+		self.setComboBoxEditable(["self.comboBox_fas_iniz"],1)
+
 		valuesRS = ["Uguale a", "Si lega a", "Copre", "Coperto da", "Riempie", "Riempito da", "Taglia", "Tagliato da", "Si appoggia a", "Gli si appoggia", ""]
 		self.delegateRS = ComboBoxDelegate()
 		self.delegateRS.def_values(valuesRS)
 		self.delegateRS.def_editable('False')
 		self.tableWidget_rapporti.setItemDelegateForColumn(0,self.delegateRS)
-		
 
 		valuesDoc = ["Fotografie", "Diapositive", "Sezioni", "Planimetrie", "Prospetti", "Video", "Fotopiano"]
 		self.delegateDoc = ComboBoxDelegate()
@@ -356,12 +430,10 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def loadMapPreview(self, mode = 0):
 		if mode == 0:
 			""" if has geometry column load to map canvas """
-			
 			gidstr =  self.ID_TABLE + " = " + str(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))	
 			layerToSet = self.pyQGIS.loadMapPreview(gidstr)
 			self.mapPreview.setLayerSet(layerToSet)
 			self.mapPreview.zoomToFullExtent()
-
 		elif mode == 1:
 			self.mapPreview.setLayerSet( [ ] )
 			self.mapPreview.zoomToFullExtent()
@@ -412,13 +484,16 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			dlg.show_image(unicode(file_path)) #item.data(QtCore.Qt.UserRole).toString()))
 			dlg.exec_()
 
-	def charge_list(self):
+	def charge_list_sito_def_strat(self):
 		#lista sito
 		sito_vl = self.UTILITY.tup_2_list_III(self.DB_MANAGER.group_by('site_table', 'sito', 'SITE'))
 		try:
 			sito_vl.remove('')
-		except:
-			pass
+		except Exception, e:
+			if str(e) == "list.remove(x): x not in list":
+				pass
+			else:
+				QMessageBox.warning(self, "Messaggio", "Sistema di aggiornamento lista Sito: " + str(e), QMessageBox.Ok)
 
 		self.comboBox_sito.clear()
 		self.comboBox_sito_rappcheck.clear()
@@ -445,39 +520,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.comboBox_def_strat.addItems(d_stratigrafica_vl)
 
 
-	def charge_periodo_list(self):
-		try:
-			search_dict = {
-			'sito'  : "'"+str(self.comboBox_sito.currentText())+"'",
-			}
-		
-			periodo_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
-		
-			periodo_list = []
 
-			for i in range(len(periodo_vl)):
-				periodo_list.append(str(periodo_vl[i].periodo))
-			try:
-				periodo_vl.remove('')
-			except:
-				pass
-
-			periodo_list.sort()
-			
-			self.comboBox_per_iniz.clear()
-			self.comboBox_per_iniz.addItems(periodo_list)
-			
-			self.comboBox_per_fin.clear()
-			self.comboBox_per_fin.addItems(periodo_list)
-			
-			if self.STATUS_ITEMS[self.BROWSE_STATUS] == "Trova":
-				self.comboBox_per_iniz.setEditText("")
-				self.comboBox_per_fin.setEditText("")
-			else:
-				self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
-				self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_finale)
-		except:
-			pass
 
 	def charge_fase_iniz_list(self):
 		try:
@@ -492,7 +535,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 			for i in range(len(fase_list_vl)):
 				fase_list.append(str(fase_list_vl[i].fase))
-		
 			try:
 				fase_list.remove('')
 			except:
@@ -501,7 +543,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			self.comboBox_fas_iniz.clear()
 
 			fase_list.sort()
-			self.comboBox_fas_iniz.addItems(fase_list)
+			self.comboBox_fas_iniz.addItems(self.UTILITY.remove_dup_from_list(fase_list))
 
 			if self.STATUS_ITEMS[self.BROWSE_STATUS] == "Trova":
 				self.comboBox_fas_iniz.setEditText("")
@@ -530,15 +572,13 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				pass
 
 			self.comboBox_fas_fin.clear()
-
 			fase_list.sort()
-			self.comboBox_fas_fin.addItems(fase_list)
+			self.comboBox_fas_fin.addItems(self.UTILITY.remove_dup_from_list(fase_list))
 
 			if self.STATUS_ITEMS[self.BROWSE_STATUS] == "Trova":
 				self.comboBox_fas_fin.setEditText("")
 			else:
 				self.comboBox_fas_fin.setEditText(self.DATA_LIST[self.rec_num].fase_finale)
-
 		except:
 			pass
 
@@ -598,32 +638,32 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			str(self.DATA_LIST[i].sito), 									#1 - Sito
 			str(self.DATA_LIST[i].area),									#2 - Area
 			int(self.DATA_LIST[i].us),										#3 - US
-			str(self.DATA_LIST[i].d_stratigrafica),							#4 - Definizione stratigrafica
-			str(self.DATA_LIST[i].d_interpretativa),						#5 - Definizione intepretata
-			self.DATA_LIST[i].descrizione,									#6 - descrizione
-			self.DATA_LIST[i].interpretazione,								#7 - interpretazione
+			str(self.DATA_LIST[i].d_stratigrafica),						#4 - definizione stratigrafica
+			str(self.DATA_LIST[i].d_interpretativa),					#5 - definizione intepretata
+			self.DATA_LIST[i].descrizione,								#6 - descrizione
+			self.DATA_LIST[i].interpretazione,							#7 - interpretazione
 			str(self.DATA_LIST[i].periodo_iniziale),						#8 - periodo iniziale
 			str(self.DATA_LIST[i].fase_iniziale),							#9 - fase iniziale
-			str(self.DATA_LIST[i].periodo_finale),							#10 - periodo finale iniziale
+			str(self.DATA_LIST[i].periodo_finale),						#10 - periodo finale iniziale
 			str(self.DATA_LIST[i].fase_finale), 							#11 - fase finale
-			str(self.DATA_LIST[i].scavato),									#12 - scavato
+			str(self.DATA_LIST[i].scavato),								#12 - scavato
 			str(self.DATA_LIST[i].attivita),								#13 - attivita
-			str(self.DATA_LIST[i].anno_scavo),								#14 - anno scavo
-			str(self.DATA_LIST[i].metodo_di_scavo),							#15 - metodo
+			str(self.DATA_LIST[i].anno_scavo),						#14 - anno scavo
+			str(self.DATA_LIST[i].metodo_di_scavo),					#15 - metodo
 			str(self.DATA_LIST[i].inclusi),									#16 - inclusi
 			str(self.DATA_LIST[i].campioni),								#17 - campioni
 			str(self.DATA_LIST[i].rapporti),								#18 - rapporti
-			str(self.DATA_LIST[i].data_schedatura),							#19 - data schedatura
-			str(self.DATA_LIST[i].schedatore),								#20 - schedatore
-			str(self.DATA_LIST[i].formazione),								#21 - formazione
-			str(self.DATA_LIST[i].stato_di_conservazione),					#22 - conservazione
-			str(self.DATA_LIST[i].colore),									#23 - colore
-			str(self.DATA_LIST[i].consistenza),								#24 - consistenza
+			str(self.DATA_LIST[i].data_schedatura),					#19 - data schedatura
+			str(self.DATA_LIST[i].schedatore),							#20 - schedatore
+			str(self.DATA_LIST[i].formazione),							#21 - formazione
+			str(self.DATA_LIST[i].stato_di_conservazione),			#22 - conservazione
+			str(self.DATA_LIST[i].colore),								#23 - colore
+			str(self.DATA_LIST[i].consistenza),							#24 - consistenza
 			str(self.DATA_LIST[i].struttura),								#25 - struttura
 			str(quota_min),													#26 - quota_min
 			str(quota_max),													#27 - quota_max
-			str(piante),													#28 - piante
-			str(self.DATA_LIST[i].documentazione)							#29 - piante
+			str(piante),															#28 - piante
+			str(self.DATA_LIST[i].documentazione)					#29 - documentazione
 		])
 		return data_list
 
@@ -872,7 +912,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.comboBox_area"],"False")
 					self.setComboBoxEnable(["self.lineEdit_us"],"False")
-
 					self.fill_fields(self.REC_CORR)
 					self.enable_button(1)
 
@@ -880,7 +919,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		sito_check = self.comboBox_sito_rappcheck.currentText()
 		self.rapporti_stratigrafici_check(sito_check)
 		QMessageBox.warning(self, "Messaggio", "Controllo Rapporti Stratigrafici. \n Controllo eseguito con successo",  QMessageBox.Ok)
-
 
 	def data_error_check(self):
 		test = 0
@@ -910,6 +948,43 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			if EC.data_is_int(us) == 0:
 				QMessageBox.warning(self, "ATTENZIONE", "Campo US. \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
 				test = 1
+
+		#PERIODIZZAZIONE CHECK
+		#periodo iniz compilato e fase vuota
+		if self.comboBox_per_iniz.currentText() != "" and self.comboBox_fas_iniz.currentText() == "":
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Fase iniziale \n Specificare la Fase iniziale oltre al Periodo",  QMessageBox.Ok)
+			test = 1
+
+		if self.comboBox_per_fin.currentText()  != "" and self.comboBox_fas_fin.currentText() == "":
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Fase finale \n Specificare la Fase finale oltre al Periodo",  QMessageBox.Ok)
+			test = 1
+			
+		if self.comboBox_per_iniz.currentText()  == "" and self.comboBox_fas_iniz.currentText() != "":
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Periodo iniziale \n Specificare un Periodo iniziale oltre alla Fase",  QMessageBox.Ok)
+			test = 1
+			
+		if self.comboBox_per_fin.currentText()  == "" and self.comboBox_fas_fin.currentText() != "":
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Periodo iniziale \n Specificare un Periodo finale oltre alla Fase",  QMessageBox.Ok)
+			test = 1
+			
+		if self.comboBox_per_fin.currentText()  != "" and self.comboBox_fas_fin.currentText() != "" and self.comboBox_per_iniz.currentText()  == "" and self.comboBox_fas_iniz.currentText() == "":
+			QMessageBox.warning(self, "ATTENZIONE", "Campi Periodo e Fase iniziali \n Specificare un Periodo e Fase iniziali se si vuole inserire un Periodo e Fase finali",  QMessageBox.Ok)
+			test = 1
+
+		if self.comboBox_per_fin.currentText()  != "" and self.comboBox_fas_fin.currentText() != "" and self.comboBox_per_iniz.currentText()  == "" and self.comboBox_fas_iniz.currentText() == "":
+			QMessageBox.warning(self, "ATTENZIONE", "Campi Periodo e Fase iniziali \n Specificare un Periodo e Fase iniziali se si vuole inserire un Periodo e Fase finali",  QMessageBox.Ok)
+			test = 1
+
+		if self.comboBox_per_iniz.currentText()  != "" and self.comboBox_fas_iniz.currentText() != "":
+
+			search_dict = {
+			'sito'  : "'"+str(self.comboBox_sito.currentText())+"'",
+			'periodo'  : "'"+str(self.comboBox_per_iniz.currentText())+"'",
+			}
+			if  bool(self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')) == False:
+				QMessageBox.warning(self, "ATTENZIONE", "Campi Periodo e Fase iniziali \n E' stata inserita una periodizzazione inesistente",  QMessageBox.Ok)
+				test = 1
+
 		return test
 
 	def rapporti_stratigrafici_check(self, sito_check):
@@ -991,32 +1066,32 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
 			str(self.comboBox_sito.currentText()), 				#1 - Sito
 			str(self.comboBox_area.currentText()), 				#2 - Area
-			int(self.lineEdit_us.text()),						#3 - US
+			int(self.lineEdit_us.text()),									#3 - US
 			str(self.comboBox_def_strat.currentText()),			#4 - Definizione stratigrafica
 			str(self.comboBox_def_intepret.currentText()),		#5 - Definizione intepretata
-			unicode(self.textEdit_descrizione.toPlainText()),	#6 - descrizione
+			unicode(self.textEdit_descrizione.toPlainText()),		#6 - descrizione
 			unicode(self.textEdit_interpretazione.toPlainText()),#7 - interpretazione
 			str(self.comboBox_per_iniz.currentText()),			#8 - periodo iniziale
 			str(self.comboBox_fas_iniz.currentText()),			#9 - fase iniziale
 			str(self.comboBox_per_fin.currentText()), 			#10 - periodo finale iniziale
 			str(self.comboBox_fas_fin.currentText()), 			#11 - fase finale
 			str(self.comboBox_scavato.currentText()),			#12 - scavato
-			str(self.lineEdit_attivita.text()),					#13 - attivita  
-			str(self.lineEdit_anno.text()),						#14 - anno scavo
+			str(self.lineEdit_attivita.text()),							#13 - attivita  
+			str(self.lineEdit_anno.text()),								#14 - anno scavo
 			str(self.comboBox_metodo.currentText()), 			#15 - metodo
-			str(inclusi),										#16 - inclusi
-			str(campioni),										#17 - campioni
-			str(rapporti),										#18 - rapporti
-			str(self.lineEdit_data_schedatura.text()),			#19 - data schedatura
+			str(inclusi),														#16 - inclusi
+			str(campioni),													#17 - campioni
+			str(rapporti),													#18 - rapporti
+			str(self.lineEdit_data_schedatura.text()),				#19 - data schedatura
 			str(self.comboBox_schedatore.currentText()),		#20 - schedatore
 			str(self.comboBox_formazione.currentText()),		#21 - formazione
-			str(self.comboBox_conservazione.currentText()),		#22 - conservazione
-			str(self.comboBox_colore.currentText()),			#23 - colore
+			str(self.comboBox_conservazione.currentText()),	#22 - conservazione
+			str(self.comboBox_colore.currentText()),				#23 - colore
 			str(self.comboBox_consistenza.currentText()),		#24 - consistenza
-			str(self.lineEdit_struttura.text()),				#25 - struttura
-			str(self.lineEdit_codice_periodo.text()),			#26 - continuitÃ  periodo
-			order_layer,										#27 - continuitÃ  periodo
-			str(documentazione))								#28 - documentazione
+			str(self.lineEdit_struttura.text()),							#25 - struttura
+			str(self.lineEdit_codice_periodo.text()),					#26 - continuita  periodo
+			order_layer,													#27 - order layer
+			str(documentazione))										#28 - documentazione
 			try:
 				self.DB_MANAGER.insert_data_session(data)
 				return 1
@@ -1171,6 +1246,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.empty_fields()
 			self.lineEdit_data_schedatura.setText("")
+			self.lineEdit_anno.setText("")
 			self.comboBox_formazione.setEditText("")
 			self.comboBox_metodo.setEditText("")
 			self.set_rec_counter('','')
@@ -1181,6 +1257,12 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			self.setComboBoxEnable(["self.comboBox_sito"],"True")
 			self.setComboBoxEnable(["self.comboBox_area"],"True")
 			self.setComboBoxEnable(["self.lineEdit_us"],"True")
+
+			self.setComboBoxEnable(["self.textEdit_descrizione"],"False")
+			self.setComboBoxEnable(["self.textEdit_interpretazione"],"False")
+
+			self.setTableEnable(["self.tableWidget_campioni", "self.tableWidget_rapporti","self.tableWidget_inclusi",
+			"self.tableWidget_documentazione"], "False")
 
 	def on_pushButton_showLayer_pressed(self):		
 		for sing_us in range(len(self.DATA_LIST)):
@@ -1215,28 +1297,28 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			search_dict = {
 			self.TABLE_FIELDS[0]  : "'"+str(self.comboBox_sito.currentText())+"'", 									#1 - Sito
 			self.TABLE_FIELDS[1]  : "'"+str(self.comboBox_area.currentText())+"'",									#2 - Area
-			self.TABLE_FIELDS[2]  : us,																				#3 - US
+			self.TABLE_FIELDS[2]  : us,																								#3 - US
 			self.TABLE_FIELDS[3]  : "'"+str(self.comboBox_def_strat.currentText())+"'",								#4 - Definizione stratigrafica
 			self.TABLE_FIELDS[4]  : "'"+str(self.comboBox_def_intepret.currentText())+"'",							#5 - Definizione intepretata
-			self.TABLE_FIELDS[5]  : str(self.textEdit_descrizione.toPlainText()),									#6 - descrizione
-			self.TABLE_FIELDS[6]  : str(self.textEdit_interpretazione.toPlainText()),								#7 - interpretazione
+			self.TABLE_FIELDS[5]  : str(self.textEdit_descrizione.toPlainText()),											#6 - descrizione
+			self.TABLE_FIELDS[6]  : str(self.textEdit_interpretazione.toPlainText()),										#7 - interpretazione
 			self.TABLE_FIELDS[7]  : "'"+str(self.comboBox_per_iniz.currentText())+"'",								#8 - periodo iniziale
 			self.TABLE_FIELDS[8]  : "'"+str(self.comboBox_fas_iniz.currentText())+"'",								#9 - fase iniziale
 			self.TABLE_FIELDS[9]  : "'"+str(self.comboBox_per_fin.currentText())+"'",	 							#10 - periodo finale iniziale
 			self.TABLE_FIELDS[10] : "'"+str(self.comboBox_fas_fin.currentText())+"'", 								#11 - fase finale
-			self.TABLE_FIELDS[11] : "'"+str(self.comboBox_scavato.currentText())+"'",								#12 - attivita  
-			self.TABLE_FIELDS[12] : "'"+str(self.lineEdit_attivita.text())+"'",										#13 - attivita  
-			self.TABLE_FIELDS[13] : "'"+str(self.lineEdit_anno.text())+"'",											#14 - anno scavo
+			self.TABLE_FIELDS[11] : "'"+str(self.comboBox_scavato.currentText())+"'",								#12 - scavato 
+			self.TABLE_FIELDS[12] : "'"+str(self.lineEdit_attivita.text())+"'",												#13 - attivita  
+			self.TABLE_FIELDS[13] : "'"+str(self.lineEdit_anno.text())+"'",													#14 - anno scavo
 			self.TABLE_FIELDS[14] : "'"+str(self.comboBox_metodo.currentText())+"'", 								#15 - metodo
-			self.TABLE_FIELDS[18] : "'"+str(self.lineEdit_data_schedatura.text())+"'",								#16 - data schedatura
+			self.TABLE_FIELDS[18] : "'"+str(self.lineEdit_data_schedatura.text())+"'",									#16 - data schedatura
 			self.TABLE_FIELDS[19] : "'"+str(self.comboBox_schedatore.currentText())+"'",							#17 - schedatore
 			self.TABLE_FIELDS[20] : "'"+str(self.comboBox_formazione.currentText())+"'",							#18 - formazione
-			self.TABLE_FIELDS[21] : "'"+str(self.comboBox_conservazione.currentText())+"'",							#19 - conservazione
+			self.TABLE_FIELDS[21] : "'"+str(self.comboBox_conservazione.currentText())+"'",						#19 - conservazione
 			self.TABLE_FIELDS[22] : "'"+str(self.comboBox_colore.currentText())+"'",								#20 - colore
 			self.TABLE_FIELDS[23] : "'"+str(self.comboBox_consistenza.currentText())+"'",							#21 - consistenza
-			self.TABLE_FIELDS[24] : "'"+str(self.lineEdit_struttura.text())+"'",									#22 - struttura
-			self.TABLE_FIELDS[25] : "'"+str(self.lineEdit_codice_periodo.text())+"'",								#23 - codice_periodo
-			self.TABLE_FIELDS[26] : "'"+str(self.lineEditOrderLayer.text())+"'"										#24 - codice_periodo
+			self.TABLE_FIELDS[24] : "'"+str(self.lineEdit_struttura.text())+"'",											#22 - struttura
+			self.TABLE_FIELDS[25] : "'"+str(self.lineEdit_codice_periodo.text())+"'",									#23 - codice_periodo
+			self.TABLE_FIELDS[26] : "'"+str(self.lineEditOrderLayer.text())+"'"											#24 - order layer
 			}
 
 			u = Utility()
@@ -1258,6 +1340,9 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.comboBox_area"],"False")
 					self.setComboBoxEnable(["self.lineEdit_us"],"False")
+					
+					self.setTableEnable(["self.tableWidget_campioni", "self.tableWidget_rapporti","self.tableWidget_inclusi",
+												"self.tableWidget_documentazione"], "True")
 				else:
 					self.DATA_LIST = []
 					for i in res:
@@ -1281,32 +1366,39 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.comboBox_area"],"False")
 					self.setComboBoxEnable(["self.lineEdit_us"],"False")
-
+					
+					self.setTableEnable(["self.tableWidget_campioni", "self.tableWidget_rapporti","self.tableWidget_inclusi",
+												"self.tableWidget_documentazione"], "True")
+					self.setComboBoxEnable(["self.textEdit_descrizione"],"True")
+					self.setComboBoxEnable(["self.textEdit_interpretazione"],"True")
+					
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 		self.enable_button_search(1)
 
 	def update_if(self, msg):
 		rec_corr = self.REC_CORR
 		self.msg = msg
-		if self.msg == 1:
-			self.update_record()
-			id_list = []
-			for i in self.DATA_LIST:
-				id_list.append(eval("i."+ self.ID_TABLE))
-			self.DATA_LIST = []
-			if self.SORT_STATUS == "n":
-				temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-			else:
-				temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
 
-			for i in temp_data_list:
-				self.DATA_LIST.append(i)
-			self.BROWSE_STATUS = "b"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			if type(self.REC_CORR) == "<type 'str'>":
-				corr = 0
-			else:
-				corr = self.REC_CORR
+		if self.msg == 1:
+			if self.data_error_check() == 0:
+				self.update_record()
+				id_list = []
+				for i in self.DATA_LIST:
+					id_list.append(eval("i."+ self.ID_TABLE))
+				self.DATA_LIST = []
+				if self.SORT_STATUS == "n":
+					temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+				else:
+					temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+
+				for i in temp_data_list:
+					self.DATA_LIST.append(i)
+				self.BROWSE_STATUS = "b"
+				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+				if type(self.REC_CORR) == "<type 'str'>":
+					corr = 0
+				else:
+					corr = self.REC_CORR
 
 	def update_record(self):
 		self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
@@ -1411,78 +1503,77 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		inclusi_row_count = self.tableWidget_inclusi.rowCount()
 		documentazione_row_count = self.tableWidget_documentazione.rowCount()
 		
-		self.comboBox_sito.setEditText("")  						#1 - Sito
-		self.comboBox_area.setEditText("") 							#2 - Area
-		self.lineEdit_us.clear()									#3 - US
-		self.comboBox_def_strat.setEditText("")						#4 - Definizione stratigrafica
-		self.comboBox_def_intepret.setEditText("")					#5 - Definizione intepretata
-		self.textEdit_descrizione.clear()							#6 - descrizione
-		self.textEdit_interpretazione.clear()						#7 - interpretazione
-		self.comboBox_per_iniz.setEditText("")						#8 - periodo iniziale
-		self.comboBox_fas_iniz.setEditText("")						#9 - fase iniziale
-		self.comboBox_per_fin.setEditText("") 						#10 - periodo finale iniziale
-		self.comboBox_fas_fin.setEditText("") 						#11 - fase finale
-		self.comboBox_scavato.setEditText("")						#12 - scavato
-		self.lineEdit_attivita.clear()								#13 - attivita
-		#self.lineEdit_anno.clear()									#14 - anno scavo
-		self.lineEdit_anno.setText(self.yearstrfdate())
-		self.comboBox_metodo.setEditText("Stratigrafico")			#15 - metodo
+		self.comboBox_sito.setEditText("")  								#1 - Sito
+		self.comboBox_area.setEditText("") 								#2 - Area
+		self.lineEdit_us.clear()													#3 - US
+		self.comboBox_def_strat.setEditText("")							#4 - Definizione stratigrafica
+		self.comboBox_def_intepret.setEditText("")						#5 - Definizione intepretata
+		self.textEdit_descrizione.clear()										#6 - descrizione
+		self.textEdit_interpretazione.clear()									#7 - interpretazione
+		self.comboBox_per_iniz.setEditText("")								#8 - periodo iniziale
+		self.comboBox_fas_iniz.setEditText("")								#9 - fase iniziale
+		self.comboBox_per_fin.setEditText("") 							#10 - periodo finale iniziale
+		self.comboBox_fas_fin.setEditText("") 								#11 - fase finale
+		self.comboBox_scavato.setEditText("")							#12 - scavato
+		self.lineEdit_attivita.clear()												#13 - attivita
+		self.lineEdit_anno.setText(self.yearstrfdate())					#14 - anno scavo
+		self.comboBox_metodo.setEditText("Stratigrafico")				#15 - metodo
 		for i in range(inclusi_row_count):
 			self.tableWidget_inclusi.removeRow(0) 					
-		self.insert_new_row("self.tableWidget_inclusi")				#16 - inclusi
+		self.insert_new_row("self.tableWidget_inclusi")					#16 - inclusi
 		for i in range(campioni_row_count):
 			self.tableWidget_campioni.removeRow(0)
-		self.insert_new_row("self.tableWidget_campioni")			#17 - campioni
+		self.insert_new_row("self.tableWidget_campioni")				#17 - campioni
 		for i in range(rapporti_row_count):
 			self.tableWidget_rapporti.removeRow(0)
-		#self.insert_new_row("self.tableWidget_rapporti")			#18 - rapporti
+		#self.insert_new_row("self.tableWidget_rapporti")				#18 - rapporti
 		for i in range(documentazione_row_count):
 			self.tableWidget_documentazione.removeRow(0) 					
 		self.insert_new_row("self.tableWidget_documentazione")		#19 - documentazione
 		self.lineEdit_data_schedatura.setText(self.datestrfdate())	#20 - data schedatura
-		self.comboBox_schedatore.setEditText("")					#21 - schedatore
-		self.comboBox_formazione.setEditText("Naturale")			#22 - formazione
+		self.comboBox_schedatore.setEditText("")						#21 - schedatore
+		self.comboBox_formazione.setEditText("Naturale")				#22 - formazione
 		self.comboBox_conservazione.setEditText("")					#23 - conservazione
-		self.comboBox_colore.setEditText("")						#24 - colore
-		self.comboBox_consistenza.setEditText("")					#25 - consistenza
-		self.lineEdit_struttura.clear()								#26 - struttura
-		self.lineEdit_codice_periodo.clear()						#27 - codice periodo
-		self.lineEditOrderLayer.clear()								#28 - order layer
+		self.comboBox_colore.setEditText("")								#24 - colore
+		self.comboBox_consistenza.setEditText("")						#25 - consistenza
+		self.lineEdit_struttura.clear()											#26 - struttura
+		self.lineEdit_codice_periodo.clear()									#27 - codice periodo
+		self.lineEditOrderLayer.clear()											#28 - order layer
 
 	def fill_fields(self, n=0):
 		self.rec_num = n
 		try:
-			self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)  									#1 - Sito
-			self.comboBox_area.setEditText(self.DATA_LIST[self.rec_num].area) 									#2 - Area
-			self.lineEdit_us.setText(str(self.DATA_LIST[self.rec_num].us))										#3 - US
-			self.comboBox_def_strat.setEditText(self.DATA_LIST[self.rec_num].d_stratigrafica)					#4 - Definizione stratigrafica
-			self.comboBox_def_intepret.setEditText(self.DATA_LIST[self.rec_num].d_interpretativa)				#5 - Definizione intepretata
-			unicode(self.textEdit_descrizione.setText(self.DATA_LIST[self.rec_num].descrizione))				#6 - descrizione
-			unicode(self.textEdit_interpretazione.setText(self.DATA_LIST[self.rec_num].interpretazione))		#7 - interpretazione
-			self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)					#8 - periodo iniziale
-			self.comboBox_fas_iniz.setEditText(self.DATA_LIST[self.rec_num].fase_iniziale)						#9 - fase iniziale
-			self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_finale)						#10 - periodo finale iniziale
-			self.comboBox_fas_fin.setEditText(self.DATA_LIST[self.rec_num].fase_finale) 						#11 - fase finale
-			self.comboBox_scavato.setEditText(self.DATA_LIST[self.rec_num].scavato)								#12 - scavato
-			self.lineEdit_attivita.setText(self.DATA_LIST[self.rec_num].attivita)								#13 - attivita
-			self.lineEdit_anno.setText(self.DATA_LIST[self.rec_num].anno_scavo)									#14 - anno scavo
-			self.comboBox_metodo.setEditText(self.DATA_LIST[self.rec_num].metodo_di_scavo) 						#15 - metodo
-			self.tableInsertData("self.tableWidget_inclusi", self.DATA_LIST[self.rec_num].inclusi)				#16 - inclusi
-			self.tableInsertData("self.tableWidget_campioni", self.DATA_LIST[self.rec_num].campioni)			#17 - campioni
-			self.tableInsertData("self.tableWidget_rapporti",self.DATA_LIST[self.rec_num].rapporti)				#18 - rapporti
-			self.tableInsertData("self.tableWidget_documentazione",self.DATA_LIST[self.rec_num].documentazione)	#19 - rapporti
-			self.lineEdit_data_schedatura.setText(self.DATA_LIST[self.rec_num].data_schedatura)					#20 - data schedatura
-			self.comboBox_schedatore.setEditText(self.DATA_LIST[self.rec_num].schedatore)						#21 - schedatore
-			self.comboBox_formazione.setEditText(self.DATA_LIST[self.rec_num].formazione)						#22 - formazione
-			self.comboBox_conservazione.setEditText(self.DATA_LIST[self.rec_num].stato_di_conservazione)		#23 - conservazione
-			self.comboBox_colore.setEditText(self.DATA_LIST[self.rec_num].colore)								#24 - colore
-			self.comboBox_consistenza.setEditText(self.DATA_LIST[self.rec_num].consistenza)						#25 - consistenza
-			self.lineEdit_struttura.setText(self.DATA_LIST[self.rec_num].struttura)								#26 - struttura
-			self.lineEdit_codice_periodo.setText(self.DATA_LIST[self.rec_num].cont_per)							#27 - codice periodo
+			self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)  												#1 - Sito
+			self.comboBox_area.setEditText(self.DATA_LIST[self.rec_num].area) 												#2 - Area
+			self.lineEdit_us.setText(str(self.DATA_LIST[self.rec_num].us))															#3 - US
+			self.comboBox_def_strat.setEditText(self.DATA_LIST[self.rec_num].d_stratigrafica)								#4 - Definizione stratigrafica
+			self.comboBox_def_intepret.setEditText(self.DATA_LIST[self.rec_num].d_interpretativa)						#5 - Definizione intepretata
+			unicode(self.textEdit_descrizione.setText(self.DATA_LIST[self.rec_num].descrizione))							#6 - descrizione
+			unicode(self.textEdit_interpretazione.setText(self.DATA_LIST[self.rec_num].interpretazione))					#7 - interpretazione
+			self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)								#8 - periodo iniziale
+			self.comboBox_fas_iniz.setEditText(self.DATA_LIST[self.rec_num].fase_iniziale)									#9 - fase iniziale
+			self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_finale)									#10 - periodo finale iniziale
+			self.comboBox_fas_fin.setEditText(self.DATA_LIST[self.rec_num].fase_finale) 									#11 - fase finale
+			self.comboBox_scavato.setEditText(self.DATA_LIST[self.rec_num].scavato)										#12 - scavato
+			self.lineEdit_attivita.setText(self.DATA_LIST[self.rec_num].attivita)													#13 - attivita
+			self.lineEdit_anno.setText(self.DATA_LIST[self.rec_num].anno_scavo)												#14 - anno scavo
+			self.comboBox_metodo.setEditText(self.DATA_LIST[self.rec_num].metodo_di_scavo) 							#15 - metodo
+			self.tableInsertData("self.tableWidget_inclusi", self.DATA_LIST[self.rec_num].inclusi)								#16 - inclusi
+			self.tableInsertData("self.tableWidget_campioni", self.DATA_LIST[self.rec_num].campioni)						#17 - campioni
+			self.tableInsertData("self.tableWidget_rapporti",self.DATA_LIST[self.rec_num].rapporti)							#18 - rapporti
+			self.tableInsertData("self.tableWidget_documentazione",self.DATA_LIST[self.rec_num].documentazione)	#19 - documentazione
+			self.lineEdit_data_schedatura.setText(self.DATA_LIST[self.rec_num].data_schedatura)							#20 - data schedatura
+			self.comboBox_schedatore.setEditText(self.DATA_LIST[self.rec_num].schedatore)								#21 - schedatore
+			self.comboBox_formazione.setEditText(self.DATA_LIST[self.rec_num].formazione)								#22 - formazione
+			self.comboBox_conservazione.setEditText(self.DATA_LIST[self.rec_num].stato_di_conservazione)			#23 - conservazione
+			self.comboBox_colore.setEditText(self.DATA_LIST[self.rec_num].colore)											#24 - colore
+			self.comboBox_consistenza.setEditText(self.DATA_LIST[self.rec_num].consistenza)								#25 - consistenza
+			self.lineEdit_struttura.setText(self.DATA_LIST[self.rec_num].struttura)												#26 - struttura
+			self.lineEdit_codice_periodo.setText(self.DATA_LIST[self.rec_num].cont_per)										#27 - codice periodo
 			if self.DATA_LIST[self.rec_num].order_layer == None:
 				self.lineEditOrderLayer.setText("")
 			else:
-				self.lineEditOrderLayer.setText(str(self.DATA_LIST[self.rec_num].order_layer))					#28 - order layer
+				self.lineEditOrderLayer.setText(str(self.DATA_LIST[self.rec_num].order_layer))								#28 - order layer
 
 			#gestione tool
 			if self.toolButtonPreview.isChecked() == True:
@@ -1515,33 +1606,33 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			order_layer = self.lineEditOrderLayer.text()
 		#data
 		self.DATA_LIST_REC_TEMP = [
-		str(self.comboBox_sito.currentText()), 				#1 - Sito
-		str(self.comboBox_area.currentText()), 				#2 - Area
-                str(self.lineEdit_us.text()),					#3 - US
-		str(self.comboBox_def_strat.currentText()),			#4 - Definizione stratigrafica
-                str(self.comboBox_def_intepret.currentText()),                  #5 - Definizione intepretata
-		str(self.textEdit_descrizione.toPlainText().toLatin1()),	#6 - descrizione
-                str(self.textEdit_interpretazione.toPlainText().toLatin1()),    #7 - interpretazione
-		str(self.comboBox_per_iniz.currentText()),			#8 - periodo iniziale
-		str(self.comboBox_fas_iniz.currentText()),			#9 - fase iniziale
-		str(self.comboBox_per_fin.currentText()), 			#10 - periodo finale iniziale
-		str(self.comboBox_fas_fin.currentText()), 			#11 - fase finale
-		str(self.comboBox_scavato.currentText()),			#12 - scavato
-                str(self.lineEdit_attivita.text()),                             #13 - attivita
-                str(self.lineEdit_anno.text()),                                 #14 - anno scavo
-		str(self.comboBox_metodo.currentText()), 			#15 - metodo
-                str(inclusi),							#16 - inclusi
-                str(campioni),							#17 - campioni
-                str(rapporti),							#18 - rapporti
-		str(self.lineEdit_data_schedatura.text()),			#19 - data schedatura
-                str(self.comboBox_schedatore.currentText()),                    #20 - schedatore
-                str(self.comboBox_formazione.currentText()),                    #21 - formazione
-                str(self.comboBox_conservazione.currentText()),                 #22 - conservazione
-		str(self.comboBox_colore.currentText()),			#23 - colore
-                str(self.comboBox_consistenza.currentText()),                   #24 - consistenza
-		str(self.lineEdit_struttura.text()),				#25 - struttura
-		str(self.lineEdit_codice_periodo.text()),			#26 - codice periodo
-                str(order_layer),						#27 - order layer
+		str(self.comboBox_sito.currentText()), 						#1 - Sito
+		str(self.comboBox_area.currentText()), 						#2 - Area
+		str(self.lineEdit_us.text()),											#3 - US
+		str(self.comboBox_def_strat.currentText()),					#4 - Definizione stratigrafica
+		str(self.comboBox_def_intepret.currentText()),             #5 - Definizione intepretata
+		str(self.textEdit_descrizione.toPlainText().toLatin1()),		#6 - descrizione
+		str(self.textEdit_interpretazione.toPlainText().toLatin1()), #7 - interpretazione
+		str(self.comboBox_per_iniz.currentText()),					#8 - periodo iniziale
+		str(self.comboBox_fas_iniz.currentText()),					#9 - fase iniziale
+		str(self.comboBox_per_fin.currentText()), 					#10 - periodo finale iniziale
+		str(self.comboBox_fas_fin.currentText()), 					#11 - fase finale
+		str(self.comboBox_scavato.currentText()),					#12 - scavato
+		str(self.lineEdit_attivita.text()),                             		#13 - attivita
+		str(self.lineEdit_anno.text()),                                 		#14 - anno scavo
+		str(self.comboBox_metodo.currentText()), 					#15 - metodo
+		str(inclusi),																#16 - inclusi
+		str(campioni),															#17 - campioni
+		str(rapporti),															#18 - rapporti
+		str(self.lineEdit_data_schedatura.text()),						#19 - data schedatura
+		str(self.comboBox_schedatore.currentText()),              #20 - schedatore
+		str(self.comboBox_formazione.currentText()),              #21 - formazione
+		str(self.comboBox_conservazione.currentText()),          #22 - conservazione
+		str(self.comboBox_colore.currentText()),						#23 - colore
+		str(self.comboBox_consistenza.currentText()),              #24 - consistenza
+		str(self.lineEdit_struttura.text()),									#25 - struttura
+		str(self.lineEdit_codice_periodo.text()),							#26 - codice periodo
+		str(order_layer),														#27 - order layer
 		str(documentazione)
 		]
 
@@ -1573,6 +1664,14 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 		for fn in field_names:
 			cmd = ('%s%s%s%s') % (fn, '.setEnabled(', v, ')')
+			eval(cmd)
+			
+	def setTableEnable(self, t, v):
+		tab_names = t
+		value = v
+
+		for tn in tab_names:
+			cmd = ('%s%s%s%s') % (tn, '.setEnabled(', v, ')')
 			eval(cmd)
 
 	def testing(self, name_file, message):

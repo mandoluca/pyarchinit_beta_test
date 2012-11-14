@@ -240,11 +240,28 @@ class Utility:
 				res = None
 		return res
 
+	def remove_dup_from_list(self,ls):
+		self.list = ls
+		
+		self.list.sort()
+		nl = []
 
+		if len(self.list) > 1:
+			value = self.list[0]
+			nl.append(value)
+			for sing_value in range(len(self.list)):
+				if sing_value > 0:
+					if self.list[sing_value] != value:
+						value = self.list[sing_value]
+						nl.append(value)
+			return nl
+		else:
+			return self.list
 
 #print dir(Utility())
 #Samples - uncomment and run the module to view the functions
 #u = Utility()
+#print u.remove_dup_from_list([1,1, 2, 2, 2, 3, 4, 5, 5, 6, 6, 7])
 #print u.findFieldFrDict((2))
 #print "----------tup_to_list--------------"
 #print ""
@@ -303,5 +320,3 @@ class Utility:
 ###print "----------extract_from_list------------------"
 ###print ""
 ###print u.extract_from_list([[1, 2, 3], [4, 5, 6]], 1)
-
-

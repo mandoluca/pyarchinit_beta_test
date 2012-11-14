@@ -28,16 +28,16 @@ def name():
   return "pyArchinit - Archeological GIS Tools"
 
 def description():
-  return "Under Testing - Use for testing only - PyArchInit it's tool to manage archaeological dataset - Only Mac Os X and Linux tested - Now work under Windows with logging turned off"
+  return "Under Testing - Use for testing only - PyArchInit it's tool to manage archaeological dataset - Only Windows 7 Tested"
 
 def version():
-  return "Version 0.20121030"
+  return "Version 0.20120102"
 
 def plugin_type():
   return QgisPlugin.UI # UI plugin
 
 def author_name():
-  return "Luca Mandolesi"
+  return "Luca Mandolesi - pyarchinit@gmail.com"
 
 def qgisMinimumVersion():
  return "1.5"

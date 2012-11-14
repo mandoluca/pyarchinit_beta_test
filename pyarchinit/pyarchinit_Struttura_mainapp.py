@@ -498,23 +498,23 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 			data = self.DB_MANAGER.insert_struttura_values(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1, #0
-			str(self.comboBox_sito.currentText()), 								#1 - Sito
-			str(self.comboBox_sigla_struttura.currentText()), 					#2 - sigla_struttura
-			int(self.numero_struttura.text()), 									#3 - numero_struttura
-			str(self.comboBox_categoria_struttura.currentText()), 				#4 - categoria_struttura
-			str(self.comboBox_tipologia_struttura.currentText()), 				#5 - tipologia_struttura
-			str(self.comboBox_definizione_struttura.currentText()), 			#6 - definizione_struttura
-			unicode(self.textEdit_descrizione_struttura.toPlainText()),			#7 - descrizione
-			unicode(self.textEdit_interpretazione_struttura.toPlainText()),		#8 - interpretazione
-			per_iniz,															#9 - periodo iniziale
-			fas_iniz,															#10 - fase iniziale
-			per_fin, 															#11 - periodo finale iniziale
-			fas_fin, 															#12 - fase finale
-			str(self.lineEdit_datazione_estesa.text()),							#13 - datazione estesa
-			str(materiali_impiegati),											#14 - materiali impiegati
-			str(elementi_strutturali),											#15 - elementi_strutturali
-			str(rapporti_struttura),											#16 - rapporti struttura
-			str(misurazioni))													#17 - misurazioni
+			str(self.comboBox_sito.currentText()), 														#1 - Sito
+			str(self.comboBox_sigla_struttura.currentText()), 											#2 - sigla_struttura
+			int(self.numero_struttura.text()), 																#3 - numero_struttura
+			str(self.comboBox_categoria_struttura.currentText()), 									#4 - categoria_struttura
+			str(self.comboBox_tipologia_struttura.currentText()), 										#5 - tipologia_struttura
+			str(self.comboBox_definizione_struttura.currentText()), 									#6 - definizione_struttura
+			unicode(self.textEdit_descrizione_struttura.toPlainText()),									#7 - descrizione
+			unicode(self.textEdit_interpretazione_struttura.toPlainText()),							#8 - interpretazione
+			per_iniz,																									#9 - periodo iniziale
+			fas_iniz,																									#10 - fase iniziale
+			per_fin, 																									#11 - periodo finale iniziale
+			fas_fin, 																									#12 - fase finale
+			str(self.lineEdit_datazione_estesa.text()),														#13 - datazione estesa
+			str(materiali_impiegati),																				#14 - materiali impiegati
+			str(elementi_strutturali),																			#15 - elementi_strutturali
+			str(rapporti_struttura),																				#16 - rapporti struttura
+			str(misurazioni))																						#17 - misurazioni
 
 			try:
 				self.DB_MANAGER.insert_data_session(data)
@@ -681,19 +681,19 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 				fase_finale = ""
 
 			search_dict = {
-			self.TABLE_FIELDS[0] : "'"+str(self.comboBox_sito.currentText())+"'",				#1 - Sito
-			self.TABLE_FIELDS[1] : "'"+str(self.comboBox_sigla_struttura.currentText())+"'", #1 - Sigla struttura
-			self.TABLE_FIELDS[2] : numero_struttura, #3 numero struttura
-			self.TABLE_FIELDS[3] : "'"+str(self.comboBox_categoria_struttura.currentText())+"'",
-			self.TABLE_FIELDS[4] : "'"+str(self.comboBox_tipologia_struttura.currentText())+"'",
-			self.TABLE_FIELDS[5] : "'"+str(self.comboBox_definizione_struttura.currentText())+"'",
-			self.TABLE_FIELDS[6] : str(self.textEdit_descrizione_struttura.toPlainText()),
-			self.TABLE_FIELDS[7] : str(self.textEdit_interpretazione_struttura.toPlainText()),
-			self.TABLE_FIELDS[8] : periodo_iniziale,
-			self.TABLE_FIELDS[9] : fase_iniziale,
-			self.TABLE_FIELDS[10] : periodo_finale,
-			self.TABLE_FIELDS[11] : fase_finale,
-			self.TABLE_FIELDS[12] : str(self.lineEdit_datazione_estesa.text())
+			self.TABLE_FIELDS[0] : "'"+str(self.comboBox_sito.currentText())+"'",							#1 - Sito
+			self.TABLE_FIELDS[1] : "'"+str(self.comboBox_sigla_struttura.currentText())+"'", 			#2 - Sigla struttura
+			self.TABLE_FIELDS[2] : numero_struttura, 																#3 - numero struttura
+			self.TABLE_FIELDS[3] : "'"+str(self.comboBox_categoria_struttura.currentText())+"'",		#4 - categoria struttura
+			self.TABLE_FIELDS[4] : "'"+str(self.comboBox_tipologia_struttura.currentText())+"'", 		#5 - tipologia struttura
+			self.TABLE_FIELDS[5] : "'"+str(self.comboBox_definizione_struttura.currentText())+"'", 	#6 - definizione struttura
+			#self.TABLE_FIELDS[6] : str(self.textEdit_descrizione_struttura.toPlainText()),					#7 - descrizione struttura
+			#self.TABLE_FIELDS[7] : str(self.textEdit_interpretazione_struttura.toPlainText()),				#8 - intepretazione struttura
+			self.TABLE_FIELDS[8] : periodo_iniziale,																	#9 - periodo iniziale
+			self.TABLE_FIELDS[9] : fase_iniziale,																		#10 - fase iniziale
+			self.TABLE_FIELDS[10] : periodo_finale,																	#11 - periodo finale
+			self.TABLE_FIELDS[11] : fase_finale,																		#12 - fase finale
+			self.TABLE_FIELDS[12] : str(self.lineEdit_datazione_estesa.text())									#10 - datazione_estesa
 			}
 
 			u = Utility()
@@ -828,11 +828,11 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		misurazioni_row_count = self.tableWidget_misurazioni.rowCount()
 
 		self.comboBox_sito.setEditText("") 								#1 - Sito
-		self.comboBox_sigla_struttura.setEditText("")					#2 - sigla_struttura
-		self.numero_struttura.clear()									#3 - numero_struttura
-		self.comboBox_categoria_struttura.setEditText("") 				#4 - categoria_struttura
-		self.comboBox_tipologia_struttura.setEditText("") 				#5 - tipologia_struttura
-		self.comboBox_definizione_struttura.setEditText("") 			#6 - definizione_struttura
+		self.comboBox_sigla_struttura.setEditText("")				#2 - sigla_struttura
+		self.numero_struttura.clear()										#3 - numero_struttura
+		self.comboBox_categoria_struttura.setEditText("") 			#4 - categoria_struttura
+		self.comboBox_tipologia_struttura.setEditText("") 			#5 - tipologia_struttura
+		self.comboBox_definizione_struttura.setEditText("") 		#6 - definizione_struttura
 		self.textEdit_descrizione_struttura.clear()						#7 - descrizione
 		self.textEdit_interpretazione_struttura.clear()					#8 - interpretazione
 		self.comboBox_per_iniz.setEditText("")							#9 - periodo iniziale
@@ -843,11 +843,11 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 		for i in range(materiali_impiegati_row_count):
 			self.tableWidget_materiali_impiegati.removeRow(0)
-		self.insert_new_row("self.tableWidget_materiali_impiegati")		#16 - materiali impiegati
+		self.insert_new_row("self.tableWidget_materiali_impiegati")#14 - materiali impiegati
 
 		for i in range(elementi_strutturali_row_count):
 			self.tableWidget_elementi_strutturali.removeRow(0)
-		self.insert_new_row("self.tableWidget_elementi_strutturali")	#15 - elementi_strutturali
+		self.insert_new_row("self.tableWidget_elementi_strutturali")#15 - elementi_strutturali
 
 		for i in range(rapporti_struttura_row_count):
 			self.tableWidget_rapporti.removeRow(0)
@@ -855,7 +855,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 		for i in range(misurazioni_row_count):
 			self.tableWidget_misurazioni.removeRow(0)
-		self.insert_new_row("self.tableWidget_misurazioni")				#17 - rapporti struttura
+		self.insert_new_row("self.tableWidget_misurazioni")			#17 - rapporti struttura
 
 	def fill_fields(self, n=0):
 		self.rec_num = n
@@ -881,23 +881,23 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 			fase_finale = str(self.DATA_LIST[self.rec_num].fase_finale)
 
 		try:
-			self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)											#1 - Sito
-			self.comboBox_sigla_struttura.setEditText(str(self.DATA_LIST[self.rec_num].sigla_struttura)) 				#2 - Periodo
-			self.numero_struttura.setText(str(self.DATA_LIST[self.rec_num].numero_struttura)) 							#3 - Fase
-			self.comboBox_categoria_struttura.setEditText(str(self.DATA_LIST[self.rec_num].categoria_struttura))			#4 - Fase
-			self.comboBox_tipologia_struttura.setEditText(str(self.DATA_LIST[self.rec_num].tipologia_struttura))		#5 - tipologia_struttura
-			self.comboBox_definizione_struttura.setEditText(str(self.DATA_LIST[self.rec_num].definizione_struttura)) 	#6 - definizione_struttura
-			unicode(self.textEdit_descrizione_struttura.setText(self.DATA_LIST[self.rec_num].descrizione))						#6 - descrizione
+			self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)																#1 - Sito
+			self.comboBox_sigla_struttura.setEditText(str(self.DATA_LIST[self.rec_num].sigla_struttura)) 							#2 - Periodo
+			self.numero_struttura.setText(str(self.DATA_LIST[self.rec_num].numero_struttura)) 										#3 - Fase
+			self.comboBox_categoria_struttura.setEditText(str(self.DATA_LIST[self.rec_num].categoria_struttura))				#4 - Fase
+			self.comboBox_tipologia_struttura.setEditText(str(self.DATA_LIST[self.rec_num].tipologia_struttura))					#5 - tipologia_struttura
+			self.comboBox_definizione_struttura.setEditText(str(self.DATA_LIST[self.rec_num].definizione_struttura)) 			#6 - definizione_struttura
+			unicode(self.textEdit_descrizione_struttura.setText(self.DATA_LIST[self.rec_num].descrizione))							#6 - descrizione
 			unicode(self.textEdit_interpretazione_struttura.setText(self.DATA_LIST[self.rec_num].interpretazione))				#7 - interpretazione
-			self.comboBox_per_iniz.setEditText(periodo_iniziale)												#8 - periodo iniziale
-			self.comboBox_fas_iniz.setEditText(fase_iniziale)										#9 - fase iniziale
-			self.comboBox_per_fin.setEditText(periodo_finale)								#10 - periodo finale iniziale
-			self.comboBox_fas_fin.setEditText(fase_finale)								#11 - fase finale
-			self.lineEdit_datazione_estesa.setText(str(self.DATA_LIST[self.rec_num].datazione_estesa))					#12 - datazione estesa
-			self.tableInsertData("self.tableWidget_materiali_impiegati", self.DATA_LIST[self.rec_num].materiali_impiegati)			#13 - inclusi
-			self.tableInsertData("self.tableWidget_elementi_strutturali", self.DATA_LIST[self.rec_num].elementi_strutturali)		#14 - inclusi
-			self.tableInsertData("self.tableWidget_rapporti", self.DATA_LIST[self.rec_num].rapporti_struttura)		#15 - inclusi
-			self.tableInsertData("self.tableWidget_misurazioni", self.DATA_LIST[self.rec_num].misure_struttura)			#16 - inclusi
+			self.comboBox_per_iniz.setEditText(periodo_iniziale)																					#8 - periodo iniziale
+			self.comboBox_fas_iniz.setEditText(fase_iniziale)																						#9 - fase iniziale
+			self.comboBox_per_fin.setEditText(periodo_finale)																						#10 - periodo finale
+			self.comboBox_fas_fin.setEditText(fase_finale)																							#11 - fase finale
+			self.lineEdit_datazione_estesa.setText(str(self.DATA_LIST[self.rec_num].datazione_estesa))								#12 - datazione estesa
+			self.tableInsertData("self.tableWidget_materiali_impiegati", self.DATA_LIST[self.rec_num].materiali_impiegati)			#13 - materiali impiegati
+			self.tableInsertData("self.tableWidget_elementi_strutturali", self.DATA_LIST[self.rec_num].elementi_strutturali)		#14 - elementi struttura
+			self.tableInsertData("self.tableWidget_rapporti", self.DATA_LIST[self.rec_num].rapporti_struttura)						#15 - rapporti struttura
+			self.tableInsertData("self.tableWidget_misurazioni", self.DATA_LIST[self.rec_num].misure_struttura)					#16 - misure struttura
 		except Exception, e:
 			QMessageBox.warning(self, "Errore Fill Fields", "Problema di riempimento campi" + str(e),  QMessageBox.Ok)
 
@@ -947,16 +947,16 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		self.DATA_LIST_REC_TEMP = [
 		str(self.comboBox_sito.currentText()), 												#1 - Sito
 		str(self.comboBox_sigla_struttura.currentText()), 									#2 - sigla
-		str(numero_struttura), 																#3 - numero_struttura
-		str(self.comboBox_categoria_struttura.currentText()),												#3 - numero_struttura
-		str(self.comboBox_tipologia_struttura.currentText()), 											#3 - numero_struttura
-		str(self.comboBox_definizione_struttura.currentText()),											#4 - cron iniziale
+		str(numero_struttura), 																		#3 - numero_struttura
+		str(self.comboBox_categoria_struttura.currentText()),							#3 - numero_struttura
+		str(self.comboBox_tipologia_struttura.currentText()), 								#3 - numero_struttura
+		str(self.comboBox_definizione_struttura.currentText()),							#4 - cron iniziale
 		str(self.textEdit_descrizione_struttura.toPlainText().toLatin1()),					#6 - descrizioene
-		str(self.textEdit_interpretazione_struttura.toPlainText().toLatin1()),				#6 - descrizioene
-		str(periodo_iniziale),																#6 - descrizioene
-		str(fase_iniziale),																	#6 - descrizioene
-		str(periodo_finale),																#6 - descrizioene
-		str(fase_finale),																	#6 - descrizioene
+		str(self.textEdit_interpretazione_struttura.toPlainText().toLatin1()),			#6 - descrizioene
+		str(periodo_iniziale),																			#6 - descrizioene
+		str(fase_iniziale),																				#6 - descrizioene
+		str(periodo_finale),																			#6 - descrizioene
+		str(fase_finale),																				#6 - descrizioene
 		str(self.lineEdit_datazione_estesa.text()),												#7- cron estesa
 		str(materiali_impiegati),
 		str(elementi_strutturali),
