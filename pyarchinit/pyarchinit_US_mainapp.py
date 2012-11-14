@@ -951,6 +951,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 		#PERIODIZZAZIONE CHECK
 		#periodo iniz compilato e fase vuota
+		"""
 		if self.comboBox_per_iniz.currentText() != "" and self.comboBox_fas_iniz.currentText() == "":
 			QMessageBox.warning(self, "ATTENZIONE", "Campo Fase iniziale \n Specificare la Fase iniziale oltre al Periodo",  QMessageBox.Ok)
 			test = 1
@@ -984,7 +985,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			if  bool(self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')) == False:
 				QMessageBox.warning(self, "ATTENZIONE", "Campi Periodo e Fase iniziali \n E' stata inserita una periodizzazione inesistente",  QMessageBox.Ok)
 				test = 1
-
+		"""
 		return test
 
 	def rapporti_stratigrafici_check(self, sito_check):
