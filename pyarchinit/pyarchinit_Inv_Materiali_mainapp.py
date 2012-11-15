@@ -291,8 +291,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.loadMediaPreview(1)
 
 	def on_pushButton_new_rec_pressed(self):
-		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+		if len(self.DATA_LIST) > 0:
+			if self.records_equal_check() == 1 :
+				self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		#set the GUI for a new record
 
 		if self.BROWSE_STATUS != "n":

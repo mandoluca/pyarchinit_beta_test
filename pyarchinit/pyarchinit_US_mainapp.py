@@ -950,7 +950,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				test = 1
 
 		#PERIODIZZAZIONE CHECK
-		#periodo iniz compilato e fase vuota
+		#periodo iniz compilato e fase vuota  il blocco deve essere utilizzato meglio a partire dai signals
 		"""
 		if self.comboBox_per_iniz.currentText() != "" and self.comboBox_fas_iniz.currentText() == "":
 			QMessageBox.warning(self, "ATTENZIONE", "Campo Fase iniziale \n Specificare la Fase iniziale oltre al Periodo",  QMessageBox.Ok)
