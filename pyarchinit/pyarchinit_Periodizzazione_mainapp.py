@@ -172,11 +172,11 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.label_sort.setText(self.SORTED_ITEMS["n"])
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-				self.charge_list_sito_def_strat()
+				self.charge_list_sito()
 				self.fill_fields()
 			else:
 				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
-				self.charge_list()
+				self.charge_list_sito()
 				self.on_pushButton_new_rec_pressed()
 		except Exception, e:
 			e = str(e)
@@ -185,7 +185,7 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 			else:
 				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 
-	def charge_list_sito_def_strat(self):
+	def charge_list_sito(self):
 		sito_vl = self.UTILITY.tup_2_list_III(self.DB_MANAGER.group_by('site_table', 'sito', 'SITE'))
 
 		try:
@@ -272,7 +272,7 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 				if test_insert == 1:
 					self.empty_fields()
 					self.label_sort.setText(self.SORTED_ITEMS["n"])
-					self.charge_list()
+					self.charge_list_sito()
 					self.charge_records()
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
