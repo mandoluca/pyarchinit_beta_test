@@ -124,6 +124,8 @@ class Main(QDialog, Ui_DialogImageViewer):
 
 
 	def getDirectory(self):
+		f
+		
 		directory = QtGui.QFileDialog.getExistingDirectory(self, "Scegli una directory", "Seleziona una directory:", QtGui.QFileDialog.ShowDirsOnly)
 		for image in sorted(os.listdir(directory.toUtf8())):
 			if image.endswith(".png") or image.endswith(".PNG") or image.endswith(".JPG") or image.endswith(".jpg") or image.endswith(".jpeg") or image.endswith(".JPEG") or image.endswith(".tif") or image.endswith(".TIF") or image.endswith(".tiff") or image.endswith(".TIFF"):
@@ -427,6 +429,7 @@ class Main(QDialog, Ui_DialogImageViewer):
 				
 	#Button utility
 	def on_pushButton_chose_dir_pressed(self):
+
 		self.getDirectory()
 
 	def on_pushButton_addRow_US_pressed(self):

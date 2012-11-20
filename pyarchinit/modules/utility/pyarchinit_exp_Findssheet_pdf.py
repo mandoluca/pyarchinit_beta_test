@@ -280,10 +280,10 @@ class single_Finds_pdf_sheet:
 		luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + self.luogo_conservazione,styNormal)
 		
 		#13 row
-		intestazione_immagine  = Paragraph("<b>Immagine</b><br/>", styNormal)
-		test_image = Image("/Users/Windows/pyarchinit_PDF_folder/catalogo_immagini/inv120.png")
-		test_image.drawHeight = 2*inch*test_image.drawHeight / test_image.drawWidth
-		test_image.drawWidth = 2*inch
+##		intestazione_immagine  = Paragraph("<b>Immagine</b><br/>", styNormal)
+##		test_image = Image("/Users/Windows/pyarchinit_PDF_folder/catalogo_immagini/inv120.png")
+##		test_image.drawHeight = 2*inch*test_image.drawHeight / test_image.drawWidth
+##		test_image.drawWidth = 2*inch
 
 		#Paragraph('<para autoLeading="off" fontSize=12>This &lt;img/&gt;<img src="/Users/pyarchinit/pyarchinit_PDF_folder/test_immagini/kelebe.jpg" valign="bottom"/> is aligned<b>bottom</b></para>', styNormal)
 		#schema
@@ -301,7 +301,7 @@ class single_Finds_pdf_sheet:
 						[area, '01', '02', us,'04', '05', '06', '07', '08', '09'], #10 row ok
 						[riferimenti_magazzino, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #11 row ok
 						[lavato, '01', '02', nr_cassa, '04', '05', luogo_conservazione, '07', '08', '09'], #12 row ok
-						[test_image, '02', '03', '04','05', '06', '07','08', '09'] #13 row
+						['', '02', '03', '04','05', '06', '07','08', '09'] #13 row
 						#["https://sites.google.com/site/pyarchinit/", '01', '02', '03', '04', '05', '06', '07', '08', '09' ] #13 row
 
 						]

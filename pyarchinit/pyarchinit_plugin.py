@@ -65,6 +65,7 @@ from pyarchinit_Tafonomia_mainapp import pyarchinit_Tafonomia
 from pyarchinit_Archeozoology_mainapp import pyarchinit_Archeozoology
 from pyarchinit_UT_mainapp import pyarchinit_UT
 from pyarchinit_images_directory_export_mainapp import pyarchinit_Images_directory_export
+from pyarchinit_images_comparision_main import Comparision
 
 from pyarchinitplugindialog import PyarchinitPluginDialog
 
@@ -184,6 +185,11 @@ class PyArchInitPlugin:
 		self.actionImages_Directory_export = QAction(QIcon(icon_Directory_export), "pyArchInit Images Directories Export", self.iface.mainWindow())
 		self.actionImages_Directory_export.setWhatsThis("pyArchInit Images Directories Export")
 		QObject.connect(self.actionImages_Directory_export, SIGNAL("triggered()"),self.runImages_directory_export)
+		
+		icon_Comparision = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','directoryExp.png'))
+		self.actionComparision = QAction(QIcon(icon_Comparision), "pyArchInit Images Comparision", self.iface.mainWindow())
+		self.actionComparision.setWhatsThis("pyArchInit Images Comparision")
+		QObject.connect(self.actionComparision, SIGNAL("triggered()"),self.runComparision)
 
 		#MENU
 		self.menu=QMenu("pyArchInit")
@@ -202,7 +208,7 @@ class PyArchInitPlugin:
 		self.menu.addSeparator()
 		self.menu.addActions([self.actionUpd, self.actionGisTimeController])
 		self.menu.addSeparator()
-		self.menu.addActions([self.actionimageViewer, self.actionImages_Directory_export])
+		self.menu.addActions([self.actionimageViewer, self.actionImages_Directory_export, self.actionComparision])
 		self.menu.addSeparator()
 		self.menu.addActions([self.actionConf])
 		self.menu.addSeparator()
@@ -233,6 +239,7 @@ class PyArchInitPlugin:
 		self.toolBar.addSeparator()
 		self.toolBar.addAction(self.actionimageViewer)
 		self.toolBar.addAction(self.actionImages_Directory_export)
+		self.toolBar.addAction(self.actionComparision)
 		self.toolBar.addSeparator()
 		self.toolBar.addAction(self.actionConf)
 		self.toolBar.addSeparator()
@@ -252,6 +259,7 @@ class PyArchInitPlugin:
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionGisTimeController)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionUpd)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionimageViewer)
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionComparision)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionImages_Directory_export)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionConf)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionInfo)
@@ -342,6 +350,11 @@ class PyArchInitPlugin:
 		pluginImage_directory_export.show()
 		self.pluginGui = pluginImage_directory_export # save
 
+	def runComparision(self):
+		pluginComparision = Comparision()
+		pluginComparision.show()
+		self.pluginGui = pluginComparision # save
+
 	def unload(self):
 		# Remove the plugin
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionSite)
@@ -358,6 +371,7 @@ class PyArchInitPlugin:
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionUpd)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionimageViewer)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionImages_Directory_export)
+		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionComparision)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionConf)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionGisTimeController)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionInfo)
@@ -376,6 +390,7 @@ class PyArchInitPlugin:
 		self.iface.removeToolBarIcon(self.actionUpd)
 		self.iface.removeToolBarIcon(self.actionimageViewer)
 		self.iface.removeToolBarIcon(self.actionImages_Directory_export)
+		self.iface.removeToolBarIcon(self.actionComparision)
 		self.iface.removeToolBarIcon(self.actionGisTimeController)
 		self.iface.removeToolBarIcon(self.actionConf)
 		self.iface.removeToolBarIcon(self.actionInfo)
