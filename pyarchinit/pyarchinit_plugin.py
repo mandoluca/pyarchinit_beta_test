@@ -186,7 +186,7 @@ class PyArchInitPlugin:
 		self.actionImages_Directory_export.setWhatsThis("pyArchInit Images Directories Export")
 		QObject.connect(self.actionImages_Directory_export, SIGNAL("triggered()"),self.runImages_directory_export)
 		
-		icon_Comparision = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','directoryExp.png'))
+		icon_Comparision = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','comparision.png'))
 		self.actionComparision = QAction(QIcon(icon_Comparision), "pyArchInit Images Comparision", self.iface.mainWindow())
 		self.actionComparision.setWhatsThis("pyArchInit Images Comparision")
 		QObject.connect(self.actionComparision, SIGNAL("triggered()"),self.runComparision)

@@ -25,11 +25,6 @@ import os
 import numpy as np
 import random
 from numpy import *
-import pylab as p
-#import matplotlib.axes3d as p3
-import mpl_toolkits.mplot3d.axes3d as p3
-from matplotlib import cm
-#import matplotlib.pyplot as plt
 
 
 
@@ -92,13 +87,8 @@ class Comparision(QDialog, Ui_DialogImagesComparision):
 		#QMessageBox.warning(self, "Messaggio", str(dir(self.ui)), QMessageBox.Ok)
 		# This is always the same
 		QDialog.__init__(self)
-		
 		self.setupUi(self)
-
 		self.setWindowTitle("pyArchInit - Images Comparision Tools")
-
-
-
 
 	def connection(self):
 		from pyarchinit_conn_strings import *
@@ -123,22 +113,19 @@ class Comparision(QDialog, Ui_DialogImagesComparision):
 		#QMessageBox.warning(self, "Messaggio", str(self.FILE), QMessageBox.Ok)
 
 	def on_pushButton_run_pressed(self):
-		self.plot_3d()
+		file_list = self.generate_files_couples()
+		#QMessageBox.warning(self, "Messaggio", str(file_list), QMessageBox.Ok)
+		lista = []
+		lunghezza = len(file_list)
 
-##		file_list = self.generate_files_couples()
-##		#QMessageBox.warning(self, "Messaggio", str(file_list), QMessageBox.Ok)
-##		lista = []
-##		lunghezza = len(file_list)
-##
-##		for i in file_list:
-##			 tupla_di_ritorno = self.calculate([i[0],i[1]])
-##			 lista.append(tupla_di_ritorno)
-##			 lunghezza -=1
-##		#QMessageBox.warning(self, "Messaggio", str(lista), QMessageBox.Ok)
-##		self.plot_chart(lista)
+		for i in file_list:
+			 tupla_di_ritorno = self.calculate([i[0],i[1]])
+			 lista.append(tupla_di_ritorno)
+			 lunghezza -=1
+		#QMessageBox.warning(self, "Messaggio", str(lista), QMessageBox.Ok)
+		self.plot_chart(lista)
 
 	def calculate(self, imgs):
-		
 		#QMessageBox.warning(self, "Messaggio", str(file_path), QMessageBox.Ok)
 		img1 = Image.open(str(imgs[0]))
 		img2 = Image.open(str(imgs[1]))
@@ -174,26 +161,6 @@ class Comparision(QDialog, Ui_DialogImagesComparision):
 			lista_con_coppie.append([path1, path2])
 				
 		return lista_con_coppie
-	
-	def plot_3d(self):
-		self.widget.canvas.ax.clear()
-		delta = 0.025
-		x = arange(-3.0, 3.0, delta)
-		y = arange(-2.0, 2.0, delta)
-		X, Y = p.meshgrid(x, y)
-		Z1 = p.bivariate_normal(X, Y, 2.01, 0.01, 0.01, 1.0)
-		Z2 = p.bivariate_normal(X, Y, 1.0, 1.0, 1, 1.0)
-		# difference of Gaussians
-		Z = 1.0 * (Z2 - Z1)
-		#fig=p.figure()
-		#self.widget.canvas.ax3d.Axes3D(fig)     
-		#self.widget.canvas.ax = p3.Axes3D(fig)
-		#QMessageBox.warning(self, "Alert", str(dir(cm)) ,  QMessageBox.Ok)
-		self.widget.canvas.ax.plot_surface(X,Y,Z,cmap=cm.terrain)
-		self.widget.canvas.ax.set_xlabel('X')
-		self.widget.canvas.ax.set_ylabel('Y')
-		self.widget.canvas.ax.set_zlabel('Z')
-		self.widget.canvas.draw()
 
 	def plot_chart(self, d):
 		self.data_list = d
@@ -226,36 +193,3 @@ class Comparision(QDialog, Ui_DialogImagesComparision):
 			n+=1
 		#self.widget.canvas.ax.plot(randomNumbers)
 		self.widget.canvas.draw()
-		
-		
-##		plt = self.widget.canvas
-##		self.data = d
-##		QMessageBox.warning(self, "Messaggio", str(self.data), QMessageBox.Ok)
-##		diz = {}
-##		for item in self.data:
-##			diz[item[0]] = item[1]
-##
-##
-##		diz = {'a': 1, 'b': 2, 'c':3}
-##		n_bars = len(diz)
-##		pts = diz.values()
-##		teams = diz.keys()
-##		ind = np.arange(n_bars)     # the x locations for bar
-##		width = 0.2                 # the width of the bars
-##		#plt.subplot(111)
-##		QMessageBox.warning(self, "Messaggio", str(diz), QMessageBox.Ok)
-##		QMessageBox.warning(self, "Messaggio", str(diz.values()), QMessageBox.Ok)
-##		bars = plt.bar(ind + 0.2, pts, width, color='b', align = 'center')
-##
-##		plt.title('Classifica')
-##		plt.ylabel('pts')
-##		plt.xticks(ind + width , teams, size = 'x-small', rotation = 45)
-##
-##		for bar in bars:
-##			val = int(bar.get_height())
-##			x_pos = bar.get_x() #+ 0.4
-##			y_pos = bar.get_height() + 0.1 * bar.get_height()
-##			plt.text(x_pos, y_pos, '%d'%val, ha='center', va='bottom',size = 'small', rotation = 90)
-##		self.ui.widget.canvas.draw()
-
-   
