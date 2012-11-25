@@ -170,6 +170,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.comboBox_sito.setEditText(sito)
 		self.charge_periodo_iniz_list()
 		self.charge_periodo_fin_list()
+		self.fill_fields()
 
 	def charge_periodo_iniz_list(self):
 		search_dict = {
@@ -359,7 +360,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				self.fill_fields()
 			else:
 				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
-				self.charge_list()
+				self.charge_list_sito_def_strat()
 				self.on_pushButton_new_rec_pressed()
 		except Exception, e:
 			e = str(e)
@@ -902,7 +903,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					self.SORT_STATUS = "n"
 					self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 					self.charge_records()
-					self.charge_list()
+					self.charge_list_sito_def_strat()
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
@@ -1215,7 +1216,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				self.DB_MANAGER.delete_one_record(self.TABLE_NAME, self.ID_TABLE, id_to_delete)
 				self.charge_records() #charge records from DB
 				QMessageBox.warning(self,"Messaggio!!!","Record eliminato!")
-				self.charge_list()
+				self.charge_list_sito_def_strat()
 			except:
 					QMessageBox.warning(self, "Attenzione", "Il database e' vuoto!",  QMessageBox.Ok)
 			if bool(self.DATA_LIST) == False:
@@ -1543,6 +1544,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 	def fill_fields(self, n=0):
 		self.rec_num = n
+		#QMessageBox.warning(self, "Test", str(self.comboBox_per_fin.currentText()),  QMessageBox.Ok)
 		try:
 			self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)  												#1 - Sito
 			self.comboBox_area.setEditText(self.DATA_LIST[self.rec_num].area) 												#2 - Area
@@ -1582,7 +1584,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			if self.toolButtonPreviewMedia.isChecked() == True:
 				self.loadMediaPreview()
 		except Exception, e:
-			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+			if str(e) != 'list index out of range':
+				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def set_rec_counter(self, t, c):
 		self.rec_tot = t
@@ -1591,6 +1594,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.label_rec_corrente.setText(str(self.rec_corr))
 
 	def set_LIST_REC_TEMP(self):
+		#QMessageBox.warning(self, "Errore", str(self.comboBox_per_fin.currentText()),  QMessageBox.Ok)
 		#TableWidget
 		##Rapporti
 		rapporti = self.table2dict("self.tableWidget_rapporti")
@@ -1636,6 +1640,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		str(order_layer),														#27 - order layer
 		str(documentazione)
 		]
+		
 
 	def set_LIST_REC_CORR(self):
 		self.DATA_LIST_REC_CORR = []
@@ -1645,7 +1650,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def records_equal_check(self):
 		self.set_LIST_REC_TEMP()
 		self.set_LIST_REC_CORR()
-
+		#QMessageBox.warning(self, "Errore", str(self.DATA_LIST_REC_CORR) + str(self.DATA_LIST_REC_TEMP),  QMessageBox.Ok)
 		if self.DATA_LIST_REC_CORR == self.DATA_LIST_REC_TEMP:
 			return 0
 		else:

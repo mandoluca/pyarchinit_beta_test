@@ -258,6 +258,37 @@ class Utility:
 		else:
 			return self.list
 
+	def sum_list_of_tuples_for_value(self, l):
+		self.l  = l
+		self.l.sort()
+		cfr_txt =self.l[0][0]
+		number = self.l[0][1]
+		res_list = []
+		for i in range(len(self.l)):
+			if len(self.l) == 1:
+				temp_tup = (cfr_txt,number)
+				res_list.append(temp_tup)
+			elif  i > 0:
+				if self.l[i][0] == cfr_txt:
+					number += self.l[i][1]
+				
+				if self.l[i][0] != cfr_txt and i < len(self.l)-1:
+					temp_tup = (cfr_txt,number)
+					res_list.append(temp_tup)
+
+					cfr_txt =  self.l[i][0]
+					number = self.l[i][1]
+					
+				if self.l[i][0] == cfr_txt and i == len(self.l)-1:
+					temp_tup = (cfr_txt,number)
+					res_list.append(temp_tup)
+				
+				if self.l[i][0] != cfr_txt and i == len(self.l)-1:
+					temp_tup1, temp_tup2 = (cfr_txt,number),(self.l[i][0],self.l[i][1])
+					res_list.append(temp_tup1)
+					res_list.append(temp_tup2)
+		return res_list
+
 #print dir(Utility())
 #Samples - uncomment and run the module to view the functions
 #u = Utility()

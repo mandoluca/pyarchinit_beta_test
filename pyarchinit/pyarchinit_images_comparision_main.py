@@ -164,6 +164,7 @@ class Comparision(QDialog, Ui_DialogImagesComparision):
 
 	def plot_chart(self, d):
 		self.data_list = d
+		QMessageBox.warning(self, "self.data_list", str(self.data_list) ,  QMessageBox.Ok)
 		
 		if type(self.data_list) == list:
 			data_diz = {}
@@ -188,6 +189,7 @@ class Comparision(QDialog, Ui_DialogImagesComparision):
 			val = int(bar.get_height())
 			x_pos = bar.get_x()+0.2
 			y_pos = 1.5 #bar.get_height() - 1
+			#self.widget.canvas.ax.xticks(ind + width , teams, size = 'x-small', rotation = 90)
 			#self.widget.canvas.ax.set_xticklabels(ind + x, label = 'gigi', position = (x_pos, y_pos), size = 'x-small', rotation = 90)
 			self.widget.canvas.ax.text(x_pos, y_pos, teams[n],zorder=0, ha='center', va='center',size = 'x-small', rotation = 90)
 			n+=1

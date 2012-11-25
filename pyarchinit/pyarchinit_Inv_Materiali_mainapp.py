@@ -48,6 +48,9 @@ from  sortpanelmain import SortPanelMain
 from  pyarchinit_exp_Findssheet_pdf import *
 
 from  imageViewer import ImageViewer
+import numpy as np
+import random
+from numpy import *
 
 class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	MSG_BOX_TITLE = "PyArchInit - Scheda Inventario Materiali"
@@ -132,6 +135,74 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.on_pushButton_connect_pressed()
 		except:
 			pass
+		self.fill_fields()
+
+	def on_pushButtonMpl_pressed(self):
+		dataset = []
+		
+		parameter1 = 'Forme minime'
+		parameter2 = 'Forma'
+		contatore = 0
+		for i in range(len(self.DATA_LIST)):
+			temp_dataset = ()
+			misurazioni = eval(self.DATA_LIST[i].misurazioni)
+			if bool(misurazioni) == True:
+
+				for mis in misurazioni:
+					if mis[0] == 'forme minime':
+						try:
+							temp_dataset = (str(self.DATA_LIST[i].definizione), int(mis[1]))
+							contatore += int(mis[1])
+							dataset.append(temp_dataset)
+						except:
+							pass
+		
+		QMessageBox.warning(self, "Totale", str(contatore),  QMessageBox.Ok)
+		if bool(dataset) == True:
+			dataset_sum = self.UTILITY.sum_list_of_tuples_for_value(dataset)
+			self.plot_chart(dataset_sum)
+		else:
+			QMessageBox.warning(self, "Attenzione", "Non ci sono dati da rappresentare",  QMessageBox.Ok)
+
+	def plot_chart(self, d):
+		self.data_list = d
+		
+		if type(self.data_list) == list:
+			data_diz = {}
+			for item in self.data_list:
+				data_diz[item[0]] = item[1]
+		x = range(len(data_diz))
+		n_bars = len(data_diz)
+		values = data_diz.values()
+		teams = data_diz.keys()
+		ind = np.arange(n_bars)
+		#randomNumbers = random.sample(range(0, 10), 10)
+		self.widget.canvas.ax.clear()
+		#QMessageBox.warning(self, "Alert", str(teams) ,  QMessageBox.Ok)
+
+		bars = self.widget.canvas.ax.bar(left=x, height=values, width=0.5, align='center', alpha=0.4,picker=5)
+		
+		self.widget.canvas.ax.set_title('Grafico per Forme minime')
+		self.widget.canvas.ax.set_ylabel('Nr. Forme')
+		l = []
+		for team in teams:
+			l.append('""')
+			
+		#self.widget.canvas.ax.set_xticklabels(x , ""   ,size = 'x-small', rotation = 0)
+		n = 0
+
+		for bar in bars:
+			val = int(bar.get_height())
+			x_pos = bar.get_x()+0.5
+			label  = teams[n]+ ' - ' + str(val)
+			y_pos = 1.5 #bar.get_height() - len(label) bar.get_height() - 1
+			self.widget.canvas.ax.tick_params(axis='x', labelsize=8)
+			#self.widget.canvas.ax.set_xticklabels(ind + x, ['fg'], position = (x_pos,y_pos), xsize = 'small', rotation = 90)
+			
+			self.widget.canvas.ax.text(x_pos, y_pos, label,zorder=0, ha='center', va='bottom',size = 'x-small', rotation = 90)
+			n+=1
+		#self.widget.canvas.ax.plot(randomNumbers)
+		self.widget.canvas.draw()
 
 
 	def on_pushButton_connect_pressed(self):
@@ -306,7 +377,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.setComboBoxEnable(['self.comboBox_sito'], 'True')
 			self.setComboBoxEnable(['self.lineEdit_num_inv'], 'True')
 
-
 			self.SORT_STATUS = "n"
 			self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
@@ -349,22 +419,22 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		for i in range(len(self.DATA_LIST)):
 			data_list.append([
             str(self.DATA_LIST[i].id_invmat), 							#1 - id_invmat
-            str(self.DATA_LIST[i].sito),								#2 - sito
-			int(self.DATA_LIST[i].numero_inventario),					#3 - numero_inventario
+            str(self.DATA_LIST[i].sito),									#2 - sito
+			int(self.DATA_LIST[i].numero_inventario),				#3 - numero_inventario
 			str(self.DATA_LIST[i].tipo_reperto),						#4 - tipo_reperto
 			str(self.DATA_LIST[i].criterio_schedatura),				#5 - criterio_schedatura
-            self.DATA_LIST[i].definizione,								#6 - definizione
+            self.DATA_LIST[i].definizione,									#6 - definizione
             unicode(self.DATA_LIST[i].descrizione),					#7 - descrizione
-            str(self.DATA_LIST[i].area),								#8 - area
-            str(self.DATA_LIST[i].us),                                 #9 - us
-            str(self.DATA_LIST[i].lavato),                             #10 - lavato
+            str(self.DATA_LIST[i].area),									#8 - area
+            str(self.DATA_LIST[i].us),                                 	#9 - us
+            str(self.DATA_LIST[i].lavato),                            	#10 - lavato
             str(self.DATA_LIST[i].nr_cassa), 							#11 - nr_cassa
 			str(self.DATA_LIST[i].luogo_conservazione),			    #12 - luogo_conservazione
 			str(self.DATA_LIST[i].stato_conservazione),				#13 - stato_conservazione
-			str(self.DATA_LIST[i].datazione_reperto),					#14 - datazione_reperto
+			str(self.DATA_LIST[i].datazione_reperto),				#14 - datazione_reperto
 			str(self.DATA_LIST[i].elementi_reperto),					#15 - elementi_reperto
-            str(self.DATA_LIST[i].misurazioni),                        #16 - misurazioni
-            str(self.DATA_LIST[i].rif_biblio),                         #17 - rif_biblio
+            str(self.DATA_LIST[i].misurazioni),                        	#16 - misurazioni
+            str(self.DATA_LIST[i].rif_biblio),                         		#17 - rif_biblio
             str(self.DATA_LIST[i].tecnologie)							#18 - misurazioni
 		])
 		return data_list

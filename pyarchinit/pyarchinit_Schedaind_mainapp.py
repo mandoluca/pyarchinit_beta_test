@@ -50,7 +50,6 @@ from  pyarchinit_exp_Individui_pdf import *
 from delegateComboBox import *
 
 
-
 class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 	MSG_BOX_TITLE = "PyArchInit - pyarchinit_US_version 0.4 - Scheda Individuo"
 	DATA_LIST = []
@@ -201,36 +200,10 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 
 	def customize_GUI(self):
 		pass
-		"""
-		self.tableWidget_rapporti.setColumnWidth(0,380)
-		self.tableWidget_rapporti.setColumnWidth(1,110)
-
-		self.mapPreview = QgsMapCanvas(self)
-		self.mapPreview.setCanvasColor(QColor(225,225,225))
-		self.tabWidget.addTab(self.mapPreview, "Piante")
-		
-		self.setComboBoxEditable(["self.comboBox_per_iniz"],1)
-		self.setComboBoxEditable(["self.comboBox_fas_iniz"],1)
-		self.setComboBoxEditable(["self.comboBox_per_fin"],1)
-		self.setComboBoxEditable(["self.comboBox_fas_fin"],1)
-		
-		valuesRS = ["Uguale_a", "Si_lega_a", "Copre", "Coperto da", "Riempie", "Riempito da", "Taglia", "Tagliato da", "Si appoggia a", "Gli si appoggia"]
-		self.delegateRS = ComboBoxDelegate()
-		self.delegateRS.def_values(valuesRS)
-		self.tableWidget_rapporti.setItemDelegateForColumn(0,self.delegateRS)
-
-		valuesINCL_CAMP = ["Terra", "Pietre", "Laterzio", "Ciottoli", "Calcare", "Calce", "Carboni", "Concotto", "Ghiaia", "Cariossidi", "Malacofauna", "Sabbia", "Malta"]
-		self.delegateINCL_CAMP = ComboBoxDelegate()
-		valuesINCL_CAMP.sort()
-		self.delegateINCL_CAMP.def_values(valuesINCL_CAMP)
-		self.tableWidget_inclusi.setItemDelegateForColumn(0,self.delegateINCL_CAMP)
-		self.tableWidget_campioni.setItemDelegateForColumn(0,self.delegateINCL_CAMP)
-		"""
 
 	def loadMapPreview(self, mode = 0):
 		pass
 			
-
 
 	def charge_list(self):
 		sito_vl = self.UTILITY.tup_2_list_III(self.DB_MANAGER.group_by('site_table', 'sito', 'SITE'))
@@ -246,117 +219,34 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 
 	def charge_periodo_list(self):
 		pass
-		"""
-		try:
-			search_dict = {
-			'sito'  : "'"+str(self.comboBox_sito.currentText())+"'",
-			}
 		
-			periodo_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
-		
-			periodo_list = []
-
-			for i in range(len(periodo_vl)):
-				periodo_list.append(str(periodo_vl[i].periodo))
-			try:
-				periodo_vl.remove('')
-			except:
-				pass
-
-			periodo_list.sort()
-
-			self.comboBox_per_iniz.clear()
-			self.comboBox_per_iniz.addItems(periodo_list)
-			self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
-			self.comboBox_per_fin.clear()
-			self.comboBox_per_fin.addItems(periodo_list)
-			self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_finale)
-		except:
-			pass
-		"""
 
 	def charge_fase_iniz_list(self):
 		pass
-		"""
-		try:
-			search_dict = {
-			'sito'  : "'"+str(self.comboBox_sito.currentText())+"'",
-			'periodo'  : "'"+str(self.comboBox_per_iniz.currentText())+"'",
-			}
 		
-			fase_list_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
-		
-			fase_list = []
-
-			for i in range(len(fase_list_vl)):
-				fase_list.append(str(fase_list_vl[i].fase))
-		
-			try:
-				fase_list.remove('')
-			except:
-				pass
-
-			self.comboBox_fas_iniz.clear()
-
-			fase_list.sort()
-			self.comboBox_fas_iniz.addItems(fase_list)
-			self.comboBox_fas_iniz.setEditText(self.DATA_LIST[self.rec_num].fase_iniziale)
-
-		except:
-			pass
-		"""
 
 
 	def charge_fase_fin_list(self):
-		pass
-		"""
-		try:
-			search_dict = {
-			'sito'  : "'"+str(self.comboBox_sito.currentText())+"'",
-			'periodo'  : "'"+str(self.comboBox_per_fin.currentText())+"'",
-			}
-
-			fase_list_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
-
-			fase_list = []
-
-			for i in range(len(fase_list_vl)):
-				fase_list.append(str(fase_list_vl[i].fase))
-
-			try:
-				fase_list.remove('')
-			except:
-				pass
-
-			self.comboBox_fas_fin.clear()
-
-			fase_list.sort()
-			self.comboBox_fas_fin.addItems(fase_list)
-			self.comboBox_fas_fin.setEditText(self.DATA_LIST[self.rec_num].fase_finale)
-
-		except:
-			pass
-		"""
+		pass		
 
 
 	#buttons functions
-
 
 	def generate_list_pdf(self):
 		data_list = []
 		for i in range(len(self.DATA_LIST)):
 			data_list.append([
 			str(self.DATA_LIST[i].sito),					#1 - Sito
-			int(self.DATA_LIST[i].area),					#2 - US
-			int(self.DATA_LIST[i].us),		        		#3 - data
-			int(self.DATA_LIST[i].nr_individuo),			#4- osservazioni
-			str(self.DATA_LIST[i].data_schedatura),			#5 - eta_stima
-			str(self.DATA_LIST[i].schedatore),
-			str(self.DATA_LIST[i].sesso), 	                #6 - sex_stima
-			str(self.DATA_LIST[i].eta_min), 	        			#7 - sex_stima
-			str(self.DATA_LIST[i].eta_max),					#8- sex_stima
-			str(self.DATA_LIST[i].classi_eta),					#9 - sex_stima
-			str(self.DATA_LIST[i].osservazioni)				#10 - sex_stima
+			int(self.DATA_LIST[i].area),					#2 - Area
+			int(self.DATA_LIST[i].us),		        		#3 - us
+			int(self.DATA_LIST[i].nr_individuo),			#4 -  nr individuo
+			str(self.DATA_LIST[i].data_schedatura),	#5 - data schedatura
+			str(self.DATA_LIST[i].schedatore),          #6 - schedatore
+			str(self.DATA_LIST[i].sesso), 	             #7 - sesso
+			str(self.DATA_LIST[i].eta_min), 	         #8 - eta' minima
+			str(self.DATA_LIST[i].eta_max),			 #9- eta massima
+			str(self.DATA_LIST[i].classi_eta),		     #10 - classi di eta'
+			str(self.DATA_LIST[i].osservazioni)			 #11 - osservazioni
 		])
 		return data_list
 
@@ -369,10 +259,9 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 	def on_toolButtonPan_toggled(self):
 		self.toolPan = QgsMapToolPan(self.mapPreview)
 		self.mapPreview.setMapTool(self.toolPan)
-
-
+	"""
+	"""
 	def on_pushButton_showSelectedFeatures_pressed(self):
-		pass
 		
 		field_position = self.pyQGIS.findFieldFrDict(self.ID_TABLE)
 
@@ -436,7 +325,6 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 			corr = 0
 		else:
 			corr = self.REC_CORR
-
 		self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 		self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 		self.SORT_STATUS = "o"
@@ -508,9 +396,7 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 					self.setComboBoxEnable(["self.lineEdit_area"],"False")
 					self.setComboBoxEnable(["self.lineEdit_us"],"False")
 					self.setComboBoxEnable(["self.lineEdit_individuo"],"False")
-
 					self.enable_button(1)
-
 			else:
 				pass
 
@@ -521,9 +407,7 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 		
 		return test
 
-
 	def insert_new_rec(self):
-
 		if self.comboBox_eta_min.currentText() == "":
 			eta_min = None
 		else:
@@ -543,16 +427,16 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 			data = self.DB_MANAGER.insert_values_ind(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
 			str(self.comboBox_sito.currentText()), 				        #1 - Sito
-			str(self.lineEdit_area.text()),
-			int(self.lineEdit_us.text()),
-			int(self.lineEdit_individuo.text()),					        #3 - US
-			str(self.lineEdit_data_schedatura.text()),			                #4 - data
-			str(self.lineEdit_schedatore.text()),		                        #7 - osservazioni
-			str(self.comboBox_sesso.currentText()),								#9 - sex_stima
-			eta_min,													#10 - sex_stima
-			eta_max,								#11 - sex_stima
-			classi_eta,								#11 - sex_stima
-			str(self.textEdit_osservazioni.toPlainText())								#12 - sex_stima
+			str(self.lineEdit_area.text()),										#2 - area
+			int(self.lineEdit_us.text()),											#3 - US
+			int(self.lineEdit_individuo.text()),					        		#4 - individuo
+			str(self.lineEdit_data_schedatura.text()),			            #5 - data schedatura
+			str(self.lineEdit_schedatore.text()),		                        #6 - schedatore
+			str(self.comboBox_sesso.currentText()),						#7 - sesso
+			eta_min,																	#8 - eta' min
+			eta_max,																#9 - eta' max
+			classi_eta,																#10 - classi eta
+			str(self.textEdit_osservazioni.toPlainText())					#11 - osservazioni
 			)
 			try:
 				self.DB_MANAGER.insert_data_session(data)
@@ -637,7 +521,6 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_next_rec_pressed(self):
-
 		if self.records_equal_check() == 1:
 			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 
@@ -652,7 +535,6 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 			except Exception, e:
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
-
 
 	def on_pushButton_delete_pressed(self):
 		msg = QMessageBox.warning(self,"Attenzione!!!","Vuoi veramente eliminare il record? \n L'azione e' irreversibile", QMessageBox.Cancel,1)
@@ -669,7 +551,6 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 				QMessageBox.warning(self, "Attenzione", "Il database e' vuoto!" + str(e),  QMessageBox.Ok)
 
 			if bool(self.DATA_LIST) == False:
-
 				self.DATA_LIST = []
 				self.DATA_LIST_REC_CORR = []
 				self.DATA_LIST_REC_TEMP = []
@@ -712,9 +593,6 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 		if self.BROWSE_STATUS != "f":
 			QMessageBox.warning(self, "ATTENZIONE", "Per eseguire una nuova ricerca clicca sul pulsante 'new search' ",  QMessageBox.Ok)
 		else:
-
-			#TableWidget
-			
 			if self.lineEdit_us.text() != "":
 				us = int(self.lineEdit_us.text())
 			else:
@@ -736,17 +614,17 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 				eta_max = ""
 
 			search_dict = {
-			self.TABLE_FIELDS[0]  : "'" + str(self.comboBox_sito.currentText())+"'",		#0 - Sito
-			self.TABLE_FIELDS[1]  : "'" + str(self.lineEdit_area.text()) + "'",
-			self.TABLE_FIELDS[2]  : us,																#2 - US
-			self.TABLE_FIELDS[3]  : individuo,                #3 - data
-			self.TABLE_FIELDS[4]  : "'" + str(self.lineEdit_data_schedatura.text()) + "'",		        #6 - osservazioni
-			self.TABLE_FIELDS[5]  : "'" + str(self.lineEdit_schedatore.text())+"'",		        #7 - eta_stima
-			self.TABLE_FIELDS[6]  : "'" + str(self.comboBox_sesso.currentText())+"'",		        #8 - sex_stima
-			self.TABLE_FIELDS[7]  : eta_min,						#9 - sex_stima
-			self.TABLE_FIELDS[8]  : eta_max,						#10 - sex_stima
-			self.TABLE_FIELDS[9]  :  "'" + str(self.comboBox_classi_eta.currentText())+"'",						#10 - sex_stima
-			self.TABLE_FIELDS[10]  : str(self.textEdit_osservazioni.toPlainText())		#11 - sex_stima
+			self.TABLE_FIELDS[0]  : "'" + str(self.comboBox_sito.currentText())+"'",			#1 - Sito
+			self.TABLE_FIELDS[1]  : "'" + str(self.lineEdit_area.text()) + "'",						#2 - Area
+			self.TABLE_FIELDS[2]  : us,																		#3 - US
+			self.TABLE_FIELDS[3]  : individuo,                												#4 - individuo
+			self.TABLE_FIELDS[4]  : "'" + str(self.lineEdit_data_schedatura.text()) + "'",		#5 - data schedatura
+			self.TABLE_FIELDS[5]  : "'" + str(self.lineEdit_schedatore.text())+"'",		        #6 - schedatore
+			self.TABLE_FIELDS[6]  : "'" + str(self.comboBox_sesso.currentText())+"'",		#7 - sesso
+			self.TABLE_FIELDS[7]  : eta_min,																#8 - eta min
+			self.TABLE_FIELDS[8]  : eta_max,																#9 - eta max
+			self.TABLE_FIELDS[9]  :  "'" + str(self.comboBox_classi_eta.currentText())+"'",	#10 - classi eta
+			self.TABLE_FIELDS[10]  : str(self.textEdit_osservazioni.toPlainText())				#11 - osservazioni
 			}
 
 			u = Utility()
@@ -769,7 +647,6 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 					self.setComboBoxEnable(["self.lineEdit_area"],"False")
 					self.setComboBoxEnable(["self.lineEdit_us"],"False")
 					self.setComboBoxEnable(["self.lineEdit_individuo"],"False")
-
 				else:
 					self.DATA_LIST = []
 					for i in res:
@@ -781,7 +658,6 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 
-					
 					if self.REC_TOT == 1:
 						strings = ("E' stato trovato", self.REC_TOT, "record")
 						if self.toolButtonGis.isChecked() == True:
@@ -828,22 +704,19 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 	#custom functions
 	def charge_records(self):
 		self.DATA_LIST = []
-			
+
 		id_list = []
 		for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
 			id_list.append(eval("i."+ self.ID_TABLE))
-
 
 		temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
 		for i in temp_data_list:
 			self.DATA_LIST.append(i)
 
-
 	def datestrfdate(self):
 		now = date.today()
 		today = now.strftime("%d-%m-%Y")
 		return today
-
 
 	def table2dict(self, n):
 		self.tablename = n
@@ -861,7 +734,6 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 				lista.append(sub_list)
 
 		return lista
-
 
 	def tableInsertData(self, t, d):
 		pass
@@ -907,43 +779,42 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 		#inclusi_row_count = self.tableWidget_inclusi.rowCount()
 
 		self.comboBox_sito.setEditText("")  						#1 - Sito
-		self.lineEdit_area.clear()							#3 - US
-		self.lineEdit_us.clear()							#3 - US
-		self.lineEdit_data_schedatura.clear()						        #4 - data
-		self.lineEdit_schedatore.clear()						#7 - osservazioni
-		self.lineEdit_individuo.clear()						        #8 - eta_stima
-		self.comboBox_sesso.setEditText("")						        #9 - sex_stima
-		self.comboBox_eta_min.setEditText("")						        #10 - sex_stima
-		self.comboBox_eta_max.setEditText("")						        #11 - sex_stima
-		self.comboBox_classi_eta.setEditText("")						        #11 - sex_stima
-		self.textEdit_osservazioni.clear()					#12 - sex_stima
+		self.lineEdit_area.clear()											#2 - area
+		self.lineEdit_us.clear()											#3 - US
+		self.lineEdit_data_schedatura.clear()						    #4 - data schedatura
+		self.lineEdit_schedatore.clear()								#5 - schedatore
+		self.lineEdit_individuo.clear()						        	#6 - individuo
+		self.comboBox_sesso.setEditText("")						#7 - sesso
+		self.comboBox_eta_min.setEditText("")					#8 - eta' minima
+		self.comboBox_eta_max.setEditText("")					#9 - eta' massima
+		self.comboBox_classi_eta.setEditText("")					#10 - classi di eta'
+		self.textEdit_osservazioni.clear()								#11 - osservazioni
 
 
 	def fill_fields(self, n=0):
 		self.rec_num = n
 		try:
-			
-			self.comboBox_sito.setEditText(str(self.DATA_LIST[self.rec_num].sito))  				#1 - Sito
-			self.lineEdit_area.setText(str(self.DATA_LIST[self.rec_num].area))			#8 - eta_stim
-			self.lineEdit_us.setText(str(self.DATA_LIST[self.rec_num].us))
-			self.lineEdit_individuo.setText(str(self.DATA_LIST[self.rec_num].nr_individuo))			#8 - eta_stim
-			self.lineEdit_data_schedatura.setText(str(self.DATA_LIST[self.rec_num].data_schedatura))				#4 - data
-			self.lineEdit_schedatore.setText(str(self.DATA_LIST[self.rec_num].schedatore))			#7 - osservazioni
-			self.comboBox_sesso.setEditText(str(self.DATA_LIST[self.rec_num].sesso))			        #9 - sex_stima
+			self.comboBox_sito.setEditText(str(self.DATA_LIST[self.rec_num].sito))  							#1 - Sito
+			self.lineEdit_area.setText(str(self.DATA_LIST[self.rec_num].area))									#2 - area
+			self.lineEdit_us.setText(str(self.DATA_LIST[self.rec_num].us))											#3 - us
+			self.lineEdit_individuo.setText(str(self.DATA_LIST[self.rec_num].nr_individuo))						#4 - nr individuo
+			self.lineEdit_data_schedatura.setText(str(self.DATA_LIST[self.rec_num].data_schedatura))	#5 - data schedatura
+			self.lineEdit_schedatore.setText(str(self.DATA_LIST[self.rec_num].schedatore))					#6 - schedatore
+			self.comboBox_sesso.setEditText(str(self.DATA_LIST[self.rec_num].sesso))			        	#7 - sesso
 
-			if self.DATA_LIST[self.rec_num].eta_min == None:												#4 - cronologia iniziale
+			if self.DATA_LIST[self.rec_num].eta_min == None:														#8 - eta minima
 				self.comboBox_eta_min.setEditText("")
 			else:
 				self.comboBox_eta_min.setEditText(str(self.DATA_LIST[self.rec_num].eta_min))
 
-			if self.DATA_LIST[self.rec_num].eta_max == None:												#4 - cronologia iniziale
+			if self.DATA_LIST[self.rec_num].eta_max == None:													#9 - eta massima
 				self.comboBox_eta_max.setEditText("")
 			else:
 				self.comboBox_eta_max.setEditText(str(self.DATA_LIST[self.rec_num].eta_max))
 
-			self.comboBox_classi_eta.setEditText(str(self.DATA_LIST[self.rec_num].classi_eta))
+			self.comboBox_classi_eta.setEditText(str(self.DATA_LIST[self.rec_num].classi_eta))			#10 - classi di eta
 
-			unicode(self.textEdit_osservazioni.setText(self.DATA_LIST[self.rec_num].osservazioni))		#12 - sex_stima
+			unicode(self.textEdit_osservazioni.setText(self.DATA_LIST[self.rec_num].osservazioni))		#11 - osservazioni
 			if self.toolButtonPreview.isChecked() == True:
 				self.loadMapPreview()
 		except Exception, e:
@@ -969,16 +840,16 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 		#data
 		self.DATA_LIST_REC_TEMP = [
 		str(self.comboBox_sito.currentText()),							#1 - Sito
-		str(self.lineEdit_area.text()),									#1 - Sito
-		str(self.lineEdit_us.text()),									#1 - Sito
-		str(self.lineEdit_individuo.text()),							#8 - eta_stima
-		str(self.lineEdit_data_schedatura.text()),						#4 - data
-		str(self.lineEdit_schedatore.text()),			    		    #7 - osservazioni
-		str(self.comboBox_sesso.currentText()),			    		    #9 - sex_stima
-		str(eta_min),													#10- sex_stima
-		str(eta_max),													#11 - sex_stima
-		str(self.comboBox_classi_eta.currentText()),					#11 - sex_stima
-		str(self.textEdit_osservazioni.toPlainText().toLatin1())]		#12 - sex_stima
+		str(self.lineEdit_area.text()),											#2 - Area
+		str(self.lineEdit_us.text()),												#3 - US
+		str(self.lineEdit_individuo.text()),										#4 - individuo
+		str(self.lineEdit_data_schedatura.text()),							#5 - data schedatura
+		str(self.lineEdit_schedatore.text()),			    		    		#6 - schedatore
+		str(self.comboBox_sesso.currentText()),			    		    #7 - sesso
+		str(eta_min),																#8- eta minima
+		str(eta_max),																#9 - eta massima
+		str(self.comboBox_classi_eta.currentText()),					#10 - classi eta
+		str(self.textEdit_osservazioni.toPlainText().toLatin1())]		#11 - osservazioni
 
 	def set_LIST_REC_CORR(self):
 		self.DATA_LIST_REC_CORR = []

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_inventario_reperti_ui.ui'
 #
-# Created: Sun Oct 14 18:24:50 2012
+# Created: Thu Nov 22 19:15:40 2012
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -769,29 +769,47 @@ class Ui_DialogInventarioMateriali(object):
         spacerItem9 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.gridLayout_32.addItem(spacerItem9, 1, 0, 1, 1)
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
+        self.tab_6 = QtGui.QWidget()
+        self.tab_6.setObjectName(_fromUtf8("tab_6"))
+        self.formLayout_2 = QtGui.QFormLayout(self.tab_6)
+        self.formLayout_2.setObjectName(_fromUtf8("formLayout_2"))
+        self.pushButtonMpl = QtGui.QPushButton(self.tab_6)
+        self.pushButtonMpl.setObjectName(_fromUtf8("pushButtonMpl"))
+        self.formLayout_2.setWidget(0, QtGui.QFormLayout.LabelRole, self.pushButtonMpl)
+        self.widget = Mplwidget(self.tab_6)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
+        self.widget.setSizePolicy(sizePolicy)
+        self.widget.setMinimumSize(QtCore.QSize(0, 260))
+        self.widget.setStyleSheet(_fromUtf8("background-color: rgb(239, 236, 236);"))
+        self.widget.setObjectName(_fromUtf8("widget"))
+        self.formLayout_2.setWidget(0, QtGui.QFormLayout.FieldRole, self.widget)
+        self.tabWidget.addTab(self.tab_6, _fromUtf8(""))
         self.tab_5 = QtGui.QWidget()
         self.tab_5.setObjectName(_fromUtf8("tab_5"))
         self.formLayout = QtGui.QFormLayout(self.tab_5)
         self.formLayout.setFieldGrowthPolicy(QtGui.QFormLayout.FieldsStayAtSizeHint)
         self.formLayout.setObjectName(_fromUtf8("formLayout"))
-        self.pushButton_exp_pdf_sheet = QtGui.QPushButton(self.tab_5)
-        self.pushButton_exp_pdf_sheet.setMaximumSize(QtCore.QSize(200, 16777215))
-        self.pushButton_exp_pdf_sheet.setObjectName(_fromUtf8("pushButton_exp_pdf_sheet"))
-        self.formLayout.setWidget(1, QtGui.QFormLayout.LabelRole, self.pushButton_exp_pdf_sheet)
-        spacerItem10 = QtGui.QSpacerItem(590, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.formLayout.setItem(1, QtGui.QFormLayout.FieldRole, spacerItem10)
         self.toolButtonPreviewMedia = QtGui.QToolButton(self.tab_5)
         self.toolButtonPreviewMedia.setEnabled(True)
         self.toolButtonPreviewMedia.setMinimumSize(QtCore.QSize(150, 0))
         self.toolButtonPreviewMedia.setCheckable(True)
         self.toolButtonPreviewMedia.setObjectName(_fromUtf8("toolButtonPreviewMedia"))
         self.formLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.toolButtonPreviewMedia)
+        self.pushButton_exp_pdf_sheet = QtGui.QPushButton(self.tab_5)
+        self.pushButton_exp_pdf_sheet.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.pushButton_exp_pdf_sheet.setObjectName(_fromUtf8("pushButton_exp_pdf_sheet"))
+        self.formLayout.setWidget(1, QtGui.QFormLayout.LabelRole, self.pushButton_exp_pdf_sheet)
+        spacerItem10 = QtGui.QSpacerItem(590, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.formLayout.setItem(1, QtGui.QFormLayout.FieldRole, spacerItem10)
         self.tabWidget.addTab(self.tab_5, _fromUtf8(""))
         self.verticalLayout_3.addWidget(self.tabWidget)
         self.gridLayout_18.addLayout(self.verticalLayout_3, 0, 0, 1, 1)
 
         self.retranslateUi(DialogInventarioMateriali)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(5)
         QtCore.QMetaObject.connectSlotsByName(DialogInventarioMateriali)
 
     def retranslateUi(self, DialogInventarioMateriali):
@@ -892,8 +910,11 @@ class Ui_DialogInventarioMateriali(object):
         self.comboBox_lavato.setItemText(1, QtGui.QApplication.translate("DialogInventarioMateriali", "No", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("DialogInventarioMateriali", "Lavato", None, QtGui.QApplication.UnicodeUTF8))
         self.label_40.setText(QtGui.QApplication.translate("DialogInventarioMateriali", "Luogo di conservazione", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("DialogInventarioMateriali", "Riferimenti stratigrafici e magazzino", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_exp_pdf_sheet.setText(QtGui.QApplication.translate("DialogInventarioMateriali", "Exp schede Pdf ", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("DialogInventarioMateriali", "Rif. stratigrafici", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButtonMpl.setText(QtGui.QApplication.translate("DialogInventarioMateriali", "Quantificazioni Test", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), QtGui.QApplication.translate("DialogInventarioMateriali", "Quantificazioni", None, QtGui.QApplication.UnicodeUTF8))
         self.toolButtonPreviewMedia.setText(QtGui.QApplication.translate("DialogInventarioMateriali", "Media Preview", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_exp_pdf_sheet.setText(QtGui.QApplication.translate("DialogInventarioMateriali", "Exp schede Pdf ", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QtGui.QApplication.translate("DialogInventarioMateriali", "Tools", None, QtGui.QApplication.UnicodeUTF8))
 
+from mplwidget import Mplwidget
