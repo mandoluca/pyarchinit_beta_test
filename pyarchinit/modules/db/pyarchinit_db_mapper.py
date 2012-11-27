@@ -449,7 +449,12 @@ class INVENTARIO_MATERIALI(object):
 	elementi_reperto,
 	misurazioni,
 	rif_biblio,
-	tecnologie
+	tecnologie,
+	forme_minime,
+	forme_massime,
+	totale_frammenti,
+	corpo_ceramico,
+	rivestimento
 	):
 		self.id_invmat = id_invmat #0
 		self.sito = sito #1
@@ -469,10 +474,15 @@ class INVENTARIO_MATERIALI(object):
 		self.misurazioni = misurazioni #15
 		self.rif_biblio = rif_biblio #16
 		self.tecnologie = tecnologie #17
+		self.forme_minime = forme_minime #18
+		self.forme_massime =  forme_massime #19
+		self.totale_frammenti = totale_frammenti #20
+		self.corpo_ceramico =  corpo_ceramico #21
+		self.rivestimento = rivestimento #22
 
 	#def __repr__"
 	def __repr__(self):
-		return "<INVENTARIO_MATERIALI(%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
+		return "<INVENTARIO_MATERIALI(%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d, '%s', '%s' )>" % (
 		self.id_invmat,
 		self.sito,
 		self.numero_inventario,
@@ -490,7 +500,12 @@ class INVENTARIO_MATERIALI(object):
 		self.elementi_reperto,
 		self.misurazioni,
 		self.rif_biblio,
-		self.tecnologie
+		self.tecnologie,
+		self.forme_minime,
+		self.forme_massime,
+		self.totale_frammenti,
+		self.corpo_ceramico,
+		self.rivestimento
 		)
 #mapper
 
@@ -516,7 +531,12 @@ class INVENTARIO_MATERIALI_TOIMP(object):
 	elementi_reperto,
 	misurazioni,
 	rif_biblio,
-	tecnologie
+	tecnologie,
+	forme_minime,
+	forme_massime,
+	totale_frammenti,
+	corpo_ceramico,
+	rivestimento
 	):
 		self.id_invmat = id_invmat #0
 		self.sito = sito #1
@@ -536,10 +556,14 @@ class INVENTARIO_MATERIALI_TOIMP(object):
 		self.misurazioni = misurazioni #15
 		self.rif_biblio = rif_biblio #16
 		self.tecnologie = tecnologie #17
-
+		self.forme_minime = forme_minime #18
+		self.forme_massime =  forme_massime #19
+		self.totale_frammenti = totale_frammenti #20
+		self.corpo_ceramico =  corpo_ceramico #21
+		self.rivestimento = rivestimento #22
 	#def __repr__"
 	def __repr__(self):
-		return "<INVENTARIO_MATERIALI_TOIMP(%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
+		return "<INVENTARIO_MATERIALI_TOIMP(%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d,'%s', '%s')>" % (
 		self.id_invmat,
 		self.sito,
 		self.numero_inventario,
@@ -557,7 +581,12 @@ class INVENTARIO_MATERIALI_TOIMP(object):
 		self.elementi_reperto,
 		self.misurazioni,
 		self.rif_biblio,
-		self.tecnologie
+		self.tecnologie,
+		self.forme_minime,
+		self.forme_massime,
+		self.totale_frammenti,
+		self.corpo_ceramico,
+		self.rivestimento
 		)
 #mapper
 

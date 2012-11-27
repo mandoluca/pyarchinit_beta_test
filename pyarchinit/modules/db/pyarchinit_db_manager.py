@@ -182,23 +182,28 @@ class Pyarchinit_db_management:
 	def insert_values_reperti(self, *arg):
 		"""Istanzia la classe Reperti da pyarchinit_db_mapper"""
 		inventario_materiali = INVENTARIO_MATERIALI(arg[0],
-									arg[1],
-									arg[2],
-									arg[3],
-									arg[4],
-									arg[5],
-									arg[6],
-									arg[7],
-									arg[8],
-									arg[9],
-									arg[10],
-									arg[11],
-									arg[12],
-									arg[13],
-									arg[14],
-									arg[15],
-									arg[16],
-									arg[17])
+																		arg[1],
+																		arg[2],
+																		arg[3],
+																		arg[4],
+																		arg[5],
+																		arg[6],
+																		arg[7],
+																		arg[8],
+																		arg[9],
+																		arg[10],
+																		arg[11],
+																		arg[12],
+																		arg[13],
+																		arg[14],
+																		arg[15],
+																		arg[16],
+																		arg[17],
+																		arg[18],
+																		arg[19],
+																		arg[20],
+																		arg[21],
+																		arg[22])
 
 		return inventario_materiali
 
@@ -787,16 +792,66 @@ class Pyarchinit_db_management:
 		sql_query_string = ("SELECT * FROM pyunitastratigrafiche WHERE scavo_s = '%s' AND area_s = '%s' AND us_s = '%s' AND stratigraph_index_us = '%s'") % (sito, area, us, stratigraph_index_us)
 		res = self.engine.execute(sql_query_string)
 		return res
-"""
+
 def main():
-	db = Pyarchinit_db_management("postgres://postgres:miapass@miohost/pyarchinit")
+	db = Pyarchinit_db_management("postgres://postgres:alajolla39@127.0.0.1/pyarchinit")
 	db.connection()
-	data = db.query(US)
-	for i in range(len(data)):
-		try:
-			print data[i]
-		except Exception, e:
-			print str(e)
+	data = db.query(INVENTARIO_MATERIALI_TOIMP)
+	
+##	for rec in data:
+##		id_invmat = rec.id_invmat
+##		misurazioni = eval(rec.misurazioni)
+##		tecnologie = eval(rec.tecnologie)
+##		#print str(misurazioni)
+##		for mis in misurazioni:
+##			if mis[0] == 'forme minime':
+##				try:
+##					print int(mis[1])
+##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['forme_minime'], [int(mis[1])] )
+##				except Exception, e:
+##					print str(e)
+##
+##		for mis in misurazioni:
+##			if mis[0] == 'forme massime':
+##				try:
+##					print int(mis[1])
+##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['forme_massime'], [int(mis[1])] )
+##				except Exception, e:
+##					print str(e)
+##
+##
+##
+##		for tec in tecnologie:
+##			if tec[0] == 'Impasto':
+##				try:
+##					#print int(mis[1])
+##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+##					db.update( 'INVENTARIO_MATERIALI_TOIMP', 'id_invmat', [id_invmat], ['corpo_ceramico'], [str(tec[1])] )
+##				except Exception, e:
+##					print str(e)
+##
+##			if tec[0] == 'Vernice':
+##				try:
+##					#print int(mis[1])
+##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+##					db.update( 'INVENTARIO_MATERIALI_TOIMP', 'id_invmat', [id_invmat], ['rivestimento'], [str(tec[1])] )
+##				except Exception, e:
+##					print str(e)
+main()
+##			try:
+##				temp_dataset = (str(self.DATA_LIST[i].definizione), int(mis[1]))
+##				contatore += int(mis[1])
+##				dataset.append(temp_dataset)
+##			except:
+##				pass
+
+##	for i in range(len(data)):
+##		try:
+##			print data[i]
+##		except Exception, e:
+##			print str(e)
 
 	#f = open("/database.txt", "w")
 	#f.write(str(db))
@@ -804,7 +859,4 @@ def main():
 
 	#db.update_for()
 
-if __name__ == '__main__':
-	main()
 
-"""

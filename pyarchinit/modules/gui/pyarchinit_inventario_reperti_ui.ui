@@ -625,7 +625,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Criterio schedatura</string>
+            <string>Tipo reperto</string>
            </property>
           </widget>
          </item>
@@ -833,7 +833,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Tipo reperto</string>
+            <string>Definizione reperto</string>
            </property>
           </widget>
          </item>
@@ -845,7 +845,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Definizione materiale</string>
+            <string>Classe materiale</string>
            </property>
           </widget>
          </item>
@@ -861,7 +861,7 @@
         </font>
        </property>
        <property name="currentIndex">
-        <number>5</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -991,8 +991,8 @@
         <attribute name="title">
          <string>Dati quantitativi</string>
         </attribute>
-        <layout class="QGridLayout" name="gridLayout_11">
-         <item row="0" column="0">
+        <layout class="QGridLayout" name="gridLayout_16">
+         <item row="0" column="0" rowspan="2">
           <layout class="QGridLayout" name="gridLayout_9">
            <item row="0" column="0">
             <widget class="QLabel" name="label_20">
@@ -1027,6 +1027,12 @@
            </item>
            <item row="1" column="0" colspan="3">
             <widget class="QTableWidget" name="tableWidget_elementi_reperto">
+             <property name="minimumSize">
+              <size>
+               <width>420</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -1074,7 +1080,78 @@
            </item>
           </layout>
          </item>
-         <item row="1" column="0">
+         <item row="0" column="1" rowspan="3">
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <layout class="QGridLayout" name="gridLayout_11">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Forme minime</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="lineEditFormeMin">
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>Forme massime</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="lineEditFormeMax">
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>Totale frammenti</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="lineEditTotFram"/>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="2" rowspan="2">
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>179</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="2" column="0">
           <layout class="QGridLayout" name="gridLayout_10">
            <item row="0" column="0">
             <widget class="QLabel" name="label_21">
@@ -1109,6 +1186,12 @@
            </item>
            <item row="1" column="0" colspan="3">
             <widget class="QTableWidget" name="tableWidget_misurazioni">
+             <property name="minimumSize">
+              <size>
+               <width>420</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -1162,103 +1245,169 @@
         <attribute name="title">
          <string>Tecnologie</string>
         </attribute>
-        <layout class="QGridLayout" name="gridLayout_14">
+        <layout class="QGridLayout" name="gridLayout_13">
          <item row="0" column="0">
-          <layout class="QGridLayout" name="gridLayout_13">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_23">
-             <property name="text">
-              <string>Tecnologie</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="pushButton_insert_row_tecnologie">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>inserisci riga</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QPushButton" name="pushButton_remove_row_tecnologie">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>rimuovi riga</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="3">
-            <widget class="QTableWidget" name="tableWidget_tecnologie">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <property name="verticalScrollBarPolicy">
-              <enum>Qt::ScrollBarAsNeeded</enum>
-             </property>
-             <property name="horizontalScrollBarPolicy">
-              <enum>Qt::ScrollBarAsNeeded</enum>
-             </property>
-             <property name="editTriggers">
-              <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
-             </property>
-             <property name="selectionMode">
-              <enum>QAbstractItemView::SingleSelection</enum>
-             </property>
-             <property name="selectionBehavior">
-              <enum>QAbstractItemView::SelectRows</enum>
-             </property>
-             <property name="rowCount">
-              <number>1</number>
-             </property>
-             <property name="columnCount">
-              <number>5</number>
-             </property>
-             <row/>
-             <column>
-              <property name="text">
-               <string>Tipo tecnologia</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Posizione</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Tipo quantità</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Unità di misura</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Qtà</string>
-              </property>
-             </column>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QLabel" name="label_23">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Tecnologie</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="2">
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>228</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="3">
+          <widget class="QPushButton" name="pushButton_remove_row_tecnologie">
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>rimuovi riga</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QPushButton" name="pushButton_insert_row_tecnologie">
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>inserisci riga</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <widget class="QLineEdit" name="lineEditCorpoCeramico"/>
+         </item>
+         <item row="1" column="2" rowspan="5" colspan="3">
+          <widget class="QTableWidget" name="tableWidget_tecnologie">
+           <property name="minimumSize">
+            <size>
+             <width>550</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAsNeeded</enum>
+           </property>
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAsNeeded</enum>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <property name="rowCount">
+            <number>1</number>
+           </property>
+           <property name="columnCount">
+            <number>5</number>
+           </property>
+           <row/>
+           <column>
+            <property name="text">
+             <string>Tipo tecnologia</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Posizione</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Tipo quantità</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Unità di misura</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Qtà</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>Corpo ceramico</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="2">
+          <widget class="QLineEdit" name="lineEditRivestimento"/>
+         </item>
+         <item row="4" column="0" colspan="2">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Rivestimento</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <spacer name="verticalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>136</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -1651,14 +1800,23 @@
          <string>Quantificazioni</string>
         </attribute>
         <layout class="QFormLayout" name="formLayout_2">
-         <item row="0" column="0">
-          <widget class="QPushButton" name="pushButtonMpl">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         </property>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pushButtonQuant">
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
-            <string>Quantificazioni Test</string>
+            <string>Impostazione quantificazione</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item row="2" column="1">
           <widget class="Mplwidget" name="widget" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">

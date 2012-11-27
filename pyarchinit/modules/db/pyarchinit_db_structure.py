@@ -261,10 +261,14 @@ class Inventario_materiali_table:
 	Column('misurazioni', Text),
 	Column('rif_biblio', Text),
 	Column('tecnologie', Text),
-	
+	Column('forme_minime', Integer),
+	Column('forme_massime', Integer),
+	Column('totale_frammenti', Integer),
+	Column('corpo_ceramico', String(20)),
+	Column('rivestimento', String(20)),
 
 	# explicit/composite unique constraint.  'name' is optional.
-    UniqueConstraint('sito', 'numero_inventario', name='ID_invmat_unico')
+	UniqueConstraint('sito', 'numero_inventario', name='ID_invmat_unico')
 	)
 
 	metadata.create_all(engine)
@@ -298,7 +302,11 @@ class Inventario_materiali_table_toimp:
 	Column('misurazioni', Text),
 	Column('rif_biblio', Text),
 	Column('tecnologie', Text),
-
+	Column('forme_minime', Integer),
+	Column('forme_massime', Integer),
+	Column('totale_frammenti', Integer),
+	Column('corpo_ceramico', String(20)),
+	Column('rivestimento', String(20)),
 
 	# explicit/composite unique constraint.  'name' is optional.
     UniqueConstraint('sito', 'numero_inventario', name='ID_invmat_unico_toimp')

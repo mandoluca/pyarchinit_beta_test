@@ -44,6 +44,7 @@ try:
 except:
 	pass
 from  sortpanelmain import SortPanelMain
+from  quantpanelmain import QuantPanelMain
 
 from  pyarchinit_exp_Findssheet_pdf import *
 
@@ -70,12 +71,13 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	MAPPER_TABLE_CLASS = "INVENTARIO_MATERIALI"
 	NOME_SCHEDA = "Scheda 	Inventario Materiali"
 	ID_TABLE = "id_invmat"
+	
 	CONVERSION_DICT = {
 	ID_TABLE:ID_TABLE,
 	"Sito" : "sito",
 	"Numero inventario" : "numero_inventario",
 	"Tipo reperto" : "tipo_reperto",
-	"Criterio schedatura" : "criterio_schedatura",
+	"Classe materiale" : "criterio_schedatura",
 	"Definizione" : "definizione",
 	"Descrizione" : "descrizione",
 	"Area" : "area",
@@ -84,8 +86,18 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	"Numero cassa" : "nr_cassa",
 	"Luogo di conservazione" : "luogo_conservazione",
 	"Stato conservazione" : "stato_conservazione",
-	"Datazione reperto" : "datazione_reperto"
+	"Datazione reperto" : "datazione_reperto",
+	"Forme minime" : 'forme_minime',
+	"Forme massime" : 'forme_massime',
+	"Totale frammenti" : 'totale_frammenti',
+	"Corpo ceramico" : 'corpo_ceramico',
+	"Rivestimento" : 'rivestimento'
 	}
+	QUANT_ITEMS = ['Tipo reperto',
+							'Classe materiale',
+							'Definizione',
+							'Corpo ceramico',
+							'Rivestimento']
 
 	SORT_ITEMS = [
 				ID_TABLE,
@@ -101,7 +113,12 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				"Numero cassa",
 				"Luogo di conservazione"
 				"Stato conservazione",
-				"Datazione reperto"
+				"Datazione reperto",
+				"Forme minime",
+				"Forme massime",
+				"Totale frammenti",
+				"Corpo ceramico",
+				"Rivestimento"
 				]
 
 	TABLE_FIELDS = [
@@ -121,7 +138,12 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					"elementi_reperto",
 					"misurazioni",
 					"rif_biblio",
-					"tecnologie"
+					"tecnologie",
+					"forme_minime",
+					"forme_massime",
+					"totale_frammenti",
+					"corpo_ceramico",
+					"rivestimento"
 					]
 
 	def __init__(self, iface):
@@ -137,32 +159,66 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			pass
 		self.fill_fields()
 
-	def on_pushButtonMpl_pressed(self):
+	def on_pushButtonQuant_pressed(self):
+		dlg = QuantPanelMain(self)
+		dlg.insertItems(self.QUANT_ITEMS)
+		dlg.exec_()
+
 		dataset = []
 		
-		parameter1 = 'Forme minime'
-		parameter2 = 'Forma'
-		contatore = 0
-		for i in range(len(self.DATA_LIST)):
-			temp_dataset = ()
-			misurazioni = eval(self.DATA_LIST[i].misurazioni)
-			if bool(misurazioni) == True:
-
-				for mis in misurazioni:
-					if mis[0] == 'forme minime':
-						try:
-							temp_dataset = (str(self.DATA_LIST[i].definizione), int(mis[1]))
-							contatore += int(mis[1])
-							dataset.append(temp_dataset)
-						except:
-							pass
+		parameter1 = dlg.TYPE_QUANT
+		parameters2 = dlg.ITEMS
+		#QMessageBox.warning(self, "Test Parametri Quant", str(parameters2),  QMessageBox.Ok)
 		
-		QMessageBox.warning(self, "Totale", str(contatore),  QMessageBox.Ok)
+		contatore = 0
+		#tipi di quantificazione
+		##per forme minime
+
+		if parameter1 == 'Forme minime':
+			for i in range(len(self.DATA_LIST)):
+				temp_dataset = ()
+				misurazioni = eval(self.DATA_LIST[i].misurazioni)
+				if bool(misurazioni) == True:
+
+					temp_dataset = (self.parameter_quant_creator(parameters2, i), int(self.DATA_LIST[i].forme_minime))
+					
+					contatore += int(self.DATA_LIST[i].forme_minime) #conteggio totale
+					
+					dataset.append(temp_dataset)
+
+##				for mis in misurazioni:
+##					if mis[0] == 'forme minime':
+##						try:
+##							temp_dataset = (str(self.DATA_LIST[i].definizione), int(mis[1]))
+##							contatore += int(mis[1])
+##							dataset.append(temp_dataset)
+##						except:
+##							pass
+		
+		#QMessageBox.warning(self, "Totale", str(contatore),  QMessageBox.Ok)
 		if bool(dataset) == True:
 			dataset_sum = self.UTILITY.sum_list_of_tuples_for_value(dataset)
 			self.plot_chart(dataset_sum)
 		else:
 			QMessageBox.warning(self, "Attenzione", "Non ci sono dati da rappresentare",  QMessageBox.Ok)
+
+	def parameter_quant_creator(self, par_list, n_rec):
+		self.parameter_list = par_list
+		self.record_number = n_rec
+		
+		converted_parameters = []
+		for par in self.parameter_list:
+			converted_parameters.append(self.CONVERSION_DICT[par])
+		
+		parameter2 = ''
+		for sing_par_conv in range(len(converted_parameters)):
+			exec_str =  ('str(self.DATA_LIST[%d].%s)') % (self.record_number, converted_parameters[sing_par_conv])
+			paramentro = str(self.parameter_list[sing_par_conv])
+			exec_str = ' -' + paramentro[:4] + ": " + eval(exec_str)
+			parameter2 += exec_str
+		return parameter2
+		
+		
 
 	def plot_chart(self, d):
 		self.data_list = d
@@ -181,7 +237,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		#QMessageBox.warning(self, "Alert", str(teams) ,  QMessageBox.Ok)
 
 		bars = self.widget.canvas.ax.bar(left=x, height=values, width=0.5, align='center', alpha=0.4,picker=5)
-		
+		#guardare il metodo barh per barre orizzontali
 		self.widget.canvas.ax.set_title('Grafico per Forme minime')
 		self.widget.canvas.ax.set_ylabel('Nr. Forme')
 		l = []
@@ -193,9 +249,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 		for bar in bars:
 			val = int(bar.get_height())
-			x_pos = bar.get_x()+0.5
+			x_pos = bar.get_x() + 0.25
 			label  = teams[n]+ ' - ' + str(val)
-			y_pos = 1.5 #bar.get_height() - len(label) bar.get_height() - 1
+			y_pos = 0.1 #bar.get_height() - bar.get_height() + 1
 			self.widget.canvas.ax.tick_params(axis='x', labelsize=8)
 			#self.widget.canvas.ax.set_xticklabels(ind + x, ['fg'], position = (x_pos,y_pos), xsize = 'small', rotation = 90)
 			
@@ -203,7 +259,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			n+=1
 		#self.widget.canvas.ax.plot(randomNumbers)
 		self.widget.canvas.draw()
-
 
 	def on_pushButton_connect_pressed(self):
 		from pyarchinit_conn_strings import *
@@ -214,6 +269,8 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.DB_MANAGER = Pyarchinit_db_management(conn_str)
 			self.DB_MANAGER.connection()
 			self.charge_records() #charge records from DB
+			#QMessageBox.warning(self, "test", str(len(self.DATA_LIST)),  QMessageBox.Ok)
+
 			#check if DB is empty
 			if bool(self.DATA_LIST) == True:
 				self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
@@ -235,6 +292,10 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			else:
 				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 		self.charge_list()
+
+
+
+
 		
 	def customize_gui(self):
 		#media prevew system
@@ -303,7 +364,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 			dlg.show_image(unicode(file_path)) #item.data(QtCore.Qt.UserRole).toString()))
 			dlg.exec_()
-
 
 	def charge_list(self):
 		sito_vl = self.UTILITY.tup_2_list_III(self.DB_MANAGER.group_by('site_table', 'sito', 'SITE'))
@@ -498,6 +558,21 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			else:
 				nr_cassa = int(self.lineEdit_nr_cassa.text())
 
+			if self.lineEditFormeMin.text() == "":
+				forme_minime = None
+			else:
+				forme_minime = int(self.lineEditFormeMin.text())
+
+			if self.lineEditFormeMax.text() == "":
+				forme_massime = None
+			else:
+				forme_massime = int(self.lineEditFormeMax.text())
+
+			if self.lineEditTotFram.text() == "":
+				totale_frammenti = None
+			else:
+				totale_frammenti = int(self.lineEditTotFram.text())
+
 			data = self.DB_MANAGER.insert_values_reperti(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1, 		#0 - IDsito
                         str(self.comboBox_sito.currentText()), 						#1 - Sito
@@ -516,8 +591,12 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
                         str(elementi_reperto),								            #14 - elementi reperto
                         str(misurazioni),								                #15 - misurazioni
                         str(rif_biblio), 								                #16 - rif biblio
-                        str(tecnologie)									                #17 - tecnologie
-			)
+                        str(forme_minime),								                #17 - tecnologie
+                        str(forme_massime),								                #17 - tecnologie
+                        str(totale_frammenti),								                #17 - tecnologie
+                        str(self.lineEditCorpoCeramico.text()),
+                        str(self.lineEditRivestimento.text())
+                        )
 
 			try:
 				self.DB_MANAGER.insert_data_session(data)
@@ -726,6 +805,21 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			else:
 				nr_cassa = ""
 
+			if self.lineEditFormeMin.text() != "":
+				forme_minime = int(self.lineEditFormeMin.text())
+			else:
+				forme_minime = ""
+
+			if self.lineEditFormeMax.text() != "":
+				forme_massime = int(self.lineEditFormeMax.text())
+			else:
+				forme_massime = ""
+	
+			if self.lineEditTotFram.text() != "":
+				totale_frammenti = int(self.lineEditTotFram.text())
+			else:
+				totale_frammenti = ""
+
 			search_dict = {
 			self.TABLE_FIELDS[0] : "'"+str(self.comboBox_sito.currentText())+"'",
 			self.TABLE_FIELDS[1] : numero_inventario,
@@ -740,6 +834,11 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.TABLE_FIELDS[10] : "'" + str(self.lineEdit_luogo_conservazione.text()) + "'",
 			self.TABLE_FIELDS[11] : "'" +  str(self.comboBox_conservazione.currentText()) + "'",
 			self.TABLE_FIELDS[12] : "'" + str(self.lineEdit_datazione_rep.text()) + "'",
+			self.TABLE_FIELDS[17] : forme_minime,
+			self.TABLE_FIELDS[18] : forme_massime,
+			self.TABLE_FIELDS[19] : totale_frammenti,
+			self.TABLE_FIELDS[20] : "'" + str(self.lineEditCorpoCeramico.text()) + "'",
+			self.TABLE_FIELDS[21] : "'" + str(self.lineEditRivestimento.text()) + "'"
 			}
 
 			u = Utility()
@@ -786,8 +885,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					self.setComboBoxEnable(['self.lineEdit_num_inv'], "False")
 					self.setComboBoxEnable(['self.comboBox_sito'], "False")
 					
-
-
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 
 		self.enable_button_search(1)
@@ -939,6 +1036,13 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.lineEdit_luogo_conservazione.clear()						#11 - luogo_conservazione
 		self.comboBox_conservazione.setEditText("") 					#12 - stato conservazione
 		self.lineEdit_datazione_rep.clear()								#13 - datazione reperto
+		
+		self.lineEditFormeMin.clear()
+		self.lineEditFormeMax.clear()	
+		self.lineEditTotFram.clear()
+		self.lineEditRivestimento.clear()
+		self.lineEditCorpoCeramico.clear()
+		
 		for i in range(elementi_reperto_row_count):
 			self.tableWidget_elementi_reperto.removeRow(0) 					
 		self.insert_new_row("self.tableWidget_elementi_reperto")		#14 - elementi reperto
@@ -958,6 +1062,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 	def fill_fields(self, n=0):
 		self.rec_num = n
+		#QMessageBox.warning(self, "check fill fields", str(self.rec_num),  QMessageBox.Ok)
 		try:
 			self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)  											#1 - Sito
 			self.lineEdit_num_inv.setText(str(self.DATA_LIST[self.rec_num].numero_inventario))							#2 - num_inv
@@ -982,6 +1087,21 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			else:
 				self.lineEdit_nr_cassa.setText(str(self.DATA_LIST[self.rec_num].nr_cassa))
 
+			if self.DATA_LIST[self.rec_num].forme_minime == None:															#10 - nr_cassa
+				self.lineEditFormeMin.setText("")
+			else:
+				self.lineEditFormeMin.setText(str(self.DATA_LIST[self.rec_num].forme_minime))
+
+			if self.DATA_LIST[self.rec_num].forme_massime == None:															#10 - nr_cassa
+				self.lineEditFormeMax.setText("")
+			else:
+				self.lineEditFormeMax.setText(str(self.DATA_LIST[self.rec_num].forme_massime))
+
+			if self.DATA_LIST[self.rec_num].totale_frammenti == None:															#10 - nr_cassa
+				self.lineEditTotFram.setText("")
+			else:
+				self.lineEditTotFram.setText(str(self.DATA_LIST[self.rec_num].totale_frammenti))
+
 			self.lineEdit_luogo_conservazione.setText(str(self.DATA_LIST[self.rec_num].luogo_conservazione))			#11 - luogo_conservazione
 
 			self.comboBox_conservazione.setEditText(str(self.DATA_LIST[self.rec_num].stato_conservazione))				#12 - stato conservazione
@@ -995,8 +1115,10 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.tableInsertData("self.tableWidget_rif_biblio", self.DATA_LIST[self.rec_num].rif_biblio)				#16 - rif biblio
 
 			self.tableInsertData("self.tableWidget_tecnologie",self.DATA_LIST[self.rec_num].tecnologie)					#17 - rapporti
-			
-			
+
+			self.lineEditRivestimento.setText(str(self.DATA_LIST[self.rec_num].rivestimento))
+
+			self.lineEditCorpoCeramico.setText(str(self.DATA_LIST[self.rec_num].corpo_ceramico))
 
 		except Exception, e:
 			QMessageBox.warning(self, "Errore Fill Fields", str(e),  QMessageBox.Ok)
@@ -1029,10 +1151,26 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			us = None
 		else:
 			us = self.lineEdit_us.text()
+		
 		if self.lineEdit_nr_cassa.text() == "":
 			nr_cassa = None
 		else:
 			nr_cassa = self.lineEdit_nr_cassa.text()
+
+		if self.lineEditFormeMin.text() == "":
+			forme_minime = None
+		else:
+			forme_minime = self.lineEditFormeMin.text()
+
+		if self.lineEditFormeMax.text() == "":
+			forme_massime = None
+		else:
+			forme_massime = self.lineEditFormeMax.text()
+
+		if self.lineEditTotFram.text() == "":
+			totale_frammenti = None
+		else:
+			totale_frammenti = self.lineEditTotFram.text()
 
 		#data
 		self.DATA_LIST_REC_TEMP = [
@@ -1052,7 +1190,12 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		str(elementi_reperto), 												#14 - elementi reperto
 		str(misurazioni),													#15 - misurazioni
 		str(rif_biblio),													#16 - rif_biblio
-		str(tecnologie)														#17 - tecnologie
+		str(tecnologie),														#17 - tecnologie
+		str(forme_minime),														#17 - tecnologie
+		str(forme_massime),														#17 - tecnologie
+		str(totale_frammenti),														#17 - tecnologie
+		str(self.lineEditCorpoCeramico.text()),														#17 - tecnologie
+		str(self.lineEditRivestimento.text())												#17 - tecnologie
 		]
 
 

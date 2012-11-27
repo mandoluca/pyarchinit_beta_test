@@ -64,7 +64,7 @@ class DB_update:
 		for i in table.columns:
 			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('stato_conservazione') == False:
-			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN stato_conservazione varchar DEFAULT 'inserisci un valore'")
+			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN stato_conservazione varchar DEFAULT ''")
 
 		for i in table.columns:
 			table_column_names_list.append(str(i.name))
@@ -90,6 +90,33 @@ class DB_update:
 			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('tecnologie') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN tecnologie text")
+		
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+		if table_column_names_list.__contains__('forme_minime') == False:
+			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN forme_minime integer DEFAULT 0")
+		
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+		if table_column_names_list.__contains__('forme_massime') == False:
+			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN forme_massime integer DEFAULT 0")
+		
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+		if table_column_names_list.__contains__('totale_frammenti') == False:
+			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN totale_frammenti integer DEFAULT 0")
+		
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+		if table_column_names_list.__contains__('corpo_ceramico') == False:
+			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN corpo_ceramico varchar(20)")
+			self.engine.execute("update inventario_materiali_table set corpo_ceramico = ''")
+		
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+		if table_column_names_list.__contains__('rivestimento') == False:
+			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN rivestimento varchar(20)")
+			self.engine.execute("update inventario_materiali_table set rivestimento = ''")
 
 if __name__ == '__main__':
 	dbup=DB_update()
