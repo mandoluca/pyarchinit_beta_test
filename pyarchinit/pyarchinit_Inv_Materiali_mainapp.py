@@ -91,13 +91,18 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	"Forme massime" : 'forme_massime',
 	"Totale frammenti" : 'totale_frammenti',
 	"Corpo ceramico" : 'corpo_ceramico',
-	"Rivestimento" : 'rivestimento'
+	"Rivestimento" : 'rivestimento',
+	"Diametro orlo": 'diametro_orlo',
+	"Peso" : 'peso',
+	"Tipo" : 'tipo',
+	"Valore E.v.e. orlo" : 'eve_orlo'
 	}
 	QUANT_ITEMS = ['Tipo reperto',
 							'Classe materiale',
 							'Definizione',
 							'Corpo ceramico',
-							'Rivestimento']
+							'Rivestimento',
+							"Tipo"]
 
 	SORT_ITEMS = [
 				ID_TABLE,
@@ -118,7 +123,11 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				"Forme massime",
 				"Totale frammenti",
 				"Corpo ceramico",
-				"Rivestimento"
+				"Rivestimento",
+				"Diametro orlo",
+				"Peso",
+				"Tipo",
+				"Valore E.v.e. orlo"
 				]
 
 	TABLE_FIELDS = [
@@ -143,7 +152,11 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					"forme_massime",
 					"totale_frammenti",
 					"corpo_ceramico",
-					"rivestimento"
+					"rivestimento",
+					'diametro_orlo',
+					'peso',
+					'tipo',
+					'eve_orlo'
 					]
 
 	def __init__(self, iface):
@@ -386,7 +399,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 		self.SORT_ITEMS_CONVERTED = []
 		for i in items:
-			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[i])
+			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[unicode(i)])
 
 		self.SORT_MODE = order_type
 		self.empty_fields()
@@ -452,7 +465,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 				self.enable_button(1)
 			else:
-				QMessageBox.warning(self, "ATTENZIONE", "Non e' stata realizzata alcuna modifica.",  QMessageBox.Ok)
+				QMessageBox.warning(self, "ATTENZIONE", u"Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
 		else:
 			if self.data_error_check() == 0:
 				test_insert = self.insert_new_rec()
@@ -573,6 +586,21 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			else:
 				totale_frammenti = int(self.lineEditTotFram.text())
 
+			if self.lineEdit_diametro_orlo.text() == "":
+				diametro_orlo = None
+			else:
+				diametro_orlo= float(self.lineEdit_diametro_orlo.text())
+	
+			if self.lineEdit_peso.text() == "":
+				peso = None
+			else:
+				peso = float(self.lineEdit_peso.text())
+
+			if self.lineEdit_eve_orlo.text() == "":
+				eve_orlo = None
+			else:
+				eve_orlo = float(self.lineEdit_eve_orlo.text())
+
 			data = self.DB_MANAGER.insert_values_reperti(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1, 		#0 - IDsito
                         str(self.comboBox_sito.currentText()), 						#1 - Sito
@@ -595,7 +623,11 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
                         str(forme_massime),								                #17 - tecnologie
                         str(totale_frammenti),								                #17 - tecnologie
                         str(self.lineEditCorpoCeramico.text()),
-                        str(self.lineEditRivestimento.text())
+                        str(self.lineEditRivestimento.text()),
+                        diametro_orlo,
+                        peso,
+                        str(self.lineEdit_tipo.text()),
+                        eve_orlo
                         )
 
 			try:
@@ -820,25 +852,44 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			else:
 				totale_frammenti = ""
 
+			if self.lineEdit_diametro_orlo.text() != "":
+				diametro_orlo = float(self.lineEdit_diametro_orlo.text())
+			else:
+				diametro_orlo = ""
+
+			if self.lineEdit_peso.text() != "":
+				peso = float(self.lineEdit_peso.text())
+			else:
+				peso = ""
+
+			if self.lineEdit_eve_orlo.text() != "":
+				eve_orlo = float(self.lineEdit_eve_orlo.text())
+			else:
+				eve_orlo = ""
+
 			search_dict = {
-			self.TABLE_FIELDS[0] : "'"+str(self.comboBox_sito.currentText())+"'",
+			self.TABLE_FIELDS[0] : "'"+unicode(self.comboBox_sito.currentText())+"'",
 			self.TABLE_FIELDS[1] : numero_inventario,
-			self.TABLE_FIELDS[2] : "'" + str(self.comboBox_tipo_reperto.currentText()) + "'",
-			self.TABLE_FIELDS[3] : "'" + str(self.comboBox_criterio_schedatura.currentText()) + "'",
-			self.TABLE_FIELDS[4] : "'" + str(self.comboBox_definizione.currentText()) + "'",
-			self.TABLE_FIELDS[5] : "'" + str(self.textEdit_descrizione_reperto.toPlainText()) + "'",
+			self.TABLE_FIELDS[2] : "'" + unicode(self.comboBox_tipo_reperto.currentText()) + "'",
+			self.TABLE_FIELDS[3] : "'" + unicode(self.comboBox_criterio_schedatura.currentText()) + "'",
+			self.TABLE_FIELDS[4] : "'" + unicode(self.comboBox_definizione.currentText()) + "'",
+			self.TABLE_FIELDS[5] : "'" + unicode(self.textEdit_descrizione_reperto.toPlainText()) + "'",
 			self.TABLE_FIELDS[6] : area,
 			self.TABLE_FIELDS[7] : us,
 			self.TABLE_FIELDS[8] : "'" + str(self.comboBox_lavato.currentText()) + "'",
 			self.TABLE_FIELDS[9] : nr_cassa,
-			self.TABLE_FIELDS[10] : "'" + str(self.lineEdit_luogo_conservazione.text()) + "'",
+			self.TABLE_FIELDS[10] : "'" + unicode(self.lineEdit_luogo_conservazione.text()) + "'",
 			self.TABLE_FIELDS[11] : "'" +  str(self.comboBox_conservazione.currentText()) + "'",
-			self.TABLE_FIELDS[12] : "'" + str(self.lineEdit_datazione_rep.text()) + "'",
+			self.TABLE_FIELDS[12] : "'" + unicode(self.lineEdit_datazione_rep.text()) + "'",
 			self.TABLE_FIELDS[17] : forme_minime,
 			self.TABLE_FIELDS[18] : forme_massime,
 			self.TABLE_FIELDS[19] : totale_frammenti,
 			self.TABLE_FIELDS[20] : "'" + str(self.lineEditCorpoCeramico.text()) + "'",
-			self.TABLE_FIELDS[21] : "'" + str(self.lineEditRivestimento.text()) + "'"
+			self.TABLE_FIELDS[21] : "'" + str(self.lineEditRivestimento.text()) + "'",
+			self.TABLE_FIELDS[22] : diametro_orlo,
+			self.TABLE_FIELDS[23] : peso,
+			self.TABLE_FIELDS[24] : "'" + unicode(self.lineEdit_tipo.text()) + "'",		
+			self.TABLE_FIELDS[25] : eve_orlo
 			}
 
 			u = Utility()
@@ -855,7 +906,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					
 					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-					self.fill_fields(self.REC_CORR)
+
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 
@@ -863,6 +914,8 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					self.setComboBoxEditable(["self.comboBox_lavato"],1)
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.lineEdit_num_inv"],"False")
+					
+					self.fill_fields(self.REC_CORR)
 
 				else:
 					self.DATA_LIST = []
@@ -870,7 +923,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 						self.DATA_LIST.append(i)
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-					self.fill_fields()
+
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
@@ -885,9 +938,21 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					self.setComboBoxEnable(['self.lineEdit_num_inv'], "False")
 					self.setComboBoxEnable(['self.comboBox_sito'], "False")
 					
+					self.fill_fields()
+					
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 
 		self.enable_button_search(1)
+
+	def on_pushButton_tot_fram_pressed(self):
+		lista_valori = self.table2dict('self.tableWidget_elementi_reperto')
+
+		tot_framm = 0
+		for sing_fr in lista_valori:
+			if sing_fr[1] == 'frammenti':
+				tot_framm += int(sing_fr[2])
+		
+		self.lineEditTotFram.setText(str(tot_framm))
 
 	def update_if(self, msg):
 		rec_corr = self.REC_CORR
@@ -914,7 +979,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				return 1
 			elif test == 0:
 				return 0
-			
 
 	#custom functions
 	def charge_records(self):
@@ -958,7 +1022,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			for c in range(col):
 				value = eval(self.tablename+".item(r,c)")
 				if value != None:
-					sub_list.append(str(value.text()))
+					sub_list.append(unicode(value.text()))
 
 			if bool(sub_list) == True:
 				lista.append(sub_list)
@@ -991,7 +1055,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			eval(cmd)
 			for col in range(len(self.data_list[row])):
 				#item = self.comboBox_sito.setEditText(self.data_list[0][col]
-				item = QTableWidgetItem(self.data_list[row][col])
+				item = QTableWidgetItem(unicode(self.data_list[row][col]))
 				exec_str = ('%s.setItem(%d,%d,item)') % (self.table_name,row,col)
 				eval(exec_str)
 
@@ -1043,6 +1107,11 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.lineEditRivestimento.clear()
 		self.lineEditCorpoCeramico.clear()
 		
+		self.lineEdit_diametro_orlo.clear()	
+		self.lineEdit_peso.clear()
+		self.lineEdit_tipo.clear()
+		self.lineEdit_eve_orlo.clear()
+		
 		for i in range(elementi_reperto_row_count):
 			self.tableWidget_elementi_reperto.removeRow(0) 					
 		self.insert_new_row("self.tableWidget_elementi_reperto")		#14 - elementi reperto
@@ -1064,11 +1133,11 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.rec_num = n
 		#QMessageBox.warning(self, "check fill fields", str(self.rec_num),  QMessageBox.Ok)
 		try:
-			self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)  											#1 - Sito
+			unicode(self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito))  											#1 - Sito
 			self.lineEdit_num_inv.setText(str(self.DATA_LIST[self.rec_num].numero_inventario))							#2 - num_inv
-			self.comboBox_tipo_reperto.setEditText(str(self.DATA_LIST[self.rec_num].tipo_reperto))						#3 - Tipo reperto
-			self.comboBox_criterio_schedatura.setEditText(str(self.DATA_LIST[self.rec_num].criterio_schedatura))		#4 - Criterio schedatura
-			self.comboBox_definizione.setEditText(str(self.DATA_LIST[self.rec_num].definizione))						#5 - definizione
+			unicode(self.comboBox_tipo_reperto.setEditText(self.DATA_LIST[self.rec_num].tipo_reperto))						#3 - Tipo reperto
+			unicode(self.comboBox_criterio_schedatura.setEditText(self.DATA_LIST[self.rec_num].criterio_schedatura))		#4 - Criterio schedatura
+			unicode(self.comboBox_definizione.setEditText(self.DATA_LIST[self.rec_num].definizione))						#5 - definizione
 			unicode(self.textEdit_descrizione_reperto.setText(self.DATA_LIST[self.rec_num].descrizione))				#6 - descrizione
 			if self.DATA_LIST[self.rec_num].area == None:																#7 - Area
 				self.lineEdit_area.setText("")
@@ -1102,11 +1171,11 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			else:
 				self.lineEditTotFram.setText(str(self.DATA_LIST[self.rec_num].totale_frammenti))
 
-			self.lineEdit_luogo_conservazione.setText(str(self.DATA_LIST[self.rec_num].luogo_conservazione))			#11 - luogo_conservazione
+			unicode(self.lineEdit_luogo_conservazione.setText(self.DATA_LIST[self.rec_num].luogo_conservazione))			#11 - luogo_conservazione
 
 			self.comboBox_conservazione.setEditText(str(self.DATA_LIST[self.rec_num].stato_conservazione))				#12 - stato conservazione
 
-			self.lineEdit_datazione_rep.setText(str(self.DATA_LIST[self.rec_num].datazione_reperto))					#13 - datazione reperto
+			unicode(self.lineEdit_datazione_rep.setText(self.DATA_LIST[self.rec_num].datazione_reperto))					#13 - datazione reperto
 
 			self.tableInsertData("self.tableWidget_elementi_reperto", self.DATA_LIST[self.rec_num].elementi_reperto)	#14 - elementi_reperto
 
@@ -1120,6 +1189,24 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 			self.lineEditCorpoCeramico.setText(str(self.DATA_LIST[self.rec_num].corpo_ceramico))
 
+			if self.DATA_LIST[self.rec_num].diametro_orlo == None:															#10 - nr_cassa
+				self.lineEdit_diametro_orlo.setText("")
+			else:
+				self.lineEdit_diametro_orlo.setText(str(self.DATA_LIST[self.rec_num].diametro_orlo))
+
+			if self.DATA_LIST[self.rec_num].peso == None:															#10 - nr_cassa
+				self.lineEdit_peso.setText("")
+			else:
+				self.lineEdit_peso.setText(str(self.DATA_LIST[self.rec_num].peso))
+
+			self.lineEdit_tipo.setText(str(self.DATA_LIST[self.rec_num].tipo))
+
+			if self.DATA_LIST[self.rec_num].eve_orlo  == None:															#10 - nr_cassa
+				self.lineEdit_eve_orlo.setText("")
+			else:
+				self.lineEdit_eve_orlo.setText(str(self.DATA_LIST[self.rec_num].eve_orlo))
+
+##########
 		except Exception, e:
 			QMessageBox.warning(self, "Errore Fill Fields", str(e),  QMessageBox.Ok)
 
@@ -1172,30 +1259,49 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		else:
 			totale_frammenti = self.lineEditTotFram.text()
 
+		if self.lineEdit_diametro_orlo.text() == "":
+			diametro_orlo = None
+		else:
+			diametro_orlo = self.lineEdit_diametro_orlo.text()
+
+		if self.lineEdit_peso.text() == "":
+			peso = None
+		else:
+			peso = self.lineEdit_peso.text()
+	
+		if self.lineEdit_eve_orlo.text() == "":
+			eve_orlo = None
+		else:
+			eve_orlo = self.lineEdit_eve_orlo.text()
+
 		#data
 		self.DATA_LIST_REC_TEMP = [
-		str(self.comboBox_sito.currentText()), 								#1 - Sito
-		str(self.lineEdit_num_inv.text()), 									#2 - num_inv
-		str(self.comboBox_tipo_reperto.currentText()), 						#3 - tipo_reperto
-		str(self.comboBox_criterio_schedatura.currentText()),				#4 - criterio schedatura
-		str(self.comboBox_definizione.currentText()), 						#5 - definizione
-		str(self.textEdit_descrizione_reperto.toPlainText().toLatin1()),	#6 - descrizione
-		str(area),															#7 - area
-		str(us),															#8 - us
-		str(self.comboBox_lavato.currentText()),							#9 - lavato
-		str(nr_cassa),														#10 - nr cassa
-		str(self.lineEdit_luogo_conservazione.text()),						#11 - luogo conservazione
-		str(self.comboBox_conservazione.currentText()), 					#12 - stato conservazione
-		str(self.lineEdit_datazione_rep.text()), 							#13 - datazione reperto
-		str(elementi_reperto), 												#14 - elementi reperto
-		str(misurazioni),													#15 - misurazioni
-		str(rif_biblio),													#16 - rif_biblio
-		str(tecnologie),														#17 - tecnologie
-		str(forme_minime),														#17 - tecnologie
-		str(forme_massime),														#17 - tecnologie
-		str(totale_frammenti),														#17 - tecnologie
-		str(self.lineEditCorpoCeramico.text()),														#17 - tecnologie
-		str(self.lineEditRivestimento.text())												#17 - tecnologie
+		unicode(self.comboBox_sito.currentText()), 								#1 - Sito
+		unicode(self.lineEdit_num_inv.text()), 									#2 - num_inv
+		unicode(self.comboBox_tipo_reperto.currentText()), 						#3 - tipo_reperto
+		unicode(self.comboBox_criterio_schedatura.currentText()),				#4 - criterio schedatura
+		unicode(self.comboBox_definizione.currentText()), 						#5 - definizione
+		unicode(self.textEdit_descrizione_reperto.toPlainText().toLatin1()),	#6 - descrizione
+		unicode(area),															#7 - area
+		unicode(us),															#8 - us
+		unicode(self.comboBox_lavato.currentText()),							#9 - lavato
+		unicode(nr_cassa),														#10 - nr cassa
+		unicode(self.lineEdit_luogo_conservazione.text()),						#11 - luogo conservazione
+		unicode(self.comboBox_conservazione.currentText()), 					#12 - stato conservazione
+		unicode(self.lineEdit_datazione_rep.text()), 							#13 - datazione reperto
+		unicode(elementi_reperto), 												#14 - elementi reperto
+		unicode(misurazioni),													#15 - misurazioni
+		unicode(rif_biblio),													#16 - rif_biblio
+		unicode(tecnologie),														#17 - tecnologie
+		unicode(forme_minime),														#17 - tecnologie
+		unicode(forme_massime),														#17 - tecnologie
+		unicode(totale_frammenti),														#17 - tecnologie
+		unicode(self.lineEditCorpoCeramico.text()),														#17 - tecnologie
+		unicode(self.lineEditRivestimento.text()),
+		unicode(diametro_orlo),
+		unicode(peso),																#17 - tecnologie
+		unicode(self.lineEdit_tipo.text()),
+		unicode(eve_orlo)														#17 - tecnologie
 		]
 
 
@@ -1247,24 +1353,20 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	def set_LIST_REC_CORR(self):
 		self.DATA_LIST_REC_CORR = []
 		for i in self.TABLE_FIELDS:
-			self.DATA_LIST_REC_CORR.append(eval("str(self.DATA_LIST[self.REC_CORR]." + i + ")"))
+			self.DATA_LIST_REC_CORR.append(eval("unicode(self.DATA_LIST[self.REC_CORR]." + i + ")"))
 
 	def records_equal_check(self):
 		self.set_LIST_REC_TEMP()
 		self.set_LIST_REC_CORR()
+		
+		#QMessageBox.warning(self, "ATTENZIONE", str(self.DATA_LIST_REC_CORR) + " temp " + str(self.DATA_LIST_REC_TEMP), QMessageBox.Ok)
 
 		check_str = str(self.DATA_LIST_REC_CORR) + " " + str(self.DATA_LIST_REC_TEMP)
-                
-		#ff = open('test_check.txt', 'w')
-		#ff.write(str(check_str))
-		#ff.close()
 
 		if self.DATA_LIST_REC_CORR == self.DATA_LIST_REC_TEMP:
 			return 0
 		else:
 			return 1
-
-
 
 	def update_record(self):
 		try:

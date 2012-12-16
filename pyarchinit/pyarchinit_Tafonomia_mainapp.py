@@ -622,7 +622,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 		self.SORT_ITEMS_CONVERTED = []
 		for i in items:
-			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[i])
+			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[unicode(i)])
 
 		self.SORT_MODE = order_type
 		self.empty_fields()

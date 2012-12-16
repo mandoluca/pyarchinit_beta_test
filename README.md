@@ -3,7 +3,7 @@ pyarchinit_beta_test_2
 
 !!!!! ATTENZIONE !!!!
 
-RICORDARSI DI FARE UNA COPIA DEL CODICE E NON SPOSTARE MAI LA CARTELLA O FILES DAL DROPBOX
+RICORDARSI DI FARE UNA COPIA DEL CODICE E NON SPOSTARE MAI LA CARTELLA O FILES DAL DROPBOX 
 
 
 
@@ -59,3 +59,9 @@ Modificare lo script del fillfields
 2012/10/15
 
 Inventario Materiali: la gui presenta la lista a tendina del sito in modalità aperta, che permette di lasciare vuoto il campo e creare ID duplicati. Aggiungere un controllo sul campo sito e mettere in modalità non editabile il campo sito.
+
+2012/12/05
+
+Problema col sistema di ricerca per i campi aperti
+
+Aggiunto il sistema di inserimento di caratteri unicode

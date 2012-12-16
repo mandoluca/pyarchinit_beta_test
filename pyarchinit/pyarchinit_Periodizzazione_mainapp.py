@@ -207,7 +207,7 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 
 		self.SORT_ITEMS_CONVERTED = []
 		for i in items:
-			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[i])
+			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[unicode(i)])
 
 		self.SORT_MODE = order_type
 		self.empty_fields()
@@ -327,13 +327,13 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 				
 			data = self.DB_MANAGER.insert_periodizzazione_values(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1, #0 - max num id
-			str(self.comboBox_sito.currentText()), 														#1 - Sito
+			unicode(self.comboBox_sito.currentText()), 													#1 - Sito
 			int(self.comboBox_periodo.currentText()), 													#2 - Periodo
 			int(self.comboBox_fase.currentText()), 														#3 - Fase
 			cron_iniz,																								#4 - Cron iniziale
 			cron_fin,																									#5 - Cron finale
 			unicode(self.textEdit_descrizione_per.toPlainText()),										#6 - Descrizione
-			str(self.lineEdit_per_estesa.text()),																#7 - Periodizzazione estesa
+			unicode(self.lineEdit_per_estesa.text()),														#7 - Periodizzazione estesa
 			cont_per)																								#8 - Cont_per 
 
 			try:
@@ -478,34 +478,34 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 			QMessageBox.warning(self, "ATTENZIONE", "Per eseguire una nuova ricerca clicca sul pulsante 'new search' ",  QMessageBox.Ok)
 		else:
 			if self.lineEdit_cron_iniz.text() != "":
-				cron_iniziale = int(self.lineEdit_cron_iniz.text())
+				cron_iniziale = "'"+unicode(self.lineEdit_cron_iniz.text())+"'"
 			else:
 				cron_iniziale = ""
 				
 			if self.lineEdit_cron_fin.text() != "":
-				cron_finale = int(self.lineEdit_cron_fin.text())
+				cron_finale ="'"+ unicode(self.lineEdit_cron_fin.text())+"'"
 			else:
 				cron_finale = ""
 
 			if self.comboBox_periodo.currentText() != "":
-				periodo = int(self.comboBox_periodo.currentText())
+				periodo = "'"+unicode(self.comboBox_periodo.currentText())+"'"
 			else:
 				periodo = ""
 
 			if self.comboBox_fase.currentText() != "":
-				fase = int(self.comboBox_fase.currentText())
+				fase = "'"+unicode(self.comboBox_fase.currentText())+"'"
 			else:
 				fase = ""
 
 			search_dict = {
-			'sito' : "'"+str(self.comboBox_sito.currentText())+"'",						#1 - Sito
-			'periodo': periodo,																		#2 - Periodo
-			'fase': fase,																				#3 - Fase
-			'cron_iniziale': cron_iniziale,															#4 - Cron iniziale
-			'cron_finale': cron_finale,															#5 - Crion finale
-			'descrizione': str(self.textEdit_descrizione_per.toPlainText()),				#6 - Descrizione
-			'datazione_estesa': "'"+str(self.lineEdit_per_estesa.text()) + "'",		#7 - Periodizzazione estesa
-			'cont_per': "'"+str(self.lineEdit_codice_periodo.text()) + "'"				#8 - Codice periodo
+			'sito' : "'"+unicode(self.comboBox_sito.currentText())+"'",					#1 - Sito
+			'periodo': periodo,																			#2 - Periodo
+			'fase': fase,																					#3 - Fase
+			'cron_iniziale': cron_iniziale,																#4 - Cron iniziale
+			'cron_finale': cron_finale,																#5 - Crion finale
+			'descrizione': unicode(self.textEdit_descrizione_per.toPlainText()),			#6 - Descrizione
+			'datazione_estesa': "'" + unicode(self.lineEdit_per_estesa.text()) + "'",	#7 - Periodizzazione estesa
+			'cont_per': "'" + unicode(self.lineEdit_codice_periodo.text()) + "'"			#8 - Codice periodo
 			}
 
 			u = Utility()
@@ -649,24 +649,25 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 	def fill_fields(self, n=0):
 		self.rec_num = n
 		try:
-			self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)  									#1 - Sito
-			self.comboBox_periodo.setEditText(str(self.DATA_LIST[self.rec_num].periodo)) 						#2 - Periodo
-			self.comboBox_fase.setEditText(str(self.DATA_LIST[self.rec_num].fase)) 								#3 - Fase
+			unicode(self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito))  							#1 - Sito
+			
+			self.comboBox_periodo.setEditText(str(self.DATA_LIST[self.rec_num].periodo))							#2 - Periodo
+			self.comboBox_fase.setEditText(str(self.DATA_LIST[self.rec_num].fase))									#3 - Fase
 
-			if self.DATA_LIST[self.rec_num].cron_iniziale == None:														#4 - Cronologia iniziale
+			if self.DATA_LIST[self.rec_num].cron_iniziale == None:															#4 - Cronologia iniziale
 				self.lineEdit_cron_iniz.setText("")
 			else:
 				self.lineEdit_cron_iniz.setText(str(self.DATA_LIST[self.rec_num].cron_iniziale))
 
-			if self.DATA_LIST[self.rec_num].cron_finale == None:														#5 - Cronologia finale
+			if self.DATA_LIST[self.rec_num].cron_finale == None:															#5 - Cronologia finale
 				self.lineEdit_cron_fin.setText("")
 			else:
 				self.lineEdit_cron_fin.setText(str(self.DATA_LIST[self.rec_num].cron_finale))
 
-			self.lineEdit_per_estesa.setText(str(self.DATA_LIST[self.rec_num].datazione_estesa))				#6 - Datazione estesa
-			unicode(self.textEdit_descrizione_per.setText(self.DATA_LIST[self.rec_num].descrizione))			#7 - Descrizione
+			unicode(self.lineEdit_per_estesa.setText(self.DATA_LIST[self.rec_num].datazione_estesa))			#6 - Datazione estesa
+			unicode(self.textEdit_descrizione_per.setText(self.DATA_LIST[self.rec_num].descrizione))				#7 - Descrizione
 
-			if self.DATA_LIST[self.rec_num].cont_per == None:														#8 - Codice periodo
+			if self.DATA_LIST[self.rec_num].cont_per == None:															#8 - Codice periodo
 				self.lineEdit_codice_periodo.setText("")
 			else:
 				self.lineEdit_codice_periodo.setText(str(self.DATA_LIST[self.rec_num].cont_per))
@@ -685,32 +686,32 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 		if self.lineEdit_cron_iniz.text() == "":
 			cron_iniz = None
 		else:
-			cron_iniz = self.lineEdit_cron_iniz.text()
+			cron_iniz = unicode(self.lineEdit_cron_iniz.text())
 
 		if self.lineEdit_cron_fin.text() == "":
 			cron_fin = None
 		else:
-			cron_fin = self.lineEdit_cron_fin.text()
+			cron_fin = unicode(self.lineEdit_cron_fin.text())
 
 		if self.lineEdit_codice_periodo.text() == "":
 			cont_per = None
 		else:
-			cont_per = self.lineEdit_codice_periodo.text()
+			cont_per = unicode(self.lineEdit_codice_periodo.text())
 
 		self.DATA_LIST_REC_TEMP = [
-		str(self.comboBox_sito.currentText()), 							#1 - Sito
-		str(self.comboBox_periodo.currentText()), 						#2 - Periodo
-		str(self.comboBox_fase.currentText()), 							#3 - Fase
-		str(cron_iniz),																#4 - Cron iniziale
-		str(cron_fin),																#5 - Cron finale
-		str(self.textEdit_descrizione_per.toPlainText().toLatin1()),	#6 - Descrizioene
-		str(self.lineEdit_per_estesa.text()),									#7 - Cron estesa
-		str(cont_per)]																#8 - Cont_per
+		unicode(self.comboBox_sito.currentText()), 								#1 - Sito
+		unicode(self.comboBox_periodo.currentText()), 						#2 - Periodo
+		unicode(self.comboBox_fase.currentText()), 							#3 - Fase
+		unicode(cron_iniz),																#4 - Cron iniziale
+		unicode(cron_fin),																#5 - Cron finale
+		unicode(self.textEdit_descrizione_per.toPlainText()),					#6 - Descrizioene
+		unicode(self.lineEdit_per_estesa.text()),									#7 - Cron estesa
+		unicode(cont_per)]																#8 - Cont_per
 
 	def set_LIST_REC_CORR(self):
 		self.DATA_LIST_REC_CORR = []
 		for i in self.TABLE_FIELDS:
-			self.DATA_LIST_REC_CORR.append(eval("str(self.DATA_LIST[self.REC_CORR]." + i + ")"))
+			self.DATA_LIST_REC_CORR.append(eval("unicode(self.DATA_LIST[self.REC_CORR]." + i + ")"))
 
 	def records_equal_check(self):
 		self.set_LIST_REC_TEMP()

@@ -454,7 +454,11 @@ class INVENTARIO_MATERIALI(object):
 	forme_massime,
 	totale_frammenti,
 	corpo_ceramico,
-	rivestimento
+	rivestimento,
+	diametro_orlo,
+	peso,
+	tipo,
+	eve_orlo
 	):
 		self.id_invmat = id_invmat #0
 		self.sito = sito #1
@@ -479,10 +483,14 @@ class INVENTARIO_MATERIALI(object):
 		self.totale_frammenti = totale_frammenti #20
 		self.corpo_ceramico =  corpo_ceramico #21
 		self.rivestimento = rivestimento #22
+		self.diametro_orlo = diametro_orlo
+		self.peso = peso
+		self.tipo = tipo
+		self.eve_orlo = eve_orlo
 
 	#def __repr__"
 	def __repr__(self):
-		return "<INVENTARIO_MATERIALI(%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d, '%s', '%s' )>" % (
+		return "<INVENTARIO_MATERIALI(%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d, '%s', '%s', '%r', '%r','%s', '%r' )>" % (
 		self.id_invmat,
 		self.sito,
 		self.numero_inventario,
@@ -505,7 +513,11 @@ class INVENTARIO_MATERIALI(object):
 		self.forme_massime,
 		self.totale_frammenti,
 		self.corpo_ceramico,
-		self.rivestimento
+		self.rivestimento,
+		self.diametro_orlo,
+		self.peso,
+		self.tipo,
+		self.eve_orlo
 		)
 #mapper
 

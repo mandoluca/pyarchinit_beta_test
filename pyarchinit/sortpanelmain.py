@@ -35,7 +35,7 @@ class SortPanelMain(QDialog, Ui_sortPanel):
 	def on_pushButtonSort_pressed(self):
 		self.ITEMS = []
 		for index in xrange(self.FieldListsort.count()):
-			self.ITEMS.append(str(self.FieldListsort.item(index).text()))
+			self.ITEMS.append(self.FieldListsort.item(index).text())
 		
 		if self.radioButtonAsc.isChecked() == True:
 			self.TYPE_ORDER = "asc"
@@ -43,7 +43,7 @@ class SortPanelMain(QDialog, Ui_sortPanel):
 			self.TYPE_ORDER = "desc"
 	
 		if bool(self.ITEMS) == False:
-			ttl = QString("Non e' stato impostata alcun criterio. Vuoi uscire?")
+			ttl = QString(u"Non è stato impostata alcun criterio. Vuoi uscire?")
 			msg = QMessageBox.warning(self,'ATTENZIONE',ttl, QMessageBox.Cancel,1)
 			if msg == 1:
 				self.close()
@@ -56,10 +56,10 @@ class SortPanelMain(QDialog, Ui_sortPanel):
 		all_items = []
 
 		for index in xrange(self.FieldsList.count()):
-			all_items.append(str(self.FieldsList.item(index).text()))
+			all_items.append(self.FieldsList.item(index).text())
 
 		item_selected = self.FieldsList.selectedItems()
-
+		
 		all_items.remove(item_selected[0].text())
 		try:
 			all_items.remove('')
@@ -76,7 +76,7 @@ class SortPanelMain(QDialog, Ui_sortPanel):
 		all_items = []
 
 		for index in xrange(self.FieldListsort.count()):
-			all_items.append(str(self.FieldListsort.item(index).text()))
+			all_items.append(self.FieldListsort.item(index).text())
 		
 		item_selected = self.FieldListsort.selectedItems()
 		try:

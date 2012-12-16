@@ -203,7 +203,11 @@ class Pyarchinit_db_management:
 																		arg[19],
 																		arg[20],
 																		arg[21],
-																		arg[22])
+																		arg[22],
+																		arg[23],
+																		arg[24],
+																		arg[25],
+																		arg[26])
 
 		return inventario_materiali
 
@@ -522,7 +526,24 @@ class Pyarchinit_db_management:
 	def query_bool(self,params, table):
 		u = Utility()
 		params = u.remove_empty_items_fr_dict(params)
-		field_value_string = ", ".join([table + ".%s == %s" % (k, v) for k, v in params.items()])
+		
+		list_keys_values = params.items()
+		
+		field_value_string = ""
+		
+		for sing_couple_n in range(len(list_keys_values)):
+			if sing_couple_n == 0:
+				if type(list_keys_values[sing_couple_n][1]) != '<str>':
+					field_value_string = table + ".%s == %s" % (list_keys_values[sing_couple_n][0], list_keys_values[sing_couple_n][1])
+				else:
+					field_value_string = table + ".%s == u%s" % (list_keys_values[sing_couple_n][0], list_keys_values[sing_couple_n][1])
+			else:
+				if type(list_keys_values[sing_couple_n][1]) == '<str>':
+					field_value_string = field_value_string + "," + table + ".%s == %s" % (list_keys_values[sing_couple_n][0], list_keys_values[sing_couple_n][1])
+				else:
+					field_value_string = field_value_string + "," + table + u".%s == %s" % (list_keys_values[sing_couple_n][0], list_keys_values[sing_couple_n][1])
+		
+		#field_value_string = ", ".join([table + ".%s == u%s" % (k, v) for k, v in params.items()])
 		
 		"""
 		Per poter utilizzare l'operatore LIKE è necessario fare una iterazione attraverso il dizionario per discriminare tra
@@ -530,9 +551,7 @@ class Pyarchinit_db_management:
 		#field_value_string = ", ".join([table + ".%s.like(%s)" % (k, v) for k, v in params.items()])
 		
 		"""
-		#f = open('/test_query.txt', "w")
-		#f.write(str(field_value_string))
-		#f.close()
+
 		
 		query_str = "session.query(" + table + ").filter(and_(" + field_value_string + ")).all()"
 		#self.connection()
@@ -796,13 +815,68 @@ class Pyarchinit_db_management:
 def main():
 	db = Pyarchinit_db_management("postgres://postgres:alajolla39@127.0.0.1/pyarchinit")
 	db.connection()
-	data = db.query(INVENTARIO_MATERIALI_TOIMP)
-	
-##	for rec in data:
-##		id_invmat = rec.id_invmat
-##		misurazioni = eval(rec.misurazioni)
-##		tecnologie = eval(rec.tecnologie)
-##		#print str(misurazioni)
+	data = db.query(INVENTARIO_MATERIALI)
+
+	for rec in data:
+
+		id_invmat = rec.id_invmat
+		misurazioni = eval(rec.misurazioni)
+		tecnologie = eval(rec.tecnologie)
+		rif_biblio = eval(rec.rif_biblio)
+		elementi_reperto = eval(rec.elementi_reperto)
+		#print str(misurazioni)
+##		misurazioni_update = []
+##		for mis in misurazioni:
+##			temp_list = []
+##			for i in mis:
+##				temp_list.append(unicode(i))
+##			misurazioni_update.append(temp_list)
+##		print misurazioni_update
+##		try:
+##			#misurazioni_update = [[u'peso', u'g', u'2490']]	#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+##			db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['misurazioni'], [unicode(misurazioni_update)])
+##		except Exception, e:
+##			print str(e)
+		
+##		tecnologie_update = []
+##		for tec in tecnologie:
+##			temp_list = []
+##			for i in tec:
+##				temp_list.append(unicode(i))
+##			tecnologie_update.append(temp_list)
+##		print tecnologie_update
+##		try:
+##			#misurazioni_update = [[u'peso', u'g', u'2490']]	#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+##			db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['tecnologie'], [unicode(tecnologie_update)])
+##		except Exception, e:
+##			print str(e)
+
+##		rif_biblio_update = []
+##		for rfbib in rif_biblio:
+##			temp_list = []
+##			for i in rfbib:
+##				temp_list.append(unicode(i))
+##			rif_biblio_update.append(temp_list)
+##		print rif_biblio_update
+##		try:
+##			db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['rif_biblio'], [unicode(rif_biblio_update)])
+##		except Exception, e:
+##			print str(e)
+
+		elem_rep_update = []
+		for elem_rep in elementi_reperto:
+			temp_list = []
+			for i in elem_rep:
+				temp_list.append(unicode(i))
+			elem_rep_update.append(temp_list)
+		print elem_rep_update
+		try:
+			#misurazioni_update = [[u'peso', u'g', u'2490']]	#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+			db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['elementi_reperto'], [unicode(elem_rep_update)])
+		except Exception, e:
+			print str(e)
+
+##		
 ##		for mis in misurazioni:
 ##			if mis[0] == 'forme minime':
 ##				try:
@@ -813,6 +887,51 @@ def main():
 ##					print str(e)
 ##
 ##		for mis in misurazioni:
+##			if mis[0] == 'conservazione orlo':
+##				print "mis2: " + str(mis[2])
+##				try:
+##					#print int(mis[1])
+##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+##					if mis[2].find(',') != -1:
+##						misura = mis[2].replace(',', '.')
+##						misura = float(misura)
+##					else:
+##						misura = float(mis[2])
+##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['eve_orlo'], [misura])
+##				except Exception, e:
+##					print str(e) + str(rec.numero_inventario)
+##
+##		for mis in misurazioni:
+##			if mis[0] == 'diametro orlo':
+##				print "mis2: " + str(mis[2])
+##				try:
+##					#print int(mis[1])
+##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+##					if mis[2].find(',') != -1:
+##						misura = mis[2].replace(',', '.')
+##						misura = float(misura)
+##					else:
+##						misura = float(mis[2])
+##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['diametro_orlo'], [misura])
+##				except Exception, e:
+##					print str(e) + str(rec.numero_inventario)
+##
+##		for mis in misurazioni:
+##			if mis[0] == 'peso':
+##				print "mis2: " + str(mis[2])
+##				try:
+##					#print int(mis[1])
+##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+##					if mis[2].find(',') != -1:
+##						misura = mis[2].replace(',', '.')
+##						misura = float(misura)
+##					else:
+##						misura = float(mis[2])
+##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['peso'], [misura])
+##				except Exception, e:
+##					print str(e) + str(rec.numero_inventario)
+##
+##		for mis in misurazioni:
 ##			if mis[0] == 'forme massime':
 ##				try:
 ##					print int(mis[1])
@@ -821,14 +940,12 @@ def main():
 ##				except Exception, e:
 ##					print str(e)
 ##
-##
-##
 ##		for tec in tecnologie:
 ##			if tec[0] == 'Impasto':
 ##				try:
 ##					#print int(mis[1])
 ##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
-##					db.update( 'INVENTARIO_MATERIALI_TOIMP', 'id_invmat', [id_invmat], ['corpo_ceramico'], [str(tec[1])] )
+##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['corpo_ceramico'], [str(tec[1])] )
 ##				except Exception, e:
 ##					print str(e)
 ##
@@ -836,17 +953,18 @@ def main():
 ##				try:
 ##					#print int(mis[1])
 ##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
-##					db.update( 'INVENTARIO_MATERIALI_TOIMP', 'id_invmat', [id_invmat], ['rivestimento'], [str(tec[1])] )
+##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['rivestimento'], [str(tec[1])] )
 ##				except Exception, e:
 ##					print str(e)
-main()
+if __name__ == '__main__':
+	main()
 ##			try:
 ##				temp_dataset = (str(self.DATA_LIST[i].definizione), int(mis[1]))
 ##				contatore += int(mis[1])
 ##				dataset.append(temp_dataset)
 ##			except:
 ##				pass
-
+##
 ##	for i in range(len(data)):
 ##		try:
 ##			print data[i]

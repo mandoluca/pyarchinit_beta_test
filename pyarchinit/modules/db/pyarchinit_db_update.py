@@ -117,6 +117,28 @@ class DB_update:
 		if table_column_names_list.__contains__('rivestimento') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN rivestimento varchar(20)")
 			self.engine.execute("update inventario_materiali_table set rivestimento = ''")
+		
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+		if table_column_names_list.__contains__('diametro_orlo') == False:
+			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN diametro_orlo Numeric(7,3) DEFAULT 0")
+
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+		if table_column_names_list.__contains__('peso') == False:
+			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN peso Numeric(9,3) DEFAULT 0")
+
+
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+		if table_column_names_list.__contains__('tipo') == False:
+			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN tipo varchar(20)")
+			self.engine.execute("update inventario_materiali_table set tipo = ''")
+
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+		if table_column_names_list.__contains__('eve_orlo') == False:
+			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN eve_orlo Numeric(7,3) DEFAULT 0")
 
 if __name__ == '__main__':
 	dbup=DB_update()

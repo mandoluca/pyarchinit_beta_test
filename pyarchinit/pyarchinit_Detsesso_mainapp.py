@@ -583,7 +583,7 @@ class pyarchinit_Detsesso(QDialog, Ui_DialogDetsesso):
 
 		self.SORT_ITEMS_CONVERTED = []
 		for i in items:
-			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[i])
+			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[unicode(i)])
 
 		self.SORT_MODE = order_type
 		self.empty_fields()
@@ -1826,7 +1826,7 @@ class pyarchinit_Detsesso(QDialog, Ui_DialogDetsesso):
 			except Exception, e:
 				QMessageBox.warning(self, "Errore", "Attenzione 1 file: "+ str(e),  QMessageBox.Ok)
 
-                if n == 16: #tavola bacino arco composito
+		if n == 16: #tavola bacino arco composito
 			try:
 				anthropo_images_path = ('%s%s') % (filepath, os.path.join(os.sep, 'anthropo_images/detsesso_bacino_arco composito.jpg'))
 				dlg.show_image(unicode(anthropo_images_path)) #item.data(QtCore.Qt.UserRole).toString()))
@@ -1841,8 +1841,8 @@ class pyarchinit_Detsesso(QDialog, Ui_DialogDetsesso):
 				dlg.exec_()
 			except Exception, e:
 				QMessageBox.warning(self, "Errore", "Attenzione 1 file: "+ str(e),  QMessageBox.Ok)
-				
-                if n == 18: #tavola bacino proporzioni ischio-pubiche
+
+		if n == 18: #tavola bacino proporzioni ischio-pubiche
 			try:
 				anthropo_images_path = ('%s%s') % (filepath, os.path.join(os.sep, 'anthropo_images/detsesso_bacino_proporzioni ischio-pubiche.jpg'))
 				dlg.show_image(unicode(anthropo_images_path)) #item.data(QtCore.Qt.UserRole).toString()))

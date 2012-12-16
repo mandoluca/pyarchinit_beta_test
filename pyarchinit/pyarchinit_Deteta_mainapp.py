@@ -67,7 +67,7 @@ class pyarchinit_Deteta(QDialog, Ui_Dialog_eta):
 	DB_MANAGER = ""
 	TABLE_NAME = 'deteta_table'
 	MAPPER_TABLE_CLASS = "DETETA"
-	NOME_SCHEDA = "Scheda Determinazione dell'età di morte"
+	NOME_SCHEDA = u"Scheda Determinazione dell'età di morte"
 	ID_TABLE = "id_det_eta"
 	CONVERSION_DICT = {
 	ID_TABLE:ID_TABLE,
@@ -512,15 +512,15 @@ class pyarchinit_Deteta(QDialog, Ui_Dialog_eta):
 				self.charge_list()
 				self.fill_fields()
 			else:
-				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
+				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + u". Il database è vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
 				self.charge_list()
 				self.on_pushButton_new_rec_pressed()
 		except Exception, e:
 			e = str(e)
 			if e.find("no such table"):
-				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br><br> Tabella non presente. E' NECESSARIO RIAVVIARE QGIS" + e ,  QMessageBox.Ok)
+				QMessageBox.warning(self, "Alert", u"La connessione è fallita <br><br> Tabella non presente. E' NECESSARIO RIAVVIARE QGIS" + e ,  QMessageBox.Ok)
 			else:
-				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
+				QMessageBox.warning(self, "Alert", u"La connessione è fallita <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 
 	def customize_GUI(self):
 		query_res = self.sex_from_individuo_table()
@@ -802,7 +802,7 @@ class pyarchinit_Deteta(QDialog, Ui_Dialog_eta):
 
 		self.SORT_ITEMS_CONVERTED = []
 		for i in items:
-			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[i])
+			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[unicode(i)])
 
 		self.SORT_MODE = order_type
 		self.empty_fields()

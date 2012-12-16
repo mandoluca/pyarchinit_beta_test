@@ -80,7 +80,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	"Periodo Finale":"periodo_finale",
 	"Fase Iniziale":"fase_iniziale",
 	"Fase finale":"fase_finale",
-	"Attivita\'":"attivita",
+	u"Attività":"attivita",
 	"Anno di scavo":"anno_scavo",
 	"Scavato":"scavato",
 	"Codice periodo" : "cont_per",
@@ -100,7 +100,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				"Periodo Finale", 
 				"Fase Iniziale",
 				"Fase Finale",
-				"Attivita\'",
+				u"Attività",
 				"Anno di scavo",
 				"Scavato",
 				"Codice periodo",
@@ -166,17 +166,20 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		#self.connect(self.comboBox_per_fin, SIGNAL("editTextChanged (const QString&)"), self.charge_fase_fin_list)
 		#self.connect(self.comboBox_per_fin, SIGNAL("currentIndexChanged(int)"), self.charge_fase_fin_list)
 
-		sito = str(self.comboBox_sito.currentText())
+		sito = self.comboBox_sito.currentText() 
 		self.comboBox_sito.setEditText(sito)
 		self.charge_periodo_iniz_list()
 		self.charge_periodo_fin_list()
 		self.fill_fields()
 
 	def charge_periodo_iniz_list(self):
+		sito =unicode(self.comboBox_sito.currentText())
+		#sitob = sito.decode('utf-8')
+
 		search_dict = {
-		'sito'  : "'"+str(self.comboBox_sito.currentText())+"'"
+		'sito'  : "'"+sito+"'"
 		}
-	
+
 		periodo_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
 
 		periodo_list = []
@@ -199,7 +202,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 	def charge_periodo_fin_list(self):
 		search_dict = {
-		'sito'  : "'"+str(self.comboBox_sito.currentText())+"'"
+		'sito'  : "'"+unicode(self.comboBox_sito.currentText())+"'"
 		}
 	
 		periodo_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')   
@@ -227,14 +230,14 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		rowSelected = eval(rowSelected_cmd)
 		rowIndex = (rowSelected[0].row())
 
-		sito = str(self.comboBox_sito.currentText())
-		area = str(self.comboBox_area.currentText())
+		sito = unicode(self.comboBox_sito.currentText())
+		area = unicode(self.comboBox_area.currentText())
 		us_item = self.tableWidget_rapporti.item(rowIndex,1)
 
-		us = str(us_item.text())
+		us = unicode(us_item.text())
 
-		search_dict = {'sito' : "'"+str(sito)+"'",
-						'area' : "'"+str(area)+"'",
+		search_dict = {'sito' : "'"+unicode(sito)+"'",
+						'area' : "'"+unicode(area)+"'",
 						'us' : us}
 
 		records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
@@ -445,10 +448,10 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			""" if has geometry column load to map canvas """
 
 			rec_list =  self.ID_TABLE + " = " + str(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))
-			search_dict = {'id_entity'  : "'"+str(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))+"'", 'entity_type' : "'US'"}
+			search_dict = {'id_entity'  : "'"+unicode(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))+"'", 'entity_type' : "'US'"}
 			record_us_list = self.DB_MANAGER.query_bool(search_dict, 'MEDIATOENTITY')
 			for i in record_us_list:
-				search_dict = {'id_media' : "'"+str(i.id_media)+"'"}
+				search_dict = {'id_media' : "'"+unicode(i.id_media)+"'"}
 
 				u = Utility()
 				search_dict = u.remove_empty_items_fr_dict(search_dict)
@@ -471,14 +474,14 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			dlg = ImageViewer(self)
 			id_orig_item = item.text() #return the name of original file
 
-			search_dict = {'id_media' : "'"+str(id_orig_item)+"'"}
+			search_dict = {'id_media' : "'"+unicode(id_orig_item)+"'"}
 
 			u = Utility()
 			search_dict = u.remove_empty_items_fr_dict(search_dict)
 
 			try:
 				res = self.DB_MANAGER.query_bool(search_dict, "MEDIA")
-				file_path = str(res[0].filepath)
+				file_path = unicode(res[0].filepath)
 			except Exception, e:
 				QMessageBox.warning(self, "Errore", "Attenzione 1 file: "+ str(e),  QMessageBox.Ok)
 
@@ -526,8 +529,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def charge_fase_iniz_list(self):
 		try:
 			search_dict = {
-			'sito'  : "'"+str(self.comboBox_sito.currentText())+"'",
-			'periodo'  : "'"+str(self.comboBox_per_iniz.currentText())+"'",
+			'sito'  : "'"+unicode(self.comboBox_sito.currentText())+"'",
+			'periodo'  : "'"+unicode(self.comboBox_per_iniz.currentText())+"'",
 			}
 		
 			fase_list_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
@@ -535,7 +538,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			fase_list = []
 
 			for i in range(len(fase_list_vl)):
-				fase_list.append(str(fase_list_vl[i].fase))
+				fase_list.append(unicode(fase_list_vl[i].fase))
 			try:
 				fase_list.remove('')
 			except:
@@ -557,8 +560,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def charge_fase_fin_list(self):
 		try:
 			search_dict = {
-			'sito'  : "'"+str(self.comboBox_sito.currentText())+"'",
-			'periodo'  : "'"+str(self.comboBox_per_fin.currentText())+"'",
+			'sito'  : "'"+unicode(self.comboBox_sito.currentText())+"'",
+			'periodo'  : "'"+unicode(self.comboBox_per_fin.currentText())+"'",
 			}
 
 			fase_list_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
@@ -566,7 +569,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			fase_list = []
 
 			for i in range(len(fase_list_vl)):
-				fase_list.append(str(fase_list_vl[i].fase))
+				fase_list.append(unicode(fase_list_vl[i].fase))
 			try:
 				fase_list.remove('')
 			except:
@@ -591,9 +594,9 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		data_list = []
 		for i in range(len(self.DATA_LIST)):
 			#assegnazione valori di quota mn e max
-			sito =  str(self.DATA_LIST[i].sito)
-			area = str(self.DATA_LIST[i].area)
-			us = int(self.DATA_LIST[i].us)
+			sito =  unicode(self.DATA_LIST[i].sito)
+			area = unicode(self.DATA_LIST[i].area)
+			us = unicode(self.DATA_LIST[i].us)
 
 			res = self.DB_MANAGER.select_quote_from_db_sql(sito, area, us)
 			quote = []
@@ -613,8 +616,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				quota_min = '%s %s' % (quote[0][0], quote[0][1])
 				quota_max = '%s %s' % (quote[-1][0], quote[-1][1])
 			else:
-				quota_min = "Non rilevata"
-				quota_max = "Non rilevata"
+				quota_min = "Non inserita su GIS"
+				quota_max = "Non inserita su GIS"
 
 			#assegnazione numero di pianta
 			resus = self.DB_MANAGER.select_us_from_db_sql(sito, area, us, "2")
@@ -624,47 +627,44 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 			if bool(elenco_record) == True:
 				sing_rec = elenco_record[0]
-				#f = open("test_elenco.txt", "w")
-				#f.write(str(sing_rec))
-				#f.close()
 				elenco_piante = sing_rec[7]
 				if elenco_piante != None:
 					piante = elenco_piante
 				else:
 					piante = "US disegnata su base GIS"
 			else:
-				piante = "US non disegnata"
+				piante = "US disegnata su base GIS"
 
 			data_list.append([
-			str(self.DATA_LIST[i].sito), 									#1 - Sito
-			str(self.DATA_LIST[i].area),									#2 - Area
+			unicode(self.DATA_LIST[i].sito), 									#1 - Sito
+			unicode(self.DATA_LIST[i].area),									#2 - Area
 			int(self.DATA_LIST[i].us),										#3 - US
-			str(self.DATA_LIST[i].d_stratigrafica),						#4 - definizione stratigrafica
-			str(self.DATA_LIST[i].d_interpretativa),					#5 - definizione intepretata
-			self.DATA_LIST[i].descrizione,								#6 - descrizione
-			self.DATA_LIST[i].interpretazione,							#7 - interpretazione
-			str(self.DATA_LIST[i].periodo_iniziale),						#8 - periodo iniziale
-			str(self.DATA_LIST[i].fase_iniziale),							#9 - fase iniziale
-			str(self.DATA_LIST[i].periodo_finale),						#10 - periodo finale iniziale
-			str(self.DATA_LIST[i].fase_finale), 							#11 - fase finale
-			str(self.DATA_LIST[i].scavato),								#12 - scavato
-			str(self.DATA_LIST[i].attivita),								#13 - attivita
-			str(self.DATA_LIST[i].anno_scavo),						#14 - anno scavo
-			str(self.DATA_LIST[i].metodo_di_scavo),					#15 - metodo
-			str(self.DATA_LIST[i].inclusi),									#16 - inclusi
-			str(self.DATA_LIST[i].campioni),								#17 - campioni
-			str(self.DATA_LIST[i].rapporti),								#18 - rapporti
-			str(self.DATA_LIST[i].data_schedatura),					#19 - data schedatura
-			str(self.DATA_LIST[i].schedatore),							#20 - schedatore
-			str(self.DATA_LIST[i].formazione),							#21 - formazione
-			str(self.DATA_LIST[i].stato_di_conservazione),			#22 - conservazione
-			str(self.DATA_LIST[i].colore),								#23 - colore
-			str(self.DATA_LIST[i].consistenza),							#24 - consistenza
-			str(self.DATA_LIST[i].struttura),								#25 - struttura
-			str(quota_min),													#26 - quota_min
-			str(quota_max),													#27 - quota_max
-			str(piante),															#28 - piante
-			str(self.DATA_LIST[i].documentazione)					#29 - documentazione
+			unicode(self.DATA_LIST[i].d_stratigrafica),						#4 - definizione stratigrafica
+			unicode(self.DATA_LIST[i].d_interpretativa),					#5 - definizione intepretata
+			unicode(self.DATA_LIST[i].descrizione),								#6 - descrizione
+			unicode(self.DATA_LIST[i].interpretazione),							#7 - interpretazione
+			unicode(self.DATA_LIST[i].periodo_iniziale),						#8 - periodo iniziale
+			unicode(self.DATA_LIST[i].fase_iniziale),							#9 - fase iniziale
+			unicode(self.DATA_LIST[i].periodo_finale),						#10 - periodo finale iniziale
+			unicode(self.DATA_LIST[i].fase_finale), 							#11 - fase finale
+			unicode(self.DATA_LIST[i].scavato),								#12 - scavato
+			unicode(self.DATA_LIST[i].attivita),								#13 - attivita
+			unicode(self.DATA_LIST[i].anno_scavo),						#14 - anno scavo
+			unicode(self.DATA_LIST[i].metodo_di_scavo),					#15 - metodo
+			unicode(self.DATA_LIST[i].inclusi),									#16 - inclusi
+			unicode(self.DATA_LIST[i].campioni),								#17 - campioni
+			unicode(self.DATA_LIST[i].rapporti),								#18 - rapporti
+			unicode(self.DATA_LIST[i].data_schedatura),					#19 - data schedatura
+			unicode(self.DATA_LIST[i].schedatore),							#20 - schedatore
+			unicode(self.DATA_LIST[i].formazione),							#21 - formazione
+			unicode(self.DATA_LIST[i].stato_di_conservazione),			#22 - conservazione
+			unicode(self.DATA_LIST[i].colore),								#23 - colore
+			unicode(self.DATA_LIST[i].consistenza),							#24 - consistenza
+			unicode(self.DATA_LIST[i].struttura),								#25 - struttura
+			unicode(quota_min),													#26 - quota_min
+			unicode(quota_max),													#27 - quota_max
+			unicode(piante),															#28 - piante
+			unicode(self.DATA_LIST[i].documentazione)					#29 - documentazione
 		])
 		return data_list
 
@@ -686,7 +686,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def on_pushButton_export_matrix_pressed(self):
 		data = []
 		for sing_rec in self.DATA_LIST:
-			us = str(sing_rec.us)
+			us = unicode(sing_rec.us)
 			rapporti_stratigrafici = eval(sing_rec.rapporti)
 			for sing_rapp in rapporti_stratigrafici:
 				try:
@@ -700,7 +700,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		sito = self.DATA_LIST[0].sito
 
 		search_dict = {
-		'sito'  : "'"+str(sito)+"'"
+		'sito'  : "'"+unicode(sito)+"'"
 		}
 
 		periodizz_data_list = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
@@ -714,9 +714,9 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		clust_number = 0
 		for i in periodi_data_values:
 			search_dict = {
-			'sito'  : "'"+str(sito)+"'",
-			'periodo_iniziale'  : "'"+str(i[0])+"'",
-			'fase_iniziale' : "'"+str(i[1])+"'"
+			'sito'  : "'"+unicode(sito)+"'",
+			'periodo_iniziale'  : "'"+unicode(i[0])+"'",
+			'fase_iniziale' : "'"+unicode(i[1])+"'"
 			}
 
 			us_group = self.DB_MANAGER.query_bool(search_dict, 'US')
@@ -743,7 +743,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def on_pushButton_orderLayers_pressed(self):
 		data = []
 		for sing_rec in self.DATA_LIST:
-			us = str(sing_rec.us)
+			us = unicode(sing_rec.us)
 			rapporti_stratigrafici = eval(sing_rec.rapporti)
 			for sing_rapp in rapporti_stratigrafici:
 				try:
@@ -762,11 +762,11 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		for k,v in order_layer_dict.items():
 			order_number = str(k)
 			us = v
-			search_dict = {'sito' : "'"+str(sito)+"'", 'area':"'"+str(area)+"'", 'us' : us}
+			search_dict = {'sito' : "'"+unicode(sito)+"'", 'area':"'"+unicode(area)+"'", 'us' : us}
 			records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
 			self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [int(records[0].id_us)], ['order_layer'], [order_number])
-			self.lineEditOrderLayer.setText(str(order_number))
-
+			self.lineEditOrderLayer.setText(unicode(order_number))
+##
 	def on_toolButtonPan_toggled(self):
 		self.toolPan = QgsMapToolPan(self.mapPreview)
 		self.mapPreview.setMapTool(self.toolPan)
@@ -813,7 +813,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 		self.SORT_ITEMS_CONVERTED = []
 		for i in items:
-			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[i])
+			QMessageBox.warning(self, "Messaggio",i, QMessageBox.Ok)
+			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[unicode(i)]) #apportare la modifica nellle altre schede
 
 		self.SORT_MODE = order_type
 		self.empty_fields()
@@ -889,12 +890,12 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		#save record
 		if self.BROWSE_STATUS == "b":
 			if self.records_equal_check() == 1:
-				self.update_if(QMessageBox.warning(self,'ATTENZIONE',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+				self.update_if(QMessageBox.warning(self,u'ATTENZIONE GIGI',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 				self.SORT_STATUS = "n"
 				self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 				self.enable_button(1)
 			else:
-				QMessageBox.warning(self, "ATTENZIONE", "Non Ã¨ stata realizzata alcuna modifica.",  QMessageBox.Ok)
+				QMessageBox.warning(self, "ATTENZIONE", u"Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
 		else:
 			if self.data_error_check() == 0:
 				test_insert = self.insert_new_rec()
@@ -917,7 +918,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					self.enable_button(1)
 
 	def on_pushButton_rapp_check_pressed(self):
-		sito_check = self.comboBox_sito_rappcheck.currentText()
+		sito_check = unicode(self.comboBox_sito_rappcheck.currentText())
 		self.rapporti_stratigrafici_check(sito_check)
 		QMessageBox.warning(self, "Messaggio", "Controllo Rapporti Stratigrafici. \n Controllo eseguito con successo",  QMessageBox.Ok)
 
@@ -925,15 +926,15 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		test = 0
 		EC = Error_check()
 
-		if EC.data_is_empty(str(self.comboBox_sito.currentText())) == 0:
+		if EC.data_is_empty(unicode(self.comboBox_sito.currentText())) == 0:
 			QMessageBox.warning(self, "ATTENZIONE", "Campo Sito. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
 			test = 1
 
-		if EC.data_is_empty(str(self.comboBox_area.currentText())) == 0:
+		if EC.data_is_empty(unicode(self.comboBox_area.currentText())) == 0:
 			QMessageBox.warning(self, "ATTENZIONE", "Campo Area. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
 			test = 1
 
-		if EC.data_is_empty(str(self.lineEdit_us.text())) == 0:
+		if EC.data_is_empty(unicode(self.lineEdit_us.text())) == 0:
 			QMessageBox.warning(self, "ATTENZIONE", "Campo US. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
 			test = 1
 
@@ -1001,15 +1002,15 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 						   'Uguale a':'Uguale a'
 						   }
 
-		search_dict = {'sito' : "'"+str(sito_check)+"'"}
+		search_dict = {'sito' : "'"+unicode(sito_check)+"'"}
 
 		records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
 
 		report_rapporti = '\bReport controllo Rapporti Stratigrafici - Sito: %s \n' % (sito_check)
 
 		for rec in range(len(records)):
-			sito = "'"+str(records[rec].sito)+"'"
-			area = "'"+str(records[rec].area)+"'"
+			sito = "'"+unicode(records[rec].sito)+"'"
+			area = "'"+unicode(records[rec].area)+"'"
 			us = int(records[rec].us)
 
 			rapporti = records[rec].rapporti #caricati i rapporti nella variabile
@@ -1032,7 +1033,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 							else:
 								report = '\bSito: %s, \bArea: %s, \bUS: %d %s \bUS: %d: Rapporto non verificato' % (sito, area, int(us), sing_rapp[0], int(sing_rapp[1]))
 					except Exception, e:
-						report = "problema di conversione rapporto: " + str(e)
+						report = "Problema di conversione rapporto: " + str(e)
 					report_rapporti = report_rapporti + report + '\n'
 		if os.name == 'posix':
 			HOME = os.environ['HOME']
@@ -1066,44 +1067,44 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			#data
 			data = self.DB_MANAGER.insert_values(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
-			str(self.comboBox_sito.currentText()), 				#1 - Sito
-			str(self.comboBox_area.currentText()), 				#2 - Area
+			unicode(self.comboBox_sito.currentText()), 				#1 - Sito
+			unicode(self.comboBox_area.currentText()), 				#2 - Area
 			int(self.lineEdit_us.text()),									#3 - US
-			str(self.comboBox_def_strat.currentText()),			#4 - Definizione stratigrafica
-			str(self.comboBox_def_intepret.currentText()),		#5 - Definizione intepretata
+			unicode(self.comboBox_def_strat.currentText()),			#4 - Definizione stratigrafica
+			unicode(self.comboBox_def_intepret.currentText()),		#5 - Definizione intepretata
 			unicode(self.textEdit_descrizione.toPlainText()),		#6 - descrizione
 			unicode(self.textEdit_interpretazione.toPlainText()),#7 - interpretazione
-			str(self.comboBox_per_iniz.currentText()),			#8 - periodo iniziale
-			str(self.comboBox_fas_iniz.currentText()),			#9 - fase iniziale
-			str(self.comboBox_per_fin.currentText()), 			#10 - periodo finale iniziale
-			str(self.comboBox_fas_fin.currentText()), 			#11 - fase finale
-			str(self.comboBox_scavato.currentText()),			#12 - scavato
-			str(self.lineEdit_attivita.text()),							#13 - attivita  
-			str(self.lineEdit_anno.text()),								#14 - anno scavo
-			str(self.comboBox_metodo.currentText()), 			#15 - metodo
-			str(inclusi),														#16 - inclusi
-			str(campioni),													#17 - campioni
-			str(rapporti),													#18 - rapporti
-			str(self.lineEdit_data_schedatura.text()),				#19 - data schedatura
-			str(self.comboBox_schedatore.currentText()),		#20 - schedatore
-			str(self.comboBox_formazione.currentText()),		#21 - formazione
-			str(self.comboBox_conservazione.currentText()),	#22 - conservazione
-			str(self.comboBox_colore.currentText()),				#23 - colore
-			str(self.comboBox_consistenza.currentText()),		#24 - consistenza
-			str(self.lineEdit_struttura.text()),							#25 - struttura
-			str(self.lineEdit_codice_periodo.text()),					#26 - continuita  periodo
+			unicode(self.comboBox_per_iniz.currentText()),			#8 - periodo iniziale
+			unicode(self.comboBox_fas_iniz.currentText()),			#9 - fase iniziale
+			unicode(self.comboBox_per_fin.currentText()), 			#10 - periodo finale iniziale
+			unicode(self.comboBox_fas_fin.currentText()), 			#11 - fase finale
+			unicode(self.comboBox_scavato.currentText()),			#12 - scavato
+			unicode(self.lineEdit_attivita.text()),							#13 - attivita  
+			unicode(self.lineEdit_anno.text()),								#14 - anno scavo
+			unicode(self.comboBox_metodo.currentText()), 			#15 - metodo
+			unicode(inclusi),														#16 - inclusi
+			unicode(campioni),													#17 - campioni
+			unicode(rapporti),													#18 - rapporti
+			unicode(self.lineEdit_data_schedatura.text()),				#19 - data schedatura
+			unicode(self.comboBox_schedatore.currentText()),		#20 - schedatore
+			unicode(self.comboBox_formazione.currentText()),		#21 - formazione
+			unicode(self.comboBox_conservazione.currentText()),	#22 - conservazione
+			unicode(self.comboBox_colore.currentText()),				#23 - colore
+			unicode(self.comboBox_consistenza.currentText()),		#24 - consistenza
+			unicode(self.lineEdit_struttura.text()),							#25 - struttura
+			unicode(self.lineEdit_codice_periodo.text()),					#26 - continuita  periodo
 			order_layer,													#27 - order layer
-			str(documentazione))										#28 - documentazione
+			unicode(documentazione))										#28 - documentazione
 			try:
 				self.DB_MANAGER.insert_data_session(data)
 				return 1
 			except Exception, e:
 				e_str = str(e)
 				if e_str.__contains__("Integrity"):
-					msg = self.ID_TABLE + " gia' presente nel database"
+					msg = self.ID_TABLE + u" già presente nel database"
 				else:
 					msg = e
-				QMessageBox.warning(self, "Errore", "immisione 1 \n"+ str(msg),  QMessageBox.Ok)
+				QMessageBox.warning(self, "Errore", "Errore di immisione 1 \n"+ str(msg),  QMessageBox.Ok)
 				return 0
 
 		except Exception, e:
@@ -1152,7 +1153,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 	def on_pushButton_first_rec_pressed(self):
 		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		try:
 			self.empty_fields()
 			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
@@ -1164,7 +1165,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 	def on_pushButton_last_rec_pressed(self):
 		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		try:
 			self.empty_fields()
 			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
@@ -1176,7 +1177,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 	def on_pushButton_prev_rec_pressed(self):
 		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 
 		self.REC_CORR = self.REC_CORR-1
 		if self.REC_CORR == -1:
@@ -1192,7 +1193,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 	def on_pushButton_next_rec_pressed(self):
 		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		self.REC_CORR = self.REC_CORR+1
 		if self.REC_CORR >= self.REC_TOT:
 			self.REC_CORR = self.REC_CORR-1
@@ -1207,7 +1208,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 
 	def on_pushButton_delete_pressed(self):
-		msg = QMessageBox.warning(self,"Attenzione!!!","Vuoi veramente eliminare il record? \n L'azione e' irreversibile", QMessageBox.Cancel,1)
+		msg = QMessageBox.warning(self,"Attenzione!!!",u"Vuoi veramente eliminare il record? \n L'azione è irreversibile", QMessageBox.Cancel,1)
 		if msg != 1:
 			QMessageBox.warning(self,"Messagio!!!","Azione Annullata!")
 		else:
@@ -1218,7 +1219,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				QMessageBox.warning(self,"Messaggio!!!","Record eliminato!")
 				self.charge_list_sito_def_strat()
 			except:
-					QMessageBox.warning(self, "Attenzione", "Il database e' vuoto!",  QMessageBox.Ok)
+					QMessageBox.warning(self, "Attenzione", u"Il database è vuoto!",  QMessageBox.Ok)
 			if bool(self.DATA_LIST) == False:
 				self.DATA_LIST = []
 				self.DATA_LIST_REC_CORR = []
@@ -1277,7 +1278,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		"""
 
 	def on_pushButton_crea_codice_periodo_pressed(self):
-		sito = str(self.comboBox_sito.currentText())
+		sito = unicode(self.comboBox_sito.currentText())
 		self.DB_MANAGER.update_cont_per(sito)
 		self.empty_fields()
 		self.charge_records()
@@ -1297,41 +1298,41 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			else:
 				us = ""
 			search_dict = {
-			self.TABLE_FIELDS[0]  : "'"+str(self.comboBox_sito.currentText())+"'", 									#1 - Sito
-			self.TABLE_FIELDS[1]  : "'"+str(self.comboBox_area.currentText())+"'",									#2 - Area
+			self.TABLE_FIELDS[0]  : "'"+unicode(self.comboBox_sito.currentText())+"'", 									#1 - Sito
+			self.TABLE_FIELDS[1]  : "'"+unicode(self.comboBox_area.currentText())+"'",									#2 - Area
 			self.TABLE_FIELDS[2]  : us,																								#3 - US
-			self.TABLE_FIELDS[3]  : "'"+str(self.comboBox_def_strat.currentText())+"'",								#4 - Definizione stratigrafica
-			self.TABLE_FIELDS[4]  : "'"+str(self.comboBox_def_intepret.currentText())+"'",							#5 - Definizione intepretata
-			self.TABLE_FIELDS[5]  : str(self.textEdit_descrizione.toPlainText()),											#6 - descrizione
-			self.TABLE_FIELDS[6]  : str(self.textEdit_interpretazione.toPlainText()),										#7 - interpretazione
-			self.TABLE_FIELDS[7]  : "'"+str(self.comboBox_per_iniz.currentText())+"'",								#8 - periodo iniziale
-			self.TABLE_FIELDS[8]  : "'"+str(self.comboBox_fas_iniz.currentText())+"'",								#9 - fase iniziale
-			self.TABLE_FIELDS[9]  : "'"+str(self.comboBox_per_fin.currentText())+"'",	 							#10 - periodo finale iniziale
-			self.TABLE_FIELDS[10] : "'"+str(self.comboBox_fas_fin.currentText())+"'", 								#11 - fase finale
-			self.TABLE_FIELDS[11] : "'"+str(self.comboBox_scavato.currentText())+"'",								#12 - scavato 
-			self.TABLE_FIELDS[12] : "'"+str(self.lineEdit_attivita.text())+"'",												#13 - attivita  
-			self.TABLE_FIELDS[13] : "'"+str(self.lineEdit_anno.text())+"'",													#14 - anno scavo
-			self.TABLE_FIELDS[14] : "'"+str(self.comboBox_metodo.currentText())+"'", 								#15 - metodo
-			self.TABLE_FIELDS[18] : "'"+str(self.lineEdit_data_schedatura.text())+"'",									#16 - data schedatura
-			self.TABLE_FIELDS[19] : "'"+str(self.comboBox_schedatore.currentText())+"'",							#17 - schedatore
-			self.TABLE_FIELDS[20] : "'"+str(self.comboBox_formazione.currentText())+"'",							#18 - formazione
-			self.TABLE_FIELDS[21] : "'"+str(self.comboBox_conservazione.currentText())+"'",						#19 - conservazione
-			self.TABLE_FIELDS[22] : "'"+str(self.comboBox_colore.currentText())+"'",								#20 - colore
-			self.TABLE_FIELDS[23] : "'"+str(self.comboBox_consistenza.currentText())+"'",							#21 - consistenza
-			self.TABLE_FIELDS[24] : "'"+str(self.lineEdit_struttura.text())+"'",											#22 - struttura
-			self.TABLE_FIELDS[25] : "'"+str(self.lineEdit_codice_periodo.text())+"'",									#23 - codice_periodo
-			self.TABLE_FIELDS[26] : "'"+str(self.lineEditOrderLayer.text())+"'"											#24 - order layer
+			self.TABLE_FIELDS[3]  : "'"+unicode(self.comboBox_def_strat.currentText())+"'",								#4 - Definizione stratigrafica
+			self.TABLE_FIELDS[4]  : "'"+unicode(self.comboBox_def_intepret.currentText())+"'",							#5 - Definizione intepretata
+			self.TABLE_FIELDS[5]  : unicode(self.textEdit_descrizione.toPlainText()),											#6 - descrizione
+			self.TABLE_FIELDS[6]  : unicode(self.textEdit_interpretazione.toPlainText()),										#7 - interpretazione
+			self.TABLE_FIELDS[7]  : "'"+unicode(self.comboBox_per_iniz.currentText())+"'",								#8 - periodo iniziale
+			self.TABLE_FIELDS[8]  : "'"+unicode(self.comboBox_fas_iniz.currentText())+"'",								#9 - fase iniziale
+			self.TABLE_FIELDS[9]  : "'"+unicode(self.comboBox_per_fin.currentText())+"'",	 							#10 - periodo finale iniziale
+			self.TABLE_FIELDS[10] : "'"+unicode(self.comboBox_fas_fin.currentText())+"'", 								#11 - fase finale
+			self.TABLE_FIELDS[11] : "'"+unicode(self.comboBox_scavato.currentText())+"'",								#12 - scavato 
+			self.TABLE_FIELDS[12] : "'"+unicode(self.lineEdit_attivita.text())+"'",												#13 - attivita  
+			self.TABLE_FIELDS[13] : "'"+unicode(self.lineEdit_anno.text())+"'",													#14 - anno scavo
+			self.TABLE_FIELDS[14] : "'"+unicode(self.comboBox_metodo.currentText())+"'", 								#15 - metodo
+			self.TABLE_FIELDS[18] : "'"+unicode(self.lineEdit_data_schedatura.text())+"'",									#16 - data schedatura
+			self.TABLE_FIELDS[19] : "'"+unicode(self.comboBox_schedatore.currentText())+"'",							#17 - schedatore
+			self.TABLE_FIELDS[20] : "'"+unicode(self.comboBox_formazione.currentText())+"'",							#18 - formazione
+			self.TABLE_FIELDS[21] : "'"+unicode(self.comboBox_conservazione.currentText())+"'",						#19 - conservazione
+			self.TABLE_FIELDS[22] : "'"+unicode(self.comboBox_colore.currentText())+"'",								#20 - colore
+			self.TABLE_FIELDS[23] : "'"+unicode(self.comboBox_consistenza.currentText())+"'",							#21 - consistenza
+			self.TABLE_FIELDS[24] : "'"+unicode(self.lineEdit_struttura.text())+"'",											#22 - struttura
+			self.TABLE_FIELDS[25] : "'"+unicode(self.lineEdit_codice_periodo.text())+"'",									#23 - codice_periodo
+			self.TABLE_FIELDS[26] : "'"+unicode(self.lineEditOrderLayer.text())+"'"											#24 - order layer
 			}
 
 			u = Utility()
 			search_dict = u.remove_empty_items_fr_dict(search_dict)
 
 			if bool(search_dict) == False:
-				QMessageBox.warning(self, "ATTENZIONE", "Non e' stata impostata alcuna ricerca!!!",  QMessageBox.Ok)
+				QMessageBox.warning(self, "ATTENZIONE", u"Non è stata impostata nessuna ricerca!!!",  QMessageBox.Ok)
 			else:
 				res = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS)
 				if bool(res) == False:
-					QMessageBox.warning(self, "ATTENZIONE", "Non e' stato trovato alcun record!",  QMessageBox.Ok)
+					QMessageBox.warning(self, "ATTENZIONE", u"Non è stato trovato nessun record!",  QMessageBox.Ok)
 
 					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
@@ -1445,7 +1446,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			for c in range(col):
 				value = eval(self.tablename+".item(r,c)")
 				if value != None:
-					sub_list.append(str(value.text()))
+					sub_list.append(unicode(value.text()))
 					
 			if bool(sub_list) == True:
 				lista.append(sub_list)
@@ -1479,7 +1480,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			eval(cmd)
 			for col in range(len(self.data_list[row])):
 				#item = self.comboBox_sito.setEditText(self.data_list[0][col]
-				item = QTableWidgetItem(self.data_list[row][col])
+				item = QTableWidgetItem(unicode(self.data_list[row][col]))
 				exec_str = ('%s.setItem(%d,%d,item)') % (self.table_name,row,col)
 				eval(exec_str)
 
@@ -1546,33 +1547,33 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.rec_num = n
 		#QMessageBox.warning(self, "Test", str(self.comboBox_per_fin.currentText()),  QMessageBox.Ok)
 		try:
-			self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)  												#1 - Sito
-			self.comboBox_area.setEditText(self.DATA_LIST[self.rec_num].area) 												#2 - Area
-			self.lineEdit_us.setText(str(self.DATA_LIST[self.rec_num].us))															#3 - US
-			self.comboBox_def_strat.setEditText(self.DATA_LIST[self.rec_num].d_stratigrafica)								#4 - Definizione stratigrafica
-			self.comboBox_def_intepret.setEditText(self.DATA_LIST[self.rec_num].d_interpretativa)						#5 - Definizione intepretata
-			unicode(self.textEdit_descrizione.setText(self.DATA_LIST[self.rec_num].descrizione))							#6 - descrizione
-			unicode(self.textEdit_interpretazione.setText(self.DATA_LIST[self.rec_num].interpretazione))					#7 - interpretazione
-			self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)								#8 - periodo iniziale
-			self.comboBox_fas_iniz.setEditText(self.DATA_LIST[self.rec_num].fase_iniziale)									#9 - fase iniziale
-			self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_finale)									#10 - periodo finale iniziale
-			self.comboBox_fas_fin.setEditText(self.DATA_LIST[self.rec_num].fase_finale) 									#11 - fase finale
-			self.comboBox_scavato.setEditText(self.DATA_LIST[self.rec_num].scavato)										#12 - scavato
-			self.lineEdit_attivita.setText(self.DATA_LIST[self.rec_num].attivita)													#13 - attivita
-			self.lineEdit_anno.setText(self.DATA_LIST[self.rec_num].anno_scavo)												#14 - anno scavo
-			self.comboBox_metodo.setEditText(self.DATA_LIST[self.rec_num].metodo_di_scavo) 							#15 - metodo
-			self.tableInsertData("self.tableWidget_inclusi", self.DATA_LIST[self.rec_num].inclusi)								#16 - inclusi
-			self.tableInsertData("self.tableWidget_campioni", self.DATA_LIST[self.rec_num].campioni)						#17 - campioni
-			self.tableInsertData("self.tableWidget_rapporti",self.DATA_LIST[self.rec_num].rapporti)							#18 - rapporti
-			self.tableInsertData("self.tableWidget_documentazione",self.DATA_LIST[self.rec_num].documentazione)	#19 - documentazione
-			self.lineEdit_data_schedatura.setText(self.DATA_LIST[self.rec_num].data_schedatura)							#20 - data schedatura
-			self.comboBox_schedatore.setEditText(self.DATA_LIST[self.rec_num].schedatore)								#21 - schedatore
-			self.comboBox_formazione.setEditText(self.DATA_LIST[self.rec_num].formazione)								#22 - formazione
-			self.comboBox_conservazione.setEditText(self.DATA_LIST[self.rec_num].stato_di_conservazione)			#23 - conservazione
-			self.comboBox_colore.setEditText(self.DATA_LIST[self.rec_num].colore)											#24 - colore
-			self.comboBox_consistenza.setEditText(self.DATA_LIST[self.rec_num].consistenza)								#25 - consistenza
-			self.lineEdit_struttura.setText(self.DATA_LIST[self.rec_num].struttura)												#26 - struttura
-			self.lineEdit_codice_periodo.setText(self.DATA_LIST[self.rec_num].cont_per)										#27 - codice periodo
+			unicode(self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)) 													#1 - Sito
+			unicode(self.comboBox_area.setEditText(self.DATA_LIST[self.rec_num].area) )												#2 - Area
+			self.lineEdit_us.setText(str(self.DATA_LIST[self.rec_num].us))																		#3 - US
+			unicode(self.comboBox_def_strat.setEditText(self.DATA_LIST[self.rec_num].d_stratigrafica))								#4 - Definizione stratigrafica
+			unicode(self.comboBox_def_intepret.setEditText(self.DATA_LIST[self.rec_num].d_interpretativa))						#5 - Definizione intepretata
+			unicode(self.textEdit_descrizione.setText(self.DATA_LIST[self.rec_num].descrizione))										#6 - descrizione
+			unicode(self.textEdit_interpretazione.setText(self.DATA_LIST[self.rec_num].interpretazione))								#7 - interpretazione
+			unicode(self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale))								#8 - periodo iniziale
+			unicode(self.comboBox_fas_iniz.setEditText(self.DATA_LIST[self.rec_num].fase_iniziale))									#9 - fase iniziale
+			unicode(self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_finale))								#10 - periodo finale iniziale
+			unicode(self.comboBox_fas_fin.setEditText(self.DATA_LIST[self.rec_num].fase_finale)) 									#11 - fase finale
+			unicode(self.comboBox_scavato.setEditText(self.DATA_LIST[self.rec_num].scavato))										#12 - scavato
+			unicode(self.lineEdit_attivita.setText(self.DATA_LIST[self.rec_num].attivita))													#13 - attivita
+			unicode(self.lineEdit_anno.setText(self.DATA_LIST[self.rec_num].anno_scavo))												#14 - anno scavo
+			unicode(self.comboBox_metodo.setEditText(self.DATA_LIST[self.rec_num].metodo_di_scavo)) 							#15 - metodo
+			self.tableInsertData("self.tableWidget_inclusi", self.DATA_LIST[self.rec_num].inclusi)											#16 - inclusi
+			self.tableInsertData("self.tableWidget_campioni", self.DATA_LIST[self.rec_num].campioni)									#17 - campioni
+			self.tableInsertData("self.tableWidget_rapporti",self.DATA_LIST[self.rec_num].rapporti)										#18 - rapporti
+			self.tableInsertData("self.tableWidget_documentazione",self.DATA_LIST[self.rec_num].documentazione)				#19 - documentazione
+			unicode(self.lineEdit_data_schedatura.setText(self.DATA_LIST[self.rec_num].data_schedatura))							#20 - data schedatura
+			unicode(self.comboBox_schedatore.setEditText(self.DATA_LIST[self.rec_num].schedatore))								#21 - schedatore
+			unicode(self.comboBox_formazione.setEditText(self.DATA_LIST[self.rec_num].formazione))								#22 - formazione
+			unicode(self.comboBox_conservazione.setEditText(self.DATA_LIST[self.rec_num].stato_di_conservazione))			#23 - conservazione
+			unicode(self.comboBox_colore.setEditText(self.DATA_LIST[self.rec_num].colore))											#24 - colore
+			unicode(self.comboBox_consistenza.setEditText(self.DATA_LIST[self.rec_num].consistenza))								#25 - consistenza
+			unicode(self.lineEdit_struttura.setText(self.DATA_LIST[self.rec_num].struttura))												#26 - struttura
+			unicode(self.lineEdit_codice_periodo.setText(self.DATA_LIST[self.rec_num].cont_per))										#27 - codice periodo
 			if self.DATA_LIST[self.rec_num].order_layer == None:
 				self.lineEditOrderLayer.setText("")
 			else:
@@ -1611,41 +1612,40 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			order_layer = self.lineEditOrderLayer.text()
 		#data
 		self.DATA_LIST_REC_TEMP = [
-		str(self.comboBox_sito.currentText()), 						#1 - Sito
-		str(self.comboBox_area.currentText()), 						#2 - Area
-		str(self.lineEdit_us.text()),											#3 - US
-		str(self.comboBox_def_strat.currentText()),					#4 - Definizione stratigrafica
-		str(self.comboBox_def_intepret.currentText()),             #5 - Definizione intepretata
-		str(self.textEdit_descrizione.toPlainText().toLatin1()),		#6 - descrizione
-		str(self.textEdit_interpretazione.toPlainText().toLatin1()), #7 - interpretazione
-		str(self.comboBox_per_iniz.currentText()),					#8 - periodo iniziale
-		str(self.comboBox_fas_iniz.currentText()),					#9 - fase iniziale
-		str(self.comboBox_per_fin.currentText()), 					#10 - periodo finale iniziale
-		str(self.comboBox_fas_fin.currentText()), 					#11 - fase finale
-		str(self.comboBox_scavato.currentText()),					#12 - scavato
-		str(self.lineEdit_attivita.text()),                             		#13 - attivita
-		str(self.lineEdit_anno.text()),                                 		#14 - anno scavo
-		str(self.comboBox_metodo.currentText()), 					#15 - metodo
-		str(inclusi),																#16 - inclusi
-		str(campioni),															#17 - campioni
-		str(rapporti),															#18 - rapporti
-		str(self.lineEdit_data_schedatura.text()),						#19 - data schedatura
-		str(self.comboBox_schedatore.currentText()),              #20 - schedatore
-		str(self.comboBox_formazione.currentText()),              #21 - formazione
-		str(self.comboBox_conservazione.currentText()),          #22 - conservazione
-		str(self.comboBox_colore.currentText()),						#23 - colore
-		str(self.comboBox_consistenza.currentText()),              #24 - consistenza
-		str(self.lineEdit_struttura.text()),									#25 - struttura
-		str(self.lineEdit_codice_periodo.text()),							#26 - codice periodo
-		str(order_layer),														#27 - order layer
-		str(documentazione)
+		unicode(self.comboBox_sito.currentText()), 						#1 - Sito
+		unicode(self.comboBox_area.currentText()), 						#2 - Area
+		unicode(self.lineEdit_us.text()),											#3 - US
+		unicode(self.comboBox_def_strat.currentText()),					#4 - Definizione stratigrafica
+		unicode(self.comboBox_def_intepret.currentText()),             #5 - Definizione intepretata
+		unicode(self.textEdit_descrizione.toPlainText()),		#6 - descrizione
+		unicode(self.textEdit_interpretazione.toPlainText()), #7 - interpretazione
+		unicode(self.comboBox_per_iniz.currentText()),					#8 - periodo iniziale
+		unicode(self.comboBox_fas_iniz.currentText()),					#9 - fase iniziale
+		unicode(self.comboBox_per_fin.currentText()), 					#10 - periodo finale iniziale
+		unicode(self.comboBox_fas_fin.currentText()), 					#11 - fase finale
+		unicode(self.comboBox_scavato.currentText()),					#12 - scavato
+		unicode(self.lineEdit_attivita.text()),                             		#13 - attivita
+		unicode(self.lineEdit_anno.text()),                                 		#14 - anno scavo
+		unicode(self.comboBox_metodo.currentText()), 					#15 - metodo
+		unicode(inclusi),																#16 - inclusi
+		unicode(campioni),															#17 - campioni
+		unicode(rapporti),															#18 - rapporti
+		unicode(self.lineEdit_data_schedatura.text()),						#19 - data schedatura
+		unicode(self.comboBox_schedatore.currentText()),              #20 - schedatore
+		unicode(self.comboBox_formazione.currentText()),              #21 - formazione
+		unicode(self.comboBox_conservazione.currentText()),          #22 - conservazione
+		unicode(self.comboBox_colore.currentText()),						#23 - colore
+		unicode(self.comboBox_consistenza.currentText()),              #24 - consistenza
+		unicode(self.lineEdit_struttura.text()),									#25 - struttura
+		unicode(self.lineEdit_codice_periodo.text()),							#26 - codice periodo
+		unicode(order_layer),														#27 - order layer
+		unicode(documentazione)
 		]
-		
 
 	def set_LIST_REC_CORR(self):
 		self.DATA_LIST_REC_CORR = []
 		for i in self.TABLE_FIELDS:
-			self.DATA_LIST_REC_CORR.append(eval("str(self.DATA_LIST[self.REC_CORR]." + i + ")"))
+			self.DATA_LIST_REC_CORR.append(eval("unicode(self.DATA_LIST[self.REC_CORR]." + i + ")"))
 
 	def records_equal_check(self):
 		self.set_LIST_REC_TEMP()

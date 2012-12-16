@@ -205,7 +205,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 
 		self.SORT_ITEMS_CONVERTED = []
 		for i in items:
-			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[i])
+			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[unicode(i)])
 
 		self.SORT_MODE = order_type
 		self.empty_fields()
@@ -278,7 +278,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		test = 0
 		EC = Error_check()
 
-		if EC.data_is_empty(str(self.comboBox_sito.currentText())) == 0:
+		if EC.data_is_empty(unicode(self.comboBox_sito.currentText())) == 0:
 			QMessageBox.warning(self, "ATTENZIONE", "Campo Sito. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
 			test = 1
 
@@ -288,12 +288,12 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		try:
 			data = self.DB_MANAGER.insert_site_values(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
-			str(self.comboBox_sito.currentText()), 					#1 - Sito
-			str(self.comboBox_nazione.currentText()), 				#2 - nazione
-			str(self.comboBox_regione.currentText()), 				#3 - regione
-			str(self.comboBox_comune.currentText()), 				#4 - comune
+			unicode(self.comboBox_sito.currentText()), 					#1 - Sito
+			unicode(self.comboBox_nazione.currentText()), 				#2 - nazione
+			unicode(self.comboBox_regione.currentText()), 				#3 - regione
+			unicode(self.comboBox_comune.currentText()), 				#4 - comune
 			unicode(self.textEdit_descrizione_site.toPlainText()),   #5 - descrizione
-			str(self.comboBox_provincia.currentText())) 			#6 - comune
+			unicode(self.comboBox_provincia.currentText())) 			#6 - comune
 			try:
 				self.DB_MANAGER.insert_data_session(data)
 				return 1
@@ -425,18 +425,20 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			self.set_rec_counter('','')
 			self.label_sort.setText(self.SORTED_ITEMS["n"])
 			self.setComboBoxEnable(["self.comboBox_sito"],"True")
+			
+			self.setComboBoxEnable(["self.textEdit_descrizione_site"],"False")
 
 	def on_pushButton_search_go_pressed(self):
 		if self.BROWSE_STATUS != "f":
 			QMessageBox.warning(self, "ATTENZIONE", "Per eseguire una nuova ricerca clicca sul pulsante 'new search' ",  QMessageBox.Ok)
 		else:
 			search_dict = {
-			'sito' : "'"+str(self.comboBox_sito.currentText())+"'",                     #1 - Sito
-			'nazione': "'"+str(self.comboBox_nazione.currentText())+"'",			#2 - Nazione
-			'regione': "'" + str(self.comboBox_regione.currentText())+"'",			#3 - Regione
-			'comune': "'" + str(self.comboBox_comune.currentText())+"'",		#4 - Comune
-			'descrizione': str(self.textEdit_descrizione_site.toPlainText()),				#5 - Descrizione
-			'provincia': "'" + str(self.comboBox_provincia.currentText())+"'"		#4 - Provincia
+			'sito' : "'"+unicode(self.comboBox_sito.currentText())+"'",                     #1 - Sito
+			'nazione': "'"+unicode(self.comboBox_nazione.currentText())+"'",			#2 - Nazione
+			'regione': "'" + unicode(self.comboBox_regione.currentText())+"'",			#3 - Regione
+			'comune': "'" + unicode(self.comboBox_comune.currentText())+"'",		#4 - Comune
+			'descrizione': unicode(self.textEdit_descrizione_site.toPlainText()),				#5 - Descrizione
+			'provincia': "'" + unicode(self.comboBox_provincia.currentText())+"'"		#4 - Provincia
 			}
 
 			u = Utility()
@@ -461,6 +463,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 						self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 
 						self.setComboBoxEnable(["self.comboBox_sito"],"False")
+						self.setComboBoxEnable(["self.textEdit_descrizione_site"],"True")
 
 					else:
 						self.DATA_LIST = []
@@ -479,6 +482,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 							strings = ("Sono stati trovati", self.REC_TOT, "records")
 
 						self.setComboBoxEnable(["self.comboBox_sito"],"False")
+						self.setComboBoxEnable(["self.textEdit_descrizione_site"],"True")
 
 						QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 
@@ -534,7 +538,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			for c in range(col):
 				value = eval(self.tablename+".item(r,c)")
 				if bool(value) == True:
-					sub_list.append(str(value.text()))
+					sub_list.append(unicode(value.text()))
 			lista.append(sub_list)
 		return lista
 
@@ -549,12 +553,12 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 	def fill_fields(self, n=0):
 		self.rec_num = n
 
-		self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)  										#1 - Sito
-		self.comboBox_nazione.setEditText(self.DATA_LIST[self.rec_num].nazione) 								#2 - Nazione
-		self.comboBox_regione.setEditText(self.DATA_LIST[self.rec_num].regione) 								#3 - Regione
-		self.comboBox_comune.setEditText(self.DATA_LIST[self.rec_num].comune) 								#4 - Comune
+		unicode(self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito))								#1 - Sito
+		unicode(self.comboBox_nazione.setEditText(self.DATA_LIST[self.rec_num].nazione))					#2 - Nazione
+		unicode(self.comboBox_regione.setEditText(self.DATA_LIST[self.rec_num].regione))					#3 - Regione
+		unicode(self.comboBox_comune.setEditText(self.DATA_LIST[self.rec_num].comune))					#4 - Comune
 		unicode(self.textEdit_descrizione_site.setText(self.DATA_LIST[self.rec_num].descrizione))				#5 - Descrizione
-		self.comboBox_provincia.setEditText(self.DATA_LIST[self.rec_num].provincia) 							#6 - Provincia
+		unicode(self.comboBox_provincia.setEditText(self.DATA_LIST[self.rec_num].provincia))				#6 - Provincia
 
 
 	def set_rec_counter(self, t, c):
@@ -566,18 +570,18 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 	def set_LIST_REC_TEMP(self):
 		#data
 		self.DATA_LIST_REC_TEMP = [
-		str(self.comboBox_sito.currentText()), 							#1 - Sito
-		str(self.comboBox_nazione.currentText()), 						#2 - Nazione
-		str(self.comboBox_regione.currentText()), 						#3 - Regione
-		str(self.comboBox_comune.currentText()), 						#4 - Comune
-		str(self.textEdit_descrizione_site.toPlainText().toLatin1()),    #5 - Descrizione
-		str(self.comboBox_provincia.currentText())]                     #6 - Provincia
+		unicode(self.comboBox_sito.currentText()), 								#1 - Sito
+		unicode(self.comboBox_nazione.currentText()), 						#2 - Nazione
+		unicode(self.comboBox_regione.currentText()), 						#3 - Regione
+		unicode(self.comboBox_comune.currentText()), 						#4 - Comune
+		unicode(self.textEdit_descrizione_site.toPlainText()),    				#5 - Descrizione
+		unicode(self.comboBox_provincia.currentText())]                     	#6 - Provincia
 
 
 	def set_LIST_REC_CORR(self):
 		self.DATA_LIST_REC_CORR = []
 		for i in self.TABLE_FIELDS:
-			self.DATA_LIST_REC_CORR.append(eval("str(self.DATA_LIST[self.REC_CORR]." + i + ")"))
+			self.DATA_LIST_REC_CORR.append(eval("unicode(self.DATA_LIST[self.REC_CORR]." + i + ")"))
 
 	def setComboBoxEnable(self, f, v):
 		field_names = f
