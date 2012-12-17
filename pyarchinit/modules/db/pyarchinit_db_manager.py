@@ -55,7 +55,7 @@ class Pyarchinit_db_management:
 			if self.conn_str.find("sqlite") == 0:
 				self.engine = create_engine(self.conn_str, echo=eval(self.boolean))
 			else:
-				self.engine = create_engine(self.conn_str, max_overflow=-1, echo=eval(self.boolean)) #encoding='latin1' - accetta gli accenti ma è necessario modificare il sistema di update e di confronto dei record
+				self.engine = create_engine(self.conn_str, max_overflow=-1, echo=eval(self.boolean))
 			self.metadata = MetaData(self.engine)
 			self.engine.connect()
 		except Exception, e:

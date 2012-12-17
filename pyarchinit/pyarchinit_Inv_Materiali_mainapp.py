@@ -602,33 +602,35 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				eve_orlo = float(self.lineEdit_eve_orlo.text())
 
 			data = self.DB_MANAGER.insert_values_reperti(
-			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1, 		#0 - IDsito
-                        str(self.comboBox_sito.currentText()), 						#1 - Sito
-                        int(self.lineEdit_num_inv.text()),						        #2 - num_inv
-                        str(self.comboBox_tipo_reperto.currentText()), 				#3 - tipo_reperto
-                        str(self.comboBox_criterio_schedatura.currentText()),			#4 - criterio
-                        str(self.comboBox_definizione.currentText()), 					#5 - definizione
-                        unicode(self.textEdit_descrizione_reperto.toPlainText()),		#6 - descrizione
-                        area,										                    #7 - area
-                        us,										                        #8 - us
-                        str(self.comboBox_lavato.currentText()),					    #9 - lavato
-                        nr_cassa,									                    #10 - nr cassa
-                        str(self.lineEdit_luogo_conservazione.text()),					#11 - luogo conservazione
-                        str(self.comboBox_conservazione.currentText()),				#12 - stato di conservazione
-                        str(self.lineEdit_datazione_rep.text()),					    #13 - datazione reperto
-                        str(elementi_reperto),								            #14 - elementi reperto
-                        str(misurazioni),								                #15 - misurazioni
-                        str(rif_biblio), 								                #16 - rif biblio
-                        str(forme_minime),								                #17 - tecnologie
-                        str(forme_massime),								                #17 - tecnologie
-                        str(totale_frammenti),								                #17 - tecnologie
-                        str(self.lineEditCorpoCeramico.text()),
-                        str(self.lineEditRivestimento.text()),
-                        diametro_orlo,
-                        peso,
-                        str(self.lineEdit_tipo.text()),
-                        eve_orlo
-                        )
+			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1, 			#0 - IDsito
+						unicode(self.comboBox_sito.currentText()), 													#1 - Sito
+						int(self.lineEdit_num_inv.text()),						        								#2 - num_inv
+						unicode(self.comboBox_tipo_reperto.currentText()), 											#3 - tipo_reperto
+						unicode(self.comboBox_criterio_schedatura.currentText()),									#4 - criterio
+						unicode(self.comboBox_definizione.currentText()), 											#5 - definizione
+						unicode(self.textEdit_descrizione_reperto.toPlainText()),								#6 - descrizione
+						area,										                    										#7 - area
+						us,										                        									#8 - us
+						unicode(self.comboBox_lavato.currentText()),					    							#9 - lavato
+						nr_cassa,									                    									#10 - nr cassa
+						unicode(self.lineEdit_luogo_conservazione.text()),												#11 - luogo conservazione
+						unicode(self.comboBox_conservazione.currentText()),										#12 - stato di conservazione
+						unicode(self.lineEdit_datazione_rep.text()),					    								#13 - datazione reperto
+						unicode(elementi_reperto),								            								#14 - elementi reperto
+						unicode(misurazioni),								                									#15 - misurazioni
+						str(rif_biblio), 								                										#16 - rif biblio
+						unicode(tecnologie),								                									#17 - tecnologie
+						forme_minime,								                								#18 - forme minime
+						forme_massime,								                							#18-  forme massime
+						totale_frammenti,								                							#19 - totale frammenti
+						unicode(self.lineEditCorpoCeramico.text()),					    								#20 - corpo ceramico
+						unicode(self.lineEditRivestimento.text()),					    									#21   rivestimento
+						diametro_orlo,					    																#22 - diametro orlo
+						peso,					    																			#23- peso
+						unicode(self.lineEdit_tipo.text()),					    											#24 - tipo
+						eve_orlo					    																		#25 - eve_orlo
+						)
+
 
 			try:
 				self.DB_MANAGER.insert_data_session(data)
@@ -1281,7 +1283,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		unicode(self.comboBox_tipo_reperto.currentText()), 						#3 - tipo_reperto
 		unicode(self.comboBox_criterio_schedatura.currentText()),				#4 - criterio schedatura
 		unicode(self.comboBox_definizione.currentText()), 						#5 - definizione
-		unicode(self.textEdit_descrizione_reperto.toPlainText().toLatin1()),	#6 - descrizione
+		unicode(self.textEdit_descrizione_reperto.toPlainText()),	#6 - descrizione
 		unicode(area),															#7 - area
 		unicode(us),															#8 - us
 		unicode(self.comboBox_lavato.currentText()),							#9 - lavato
