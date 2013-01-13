@@ -1267,7 +1267,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			self.setTableEnable(["self.tableWidget_campioni", "self.tableWidget_rapporti","self.tableWidget_inclusi",
 			"self.tableWidget_documentazione"], "False")
 
-	def on_pushButton_showLayer_pressed(self):		
+	def on_pushButton_showLayer_pressed(self):
 		for sing_us in range(len(self.DATA_LIST)):
 			sing_layer = [self.DATA_LIST[sing_us]]
 			self.pyQGIS.charge_vector_layers(sing_layer)

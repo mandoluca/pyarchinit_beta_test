@@ -399,7 +399,7 @@ class Print_utility:
 
 
 		"""
-		uri.setDataSource("public", "pyarchinit_uscaratterizzazioni_view", "the_geom", gidstr)
+		uri.setDataSource("pyarchinit_schema", "pyarchinit_uscaratterizzazioni_view", "the_geom", gidstr)
 		layerCar = QgsVectorLayer(uri.uri(), "Unita' Stratigrafiche", "postgres")
 
 		if	layerCar.isValid() == True:

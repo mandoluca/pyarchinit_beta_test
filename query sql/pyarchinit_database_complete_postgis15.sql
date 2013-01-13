@@ -12,6 +12,10 @@
 --CREATE SCHEMA public
   --AUTHORIZATION postgres;
 
+--##############################
+-- TABELLA RIPARTIZIONI SPAZIALI
+--##############################
+
 CREATE TABLE public.pyarchinit_ripartizioni_spaziali (
     gid  serial NOT NULL,
     id_rs character varying(80),

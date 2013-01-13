@@ -198,38 +198,36 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			uri = QgsDataSourceURI()
 			uri.setDatabase(db_file_path)
 
-			uri.setDataSource('','pyarchinit_us_view', 'Geometry', gidstr, "gid")
+			uri.setDataSource('','pyarchinit_us_view', 'the_geom', gidstr, "ROWID")
 			layerUS=QgsVectorLayer(uri.uri(), 'pyarchinit_us_view', 'spatialite')
 
 			if  layerUS.isValid() == True:
 				self.USLayerId = layerUS.getLayerID()
-				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
-				layerUS.loadNamedStyle(style_path)
+				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
+				#layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayer(layerUS, True)
+
+			uri.setDataSource('','pyarchinit_quote_view', 'the_geom', gidstr, "ROWID")
+			layerQUOTE=QgsVectorLayer(uri.uri(), 'pyarchinit_quote_view', 'spatialite')
+			if  layerQUOTE.isValid() == True:
+				self.USLayerId = layerUS.getLayerID()
+				QgsMapLayerRegistry.instance().addMapLayer(layerQUOTE, True)
 
 			"""
 			uri.setDataSource('','pyarchinit_caratterizzazioni_view', 'Geometry', gidstr, "gid")
 			layerCA=QgsVectorLayer(uri.uri(), 'pyarchinit_caratterizzazioni_view', 'spatialite')
-
 
 			if  layerCA.isValid() == True:
 				CALayerId = layerCA.getLayerID()
 				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'previewCAstyle.qml')
 				layerCA.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayer(layerCA, True)
-			"""
 
-			uri.setDataSource('','pyarchinit_quote_view', 'Geometry', gidstr, "gid")
-			layerQUOTE=QgsVectorLayer(uri.uri(), 'pyarchinit_quote_view', 'spatialite')
-			if  layerQUOTE.isValid() == True:
-				QgsMapLayerRegistry.instance().addMapLayer(layerQUOTE, True)
-				
-
-			uri.setDataSource('','pyarchinit_pyuscarlinee_view', 'Geometry', gidstr, "gid")
+			uri.setDataSource('','pyarchinit_pyuscarlinee_view', 'Geometry', gidstr, "id")
 			layerQUOTE=QgsVectorLayer(uri.uri(), 'pyarchinit_pyuscarlinee_view', 'spatialite')
 			if  layerQUOTE.isValid() == True:
 				QgsMapLayerRegistry.instance().addMapLayer(layerQUOTE, True)
-
+			"""
 		elif settings.SERVER == 'postgres':
 
 			uri = QgsDataSourceURI()

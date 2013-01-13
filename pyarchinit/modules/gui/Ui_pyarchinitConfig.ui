@@ -48,7 +48,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -210,6 +210,9 @@
        <string>Installazione layers</string>
       </attribute>
       <widget class="QWidget" name="layoutWidget">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -228,6 +231,9 @@
         </item>
         <item row="0" column="1">
          <widget class="QPushButton" name="pushButton_crea_database">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Installa</string>
           </property>
@@ -242,6 +248,9 @@
         </item>
         <item row="1" column="1">
          <widget class="QPushButton" name="pushButton_crea_layer">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Installa</string>
           </property>
@@ -256,6 +265,9 @@
         </item>
         <item row="2" column="1">
          <widget class="QPushButton" name="pushButton_crea_db_sqlite">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Installa</string>
           </property>

@@ -491,30 +491,33 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		data_list = []
 		for i in range(len(self.DATA_LIST)):
 			data_list.append([
-            str(self.DATA_LIST[i].id_invmat), 							#1 - id_invmat
-            str(self.DATA_LIST[i].sito),									#2 - sito
+			str(self.DATA_LIST[i].id_invmat), 							#1 - id_invmat
+			unicode(self.DATA_LIST[i].sito),								#2 - sito
 			int(self.DATA_LIST[i].numero_inventario),				#3 - numero_inventario
-			str(self.DATA_LIST[i].tipo_reperto),						#4 - tipo_reperto
-			str(self.DATA_LIST[i].criterio_schedatura),				#5 - criterio_schedatura
-            self.DATA_LIST[i].definizione,									#6 - definizione
-            unicode(self.DATA_LIST[i].descrizione),					#7 - descrizione
-            str(self.DATA_LIST[i].area),									#8 - area
-            str(self.DATA_LIST[i].us),                                 	#9 - us
-            str(self.DATA_LIST[i].lavato),                            	#10 - lavato
-            str(self.DATA_LIST[i].nr_cassa), 							#11 - nr_cassa
-			str(self.DATA_LIST[i].luogo_conservazione),			    #12 - luogo_conservazione
-			str(self.DATA_LIST[i].stato_conservazione),				#13 - stato_conservazione
-			str(self.DATA_LIST[i].datazione_reperto),				#14 - datazione_reperto
-			str(self.DATA_LIST[i].elementi_reperto),					#15 - elementi_reperto
-            str(self.DATA_LIST[i].misurazioni),                        	#16 - misurazioni
-            str(self.DATA_LIST[i].rif_biblio),                         		#17 - rif_biblio
-            str(self.DATA_LIST[i].tecnologie)							#18 - misurazioni
+			unicode(self.DATA_LIST[i].tipo_reperto),					#4 - tipo_reperto
+			unicode(self.DATA_LIST[i].criterio_schedatura),			#5 - criterio_schedatura
+			unicode(self.DATA_LIST[i].definizione),					#6 - definizione
+			unicode(self.DATA_LIST[i].descrizione),					#7 - descrizione
+			unicode(self.DATA_LIST[i].area),							#8 - area
+			unicode(self.DATA_LIST[i].us),								#9 - us
+			unicode(self.DATA_LIST[i].lavato),							#10 - lavato
+			unicode(self.DATA_LIST[i].nr_cassa), 						#11 - nr_cassa
+			unicode(self.DATA_LIST[i].luogo_conservazione),		#12 - luogo_conservazione
+			unicode(self.DATA_LIST[i].stato_conservazione),		#13 - stato_conservazione
+			unicode(self.DATA_LIST[i].datazione_reperto),			#14 - datazione_reperto
+			unicode(self.DATA_LIST[i].elementi_reperto),			#15 - elementi_reperto
+			unicode(self.DATA_LIST[i].misurazioni),					#16 - misurazioni
+			unicode(self.DATA_LIST[i].rif_biblio),						#17 - rif_biblio
+			unicode(self.DATA_LIST[i].tecnologie),						#18 - misurazioni
+			unicode(self.DATA_LIST[i].tipo),								#19 - tipo
+			unicode(self.DATA_LIST[i].corpo_ceramico),				#20 - corpo_ceramico
+			unicode(self.DATA_LIST[i].rivestimento)					#21- rivestimento
 		])
 		return data_list
 
 	def on_pushButton_exp_pdf_sheet_pressed(self):
 		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		Finds_pdf_sheet = generate_pdf()
 		data_list = self.generate_list_pdf()
 		Finds_pdf_sheet.build_Finds_sheets(data_list)
