@@ -197,7 +197,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		if self.STATUS_ITEMS[self.BROWSE_STATUS] == "Trova":
 			self.comboBox_per_iniz.setEditText("")
 		elif self.STATUS_ITEMS[self.BROWSE_STATUS] == "Usa":
-			self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
+			if len(self.DATA_LIST) > 0:
+				self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
 
 
 	def charge_periodo_fin_list(self):
@@ -221,7 +222,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		if self.STATUS_ITEMS[self.BROWSE_STATUS] == "Trova":
 			self.comboBox_per_fin.setEditText("")
 		elif self.STATUS_ITEMS[self.BROWSE_STATUS] == "Usa":
-			self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
+			if len(self.DATA_LIST) > 0:
+				self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
 
 
 	def on_pushButton_go_to_us_pressed(self):

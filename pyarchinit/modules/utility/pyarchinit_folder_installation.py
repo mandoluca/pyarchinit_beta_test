@@ -41,9 +41,9 @@ class pyarchinit_Folder_installation:
 		config_copy_from_path =  ('%s%s') % (module_path, config_copy_from_path_rel)
 		config_copy_to_path = ('%s%s%s') % (home_DB_path, os.sep, 'config.cfg')
 
-		db_copy_from_path_rel = os.path.join(os.sep, 'DBfiles', 'pyarchinitDB.sqlite')
+		db_copy_from_path_rel = os.path.join(os.sep, 'DBfiles', 'pyarchinit_db.sqlite')
 		db_copy_from_path = ('%s%s') % (module_path, db_copy_from_path_rel)
-		db_copy_to_path = ('%s%s%s') % (home_DB_path, os.sep, 'pyarchinitDB.sqlite')
+		db_copy_to_path = ('%s%s%s') % (home_DB_path, os.sep, 'pyarchinit_db.sqlite')
 	
 		OS_utility = pyarchinit_OS_Utility()
 
