@@ -24,6 +24,9 @@ from Ui_pyarchinitConfig import Ui_Dialog_Config
 from Ui_pyarchinitConfig import *
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+
+from pyarchinit_OS_utility import *
+
 #from PyQt4 import QtCore, QtGui
 import sys, os
 
@@ -64,7 +67,24 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 		f = open(path_rel, "w")
 		f.write(str(self.PARAMS_DICT))
 		f.close()
-
+##
+##	def on_pushButton_exp_directories_pressed(self):
+##		module_path_rel = os.path.join(os.sep, '.qgis', 'python','plugins', 'pyarchinit', 'modules', 'utility')
+##		module_path = ('%s%s') % (home, module_path_rel)
+##
+##		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+##
+##		config_copy_from_path_rel = os.path.join(os.sep, 'DBfiles', 'config.cfg')
+##		config_copy_from_path =  ('%s%s') % (module_path, config_copy_from_path_rel)
+##		config_copy_to_path = ('%s%s%s') % (home_DB_path, os.sep, 'config.cfg')
+##
+##		db_copy_from_path_rel = os.path.join(os.sep, 'DBfiles', 'pyarchinit_db.sqlite')
+##		db_copy_from_path = ('%s%s') % (module_path, db_copy_from_path_rel)
+##		db_copy_to_path = ('%s%s%s') % (home_DB_path, os.sep, 'pyarchinit_db.sqlite')
+##	
+##		OS_utility = pyarchinit_OS_Utility()
+##
+##		OS_utility.create_dir(str(home_DB_path))
 
 	def on_pushButton_save_pressed(self):
 		self.PARAMS_DICT['SERVER'] = str(self.comboBox_Database.currentText())

@@ -22,7 +22,7 @@
 import sqlalchemy
 from sqlalchemy import *
 from sqlalchemy.orm import mapper
-from pyarchinit_db_structure import US_table, UT_table, US_table_toimp, Site_table, Periodizzazione_table, Inventario_materiali_table, Struttura_table, Media_table, Media_thumb_table,Media_to_Entity_table, Tafonomia_table, Inventario_materiali_table_toimp, Pyarchinit_thesaurus_sigle, SCHEDAIND_table, DETSESSO_table, DETETA_table, Archeozoology_table
+from pyarchinit_db_structure import PDF_administrator, US_table, UT_table, US_table_toimp, Site_table, Periodizzazione_table, Inventario_materiali_table, Struttura_table, Media_table, Media_thumb_table,Media_to_Entity_table, Tafonomia_table, Inventario_materiali_table_toimp, Pyarchinit_thesaurus_sigle, SCHEDAIND_table, DETSESSO_table, DETETA_table, Archeozoology_table
 
 
 class US(object):
@@ -1385,3 +1385,37 @@ class ARCHEOZOOLOGY(object):
 		)
 #mapper
 mapper(ARCHEOZOOLOGY, Archeozoology_table.archeozoology_table)
+##############
+
+
+class PDF_ADMINISTRATOR(object):
+	#def __init__"
+	def __init__(self,
+	id_pdf_administrator,
+	table_name,
+	schema_griglia,
+	schema_fusione_celle,
+	modello
+	):
+		self.id_pdf_administrator= id_pdf_administrator 				#0
+		self.table_name = table_name 									#1
+		self.schema_griglia = schema_griglia 							#2
+		self.schema_fusione_celle = schema_fusione_celle 			#3
+		self.modello = modello 												#4
+
+	#def __repr__"
+	def __repr__(self):
+		return "<PDF_ADMINISTRATOR('%d', '%s', '%s', '%s', '%s')>" % (
+		self.id_pdf_administrator,		#0
+		self.table_name,					#1
+		self.schema_griglia,				#2
+		self.schema_fusione_celle,		#3
+		self.modello				 			#4
+		)
+#mapper
+
+mapper(PDF_ADMINISTRATOR, PDF_administrator.pdf_administrator_table)
+
+
+
+

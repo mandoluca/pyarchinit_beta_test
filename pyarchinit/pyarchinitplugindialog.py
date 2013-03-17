@@ -42,7 +42,9 @@ from pyarchinit_Tafonomia_mainapp import pyarchinit_Tafonomia
 from pyarchinit_Archeozoology_mainapp import pyarchinit_Archeozoology
 from pyarchinit_UT_mainapp import pyarchinit_UT
 from pyarchinit_images_directory_export_mainapp import pyarchinit_Images_directory_export
+from pyarchinit_PDF_administrator_mainapp import pyarchinit_PDFAdministrator
 from ui_pyarchinitplugin import Ui_PyarchinitPlugin
+
 #from ui_login import Ui_LoginDialog
 ##from qgiscloudapi.qgiscloudapi import *
 ##from db_connections import DbConnections
@@ -82,7 +84,7 @@ class PyarchinitPluginDialog(QDockWidget):
 		QObject.connect(self.ui.btnMedtable, SIGNAL("clicked()"), self.runImageViewer)
 		QObject.connect(self.ui.btnExptable, SIGNAL("clicked()"), self.runImages_directory_export)
 		
-		
+		QObject.connect(self.ui.btnPDFmen, SIGNAL("clicked()"), self.runPDFadministrator)
 		QObject.connect(self.ui.btnUTtable, SIGNAL("clicked()"), self.runUT)
 
 	def runSite(self):
@@ -169,3 +171,8 @@ class PyarchinitPluginDialog(QDockWidget):
 		pluginUT = pyarchinit_UT(self.iface)
 		pluginUT.show()
 		self.pluginGui = pluginUT # save
+
+	def runPDFadministrator(self):
+		pluginPDFadmin = pyarchinit_PDFAdministrator(self.iface)
+		pluginPDFadmin.show()
+		self.pluginGui = pluginPDFadmin # save

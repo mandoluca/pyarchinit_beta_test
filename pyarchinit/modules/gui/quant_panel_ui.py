@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'quant_panel_ui.ui'
 #
-# Created: Mon Nov 26 21:59:18 2012
+# Created: Wed Feb 20 23:44:04 2013
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -95,7 +95,7 @@ class Ui_quantPanel(object):
         self.pushButtonQuant.setObjectName(_fromUtf8("pushButtonQuant"))
         self.gridlayout.addWidget(self.pushButtonQuant, 9, 4, 1, 1)
         self.radioButtonFrammenti = QtGui.QRadioButton(quantPanel)
-        self.radioButtonFrammenti.setEnabled(False)
+        self.radioButtonFrammenti.setEnabled(True)
         self.radioButtonFrammenti.setObjectName(_fromUtf8("radioButtonFrammenti"))
         self.gridlayout.addWidget(self.radioButtonFrammenti, 3, 4, 1, 1)
         self.radioButtonPeso = QtGui.QRadioButton(quantPanel)

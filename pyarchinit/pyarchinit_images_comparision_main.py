@@ -117,35 +117,41 @@ class Comparision(QDialog, Ui_DialogImagesComparision):
 		#QMessageBox.warning(self, "Messaggio", str(file_list), QMessageBox.Ok)
 		lista = []
 		lunghezza = len(file_list)
-
+		calculate_res = None
 		for i in file_list:
-			 tupla_di_ritorno = self.calculate([i[0],i[1]])
-			 lista.append(tupla_di_ritorno)
-			 lunghezza -=1
+			calculate_res = self.calculate([i[0],i[1]])
+			
+			if calculate_res != None:
+				 tupla_di_ritorno = calculate_res
+				 lista.append(tupla_di_ritorno)
+				 lunghezza -=1
+			calculate_res = None
 		#QMessageBox.warning(self, "Messaggio", str(lista), QMessageBox.Ok)
 		self.plot_chart(lista)
 
 	def calculate(self, imgs):
-		#QMessageBox.warning(self, "Messaggio", str(file_path), QMessageBox.Ok)
-		img1 = Image.open(str(imgs[0]))
-		img2 = Image.open(str(imgs[1]))
+		try:
+			img1 = Image.open(str(imgs[0]))
+			img2 = Image.open(str(imgs[1]))
 
 
-		if img1.size != img2.size or img1.getbands() != img2.getbands():
-			return -1
+			if img1.size != img2.size or img1.getbands() != img2.getbands():
+				return -1
 
-		s = 0
-		for band_index, band in enumerate(img1.getbands()):
-			m1 = np.array([p[band_index] for p in img1.getdata()]).reshape(*img1.size)
-			m2 = np.array([p[band_index] for p in img2.getdata()]).reshape(*img2.size)
-			s += np.sum(np.abs(m1-m2))
-		s = s/1000000
+			s = 0
+			for band_index, band in enumerate(img1.getbands()):
+				m1 = np.array([p[band_index] for p in img1.getdata()]).reshape(*img1.size)
+				m2 = np.array([p[band_index] for p in img2.getdata()]).reshape(*img2.size)
+				s += np.sum(np.abs(m1-m2))
+			s = s/1000000
 
-		(filepath1, filename1) = os.path.split(str(imgs[0]))
-		(filepath2, filename2) = os.path.split(str(imgs[1]))
-		label = filename1 + "-" + filename2
+			(filepath1, filename1) = os.path.split(str(imgs[0]))
+			(filepath2, filename2) = os.path.split(str(imgs[1]))
+			label = filename1 + "-" + filename2
 
-		return (label, s)
+			return (label, s)
+		except Exception, e:
+			QMessageBox.warning(self, "Messaggio", str(e), QMessageBox.Ok)
 
 	def generate_files_couples(self):
 		path = self.PATH
@@ -165,33 +171,36 @@ class Comparision(QDialog, Ui_DialogImagesComparision):
 	def plot_chart(self, d):
 		self.data_list = d
 		QMessageBox.warning(self, "self.data_list", str(self.data_list) ,  QMessageBox.Ok)
-		
-		if type(self.data_list) == list:
-			data_diz = {}
-			for item in self.data_list:
-				data_diz[item[0]] = item[1]
-		x = range(len(data_diz))
-		n_bars = len(data_diz)
-		values = data_diz.values()
-		teams = data_diz.keys()
-		ind = np.arange(n_bars)
-		#randomNumbers = random.sample(range(0, 10), 10)
-		self.widget.canvas.ax.clear()
-		#QMessageBox.warning(self, "Alert", str(dir(self.widget.canvas.ax)) ,  QMessageBox.Ok)
+		try:
+			if type(self.data_list) == list:
+				data_diz = {}
+				for item in self.data_list:
+					data_diz[item[0]] = item[1]
+			x = range(len(data_diz))
+			n_bars = len(data_diz)
+			values = data_diz.values()
+			teams = data_diz.keys()
+			ind = np.arange(n_bars)
+			#randomNumbers = random.sample(range(0, 10), 10)
+			self.widget.canvas.ax.clear()
+			#QMessageBox.warning(self, "Alert", str(dir(self.widget.canvas.ax)) ,  QMessageBox.Ok)
 
-		bars = self.widget.canvas.ax.bar(left=x, height=values, width=0.3, align='center', alpha=0.4,picker=5)
-		
-		self.widget.canvas.ax.set_title('Classifica')
-		self.widget.canvas.ax.set_ylabel('Indice di differenza')
-		#self.widget.canvas.ax.set_xticklabels(ind + x , teams, size = 'x-small', rotation = 90)
-		n = 0
-		for bar in bars:
-			val = int(bar.get_height())
-			x_pos = bar.get_x()+0.2
-			y_pos = 1.5 #bar.get_height() - 1
-			#self.widget.canvas.ax.xticks(ind + width , teams, size = 'x-small', rotation = 90)
-			#self.widget.canvas.ax.set_xticklabels(ind + x, label = 'gigi', position = (x_pos, y_pos), size = 'x-small', rotation = 90)
-			self.widget.canvas.ax.text(x_pos, y_pos, teams[n],zorder=0, ha='center', va='center',size = 'x-small', rotation = 90)
-			n+=1
-		#self.widget.canvas.ax.plot(randomNumbers)
+			bars = self.widget.canvas.ax.bar(left=x, height=values, width=0.3, align='center', alpha=0.4,picker=5)
+			
+			self.widget.canvas.ax.set_title('Classifica')
+			self.widget.canvas.ax.set_ylabel('Indice di differenza')
+			#self.widget.canvas.ax.set_xticklabels(ind + x , teams, size = 'x-small', rotation = 90)
+			n = 0
+			for bar in bars:
+				val = int(bar.get_height())
+				x_pos = bar.get_x()+0.2
+				y_pos = 1.5 #bar.get_height() - 1
+				#self.widget.canvas.ax.xticks(ind + width , teams, size = 'x-small', rotation = 90)
+				#self.widget.canvas.ax.set_xticklabels(ind + x, label = 'gigi', position = (x_pos, y_pos), size = 'x-small', rotation = 90)
+				self.widget.canvas.ax.text(x_pos, y_pos, teams[n],zorder=0, ha='center', va='center',size = 'x-small', rotation = 90)
+				n+=1
+			#self.widget.canvas.ax.plot(randomNumbers)
+		except:
+			QMessageBox.warning(self, "self.data_list", str(self.data_list) ,  QMessageBox.Ok)
+			pass
 		self.widget.canvas.draw()

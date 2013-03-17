@@ -291,7 +291,8 @@ class Utility:
 
 #print dir(Utility())
 #Samples - uncomment and run the module to view the functions
-#u = Utility()
+u = Utility()
+print u.sum_list_of_tuples_for_value([("a", 1), ("b", 2), ("a", 3)])
 #print u.remove_dup_from_list([1,1, 2, 2, 2, 3, 4, 5, 5, 6, 6, 7])
 #print u.findFieldFrDict((2))
 #print "----------tup_to_list--------------"

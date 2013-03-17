@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_pyarchinitplugin.ui'
 #
-# Created: Tue Oct 30 22:14:50 2012
+# Created: Wed Jan 23 18:36:05 2013
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -31,6 +31,11 @@ class Ui_PyarchinitPlugin(object):
         self.dockWidgetContents.setObjectName(_fromUtf8("dockWidgetContents"))
         self.gridLayout = QtGui.QGridLayout(self.dockWidgetContents)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
+        self.label_6 = QtGui.QLabel(self.dockWidgetContents)
+        self.label_6.setText(_fromUtf8(""))
+        self.label_6.setPixmap(QtGui.QPixmap(_fromUtf8(":/images/sfondo.png")))
+        self.label_6.setObjectName(_fromUtf8("label_6"))
+        self.gridLayout.addWidget(self.label_6, 0, 0, 1, 1)
         self.tabWidget = QtGui.QTabWidget(self.dockWidgetContents)
         font = QtGui.QFont()
         font.setWeight(50)
@@ -355,6 +360,17 @@ class Ui_PyarchinitPlugin(object):
         self.line_34.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_34.setObjectName(_fromUtf8("line_34"))
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
+        self.tab_3 = QtGui.QWidget()
+        self.tab_3.setObjectName(_fromUtf8("tab_3"))
+        self.btnPDFmen = QtGui.QPushButton(self.tab_3)
+        self.btnPDFmen.setGeometry(QtCore.QRect(90, 10, 81, 31))
+        self.btnPDFmen.setStyleSheet(_fromUtf8("background-color: rgb(170, 170, 127);"))
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/pdf-icon.jpg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btnPDFmen.setIcon(icon9)
+        self.btnPDFmen.setIconSize(QtCore.QSize(25, 25))
+        self.btnPDFmen.setObjectName(_fromUtf8("btnPDFmen"))
+        self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
         self.account = QtGui.QWidget()
         self.account.setObjectName(_fromUtf8("account"))
         self.label_7 = QtGui.QLabel(self.account)
@@ -376,11 +392,6 @@ class Ui_PyarchinitPlugin(object):
         self.line_27.setObjectName(_fromUtf8("line_27"))
         self.tabWidget.addTab(self.account, _fromUtf8(""))
         self.gridLayout.addWidget(self.tabWidget, 2, 0, 1, 1)
-        self.label_6 = QtGui.QLabel(self.dockWidgetContents)
-        self.label_6.setText(_fromUtf8(""))
-        self.label_6.setPixmap(QtGui.QPixmap(_fromUtf8(":/images/sfondo.png")))
-        self.label_6.setObjectName(_fromUtf8("label_6"))
-        self.gridLayout.addWidget(self.label_6, 0, 0, 1, 1)
         PyarchinitPlugin.setWidget(self.dockWidgetContents)
 
         self.retranslateUi(PyarchinitPlugin)
@@ -416,6 +427,8 @@ class Ui_PyarchinitPlugin(object):
         self.btnMedtable.setText(QtGui.QApplication.translate("PyarchinitPlugin", "Media", None, QtGui.QApplication.UnicodeUTF8))
         self.btnExptable.setText(QtGui.QApplication.translate("PyarchinitPlugin", "Esportazione Media", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("PyarchinitPlugin", "Media", None, QtGui.QApplication.UnicodeUTF8))
+        self.btnPDFmen.setText(QtGui.QApplication.translate("PyarchinitPlugin", "PDF EXP", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QtGui.QApplication.translate("PyarchinitPlugin", "Utility", None, QtGui.QApplication.UnicodeUTF8))
         self.label_7.setText(QtGui.QApplication.translate("PyarchinitPlugin", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

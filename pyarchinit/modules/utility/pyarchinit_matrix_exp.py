@@ -40,8 +40,8 @@ class HARRIS_MATRIX_EXP:
 		elist = []
 
 		for i in self.sequence:
-		    a = (i[0], i[1])
-		    elist.append(a)
+			a = (i[0], i[1])
+			elist.append(a)
 
 		G.add_edges_from(elist)
 
@@ -52,22 +52,22 @@ class HARRIS_MATRIX_EXP:
 		G.node_attr['color']='red'
 
 		for i in self.periodi:
-		    G.subgraph(nbunch=i[0], 
-						name=i[1],
-						style='strocked',
-						shape = 'square',
-						color='blue',
-						label=i[2],
-						font_color = 'Blue')
+			G.subgraph(nbunch=i[0], 
+			name=i[1],
+			style='strocked',
+			shape = 'square',
+			color='blue',
+			label=i[2],
+			font_color = 'Blue')
 
 		G.tred()
 
 
 		Matrix_path = ('%s%s%s') % (self.HOME, os.sep, "pyarchinit_Matrix_folder")
 
-		f = open('C:\\test.txt', 'w')
-		f.write(str(os.name))
-		f.close()
+##		f = open('C:\\test.txt', 'w')
+##		f.write(str(os.name))
+##		f.close()
 
 		if os.name == 'posix':
 			filename_svg = ('%s%s%s') % (Matrix_path, os.sep, 'Harris_matrix.svg')
@@ -75,14 +75,17 @@ class HARRIS_MATRIX_EXP:
 			G.draw(filename_svg, prog='dot')
 			G.draw(filename_png, prog='dot')
 		elif os.name == 'nt':
-			filename_dot = ('%s%s%s') % (Matrix_path, os.sep, 'Harris_matrix.dot')
+			filename_dot = ('%s%s%s') % (Matrix_path, os.sep, 'Harris_matrix_win.dot')
 			G.write(filename_dot)
-
+			filename_png = ('%s%s%s') % (Matrix_path, os.sep, 'Harris_matrix_win.png')
+			filename_svg = ('%s%s%s') % (Matrix_path, os.sep, 'Harris_matrix_win.svg')
+			G.draw(filename_svg, prog='dot')
+			G.draw(filename_png, prog='dot')
 
 
 
 if __name__ == "__main__":
-	data = [(1, 2), (2, 4)]
+	data = [(1, 2), (2, 4), ]
 	Harris_matrix_exp =  HARRIS_MATRIX_EXP(data)
 	Harris_matrix_exp.export_matrix()
 

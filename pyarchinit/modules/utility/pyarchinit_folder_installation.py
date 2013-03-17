@@ -65,3 +65,9 @@ class pyarchinit_Folder_installation:
 		
 		home_MAPS_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_MAPS_folder')
 		OS_utility.create_dir(home_MAPS_path)
+
+		home_REPORT_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_Report_folder')
+		OS_utility.create_dir(home_REPORT_path)
+
+		home_QUANT_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_Quantificazioni_folder')
+		OS_utility.create_dir(home_QUANT_path)

@@ -2332,7 +2332,7 @@ class pyarchinit_Deteta(QDialog, Ui_Dialog_eta):
 	def records_equal_check(self):
 		self.set_LIST_REC_TEMP()
 		self.set_LIST_REC_CORR()
-		f = open('/test_rec_corr.txt', 'w')
+		#f = open('/test_rec_corr.txt', 'w')
 		#test = str(self.DATA_LIST_REC_CORR) + " " + str(self.DATA_LIST_REC_TEMP)
 		#f.write(test)
 		#f.close()

@@ -138,6 +138,13 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					'documentazione'
 					]
 
+	if os.name == 'posix':
+		HOME = os.environ['HOME']
+	elif os.name == 'nt':
+		HOME = os.environ['HOMEPATH']
+
+	REPORT_PATH = ('%s%s%s') % (HOME, os.sep, "pyarchinit_Report_folder")
+
 	def __init__(self, iface):
 		self.iface = iface
 		self.pyQGIS = Pyarchinit_pyqgis(self.iface)
@@ -156,6 +163,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		#SIGNALS & SLOTS Functions
 		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_iniz_list)
 		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_fin_list)
+
 
 		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_periodo_iniz_list)
 		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_periodo_fin_list)
@@ -436,7 +444,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def loadMapPreview(self, mode = 0):
 		if mode == 0:
 			""" if has geometry column load to map canvas """
-			gidstr =  self.ID_TABLE + " = " + str(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))	
+			gidstr =  self.ID_TABLE + " = " + str(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))
 			layerToSet = self.pyQGIS.loadMapPreview(gidstr)
 			self.mapPreview.setLayerSet(layerToSet)
 			self.mapPreview.zoomToFullExtent()
@@ -640,18 +648,18 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			data_list.append([
 			unicode(self.DATA_LIST[i].sito), 									#1 - Sito
 			unicode(self.DATA_LIST[i].area),									#2 - Area
-			int(self.DATA_LIST[i].us),										#3 - US
+			int(self.DATA_LIST[i].us),												#3 - US
 			unicode(self.DATA_LIST[i].d_stratigrafica),						#4 - definizione stratigrafica
-			unicode(self.DATA_LIST[i].d_interpretativa),					#5 - definizione intepretata
-			unicode(self.DATA_LIST[i].descrizione),								#6 - descrizione
-			unicode(self.DATA_LIST[i].interpretazione),							#7 - interpretazione
+			unicode(self.DATA_LIST[i].d_interpretativa),						#5 - definizione intepretata
+			unicode(self.DATA_LIST[i].descrizione),							#6 - descrizione
+			unicode(self.DATA_LIST[i].interpretazione),						#7 - interpretazione
 			unicode(self.DATA_LIST[i].periodo_iniziale),						#8 - periodo iniziale
 			unicode(self.DATA_LIST[i].fase_iniziale),							#9 - fase iniziale
 			unicode(self.DATA_LIST[i].periodo_finale),						#10 - periodo finale iniziale
 			unicode(self.DATA_LIST[i].fase_finale), 							#11 - fase finale
 			unicode(self.DATA_LIST[i].scavato),								#12 - scavato
-			unicode(self.DATA_LIST[i].attivita),								#13 - attivita
-			unicode(self.DATA_LIST[i].anno_scavo),						#14 - anno scavo
+			unicode(self.DATA_LIST[i].attivita),									#13 - attivita
+			unicode(self.DATA_LIST[i].anno_scavo),							#14 - anno scavo
 			unicode(self.DATA_LIST[i].metodo_di_scavo),					#15 - metodo
 			unicode(self.DATA_LIST[i].inclusi),									#16 - inclusi
 			unicode(self.DATA_LIST[i].campioni),								#17 - campioni
@@ -660,13 +668,13 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			unicode(self.DATA_LIST[i].schedatore),							#20 - schedatore
 			unicode(self.DATA_LIST[i].formazione),							#21 - formazione
 			unicode(self.DATA_LIST[i].stato_di_conservazione),			#22 - conservazione
-			unicode(self.DATA_LIST[i].colore),								#23 - colore
+			unicode(self.DATA_LIST[i].colore),									#23 - colore
 			unicode(self.DATA_LIST[i].consistenza),							#24 - consistenza
 			unicode(self.DATA_LIST[i].struttura),								#25 - struttura
-			unicode(quota_min),													#26 - quota_min
+			unicode(quota_min),														#26 - quota_min
 			unicode(quota_max),													#27 - quota_max
 			unicode(piante),															#28 - piante
-			unicode(self.DATA_LIST[i].documentazione)					#29 - documentazione
+			unicode(self.DATA_LIST[i].documentazione)						#29 - documentazione
 		])
 		return data_list
 
@@ -741,33 +749,94 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 		matrix_exp = HARRIS_MATRIX_EXP(data, periodi_us_list)
 		matrix_exp.export_matrix()
+		QMessageBox.warning(self, "Messaggio", "Esportazione del Matrix terminata", QMessageBox.Ok)
+
+	def launch_matrix_exp_if(self, msg):
+		if msg == 1:
+			self.on_pushButton_export_matrix_pressed()
+		else:
+			pass
+
 
 	def on_pushButton_orderLayers_pressed(self):
-		data = []
-		for sing_rec in self.DATA_LIST:
-			us = unicode(sing_rec.us)
-			rapporti_stratigrafici = eval(sing_rec.rapporti)
-			for sing_rapp in rapporti_stratigrafici:
+		self.launch_matrix_exp_if(QMessageBox.warning(self,u'ATTENZIONE',u"Si consiglia di lanciare il matrix e controllare se sono presenti paradossi stratigrafici prima di proseguire", QMessageBox.Cancel,1))
+
+		self.launch_order_layer_if(QMessageBox.warning(self,u'ATTENZIONE',u"Sei sicuro di voler proseguire? Se saranno presenti paradossi stratigrafici il sistema potrebbe andare in crush!", QMessageBox.Cancel,1))
+		
+	def launch_order_layer_if(self, msg):
+		if msg == 1:
+
+			#report errori rapporti stratigrafici
+			msg_tipo_rapp = "Manca il tipo di rapporto nell'US: \n"
+			msg_nr_rapp = "Manca il numero del rapporto nell'US: \n"
+			msg_paradx_rapp = "Paradosso nei rapporti: \n"
+			msg_us_mancanti = "Mancano le seguenti schede US presenti nei rapporti: \n"
+			#report errori rapporti stratigrafici
+
+			data = []
+			for sing_rec in self.DATA_LIST:
+				us = sing_rec.us
+				rapporti_stratigrafici = eval(sing_rec.rapporti)
+				for sing_rapp in rapporti_stratigrafici:
+					if len(sing_rapp) != 2:
+						msg_nr_rapp = msg_nr_rapp + str(sing_rapp) + "relativo a: " + str(us) + " \n"
+						
+					try:
+						if sing_rapp[0] == 'Taglia' or  sing_rapp[0] == 'Copre' or  sing_rapp[0] == 'Si appoggia a' or  sing_rapp[0] == 'Riempie':  #or sing_rapp[0] == 'Si lega a' or  sing_rapp[0] == 'Uguale a'
+							try:
+								if sing_rapp[1] != '':
+									harris_rapp = (int(us), int(sing_rapp[1]))
+##									if harris_rapp== (1, 67):
+##										QMessageBox.warning(self, "Messaggio", "Magagna", QMessageBox.Ok)
+									data.append(harris_rapp)
+							except:
+								msg_nr_rapp = msg_nr_rapp + str(us) + " \n"
+					except:
+						msg_tipo_rapp = msg_tipo_rapp + str(us) + " \n"
+
+			for i in data:
+				temp_tup = (i[1],i[0]) #controlla che nn vi siano rapporti inversi dentro la lista DA PROBLEMI CON GLI UGUALE A E I SI LEGA A
+				#QMessageBox.warning(self, "Messaggio", "Temp_tup" + str(temp_tup), QMessageBox.Ok)
+				if data.count(temp_tup) != 0:
+					msg_paradx_rapp = msg_paradx_rapp + '\n'+str(i) + '\n' + str(temp_tup)
+					data.remove(i)
+			#OK
+			QMessageBox.warning(self, "Messaggio", "DATA LIST" + str(data), QMessageBox.Ok)
+
+			#script order layer from pyqgis
+			OL = Order_layers(data)
+			order_layer_dict = OL.main()
+			#script order layer from pyqgis
+
+			sito = self.DATA_LIST[0].sito #self.comboBox_sito_rappcheck.currentText()
+			area = self.DATA_LIST[0].area #self.comboBox_area.currentText()
+			order_number = ""
+			us = ""
+			for k,v in order_layer_dict.items():
+				order_number = str(k)
+				us = v
+				search_dict = {'sito' : "'"+unicode(sito)+"'", 'area':"'"+unicode(area)+"'", 'us' : us}
 				try:
-					if sing_rapp[0] == 'Taglia' or  sing_rapp[0] == 'Copre' or  sing_rapp[0] == 'Si appoggia a' or  sing_rapp[0] == 'Riempie':  #or sing_rapp[0] == 'Si lega a' or  sing_rapp[0] == 'Uguale a'
-						if sing_rapp[1] != '':
-							harris_rapp = (us, str(sing_rapp[1]))
-							data.append(harris_rapp)
-				except:
-					QMessageBox.warning(self, "Messaggio", "Problema nel sistema di gestione dell'ordine stratigrafico", QMessageBox.Ok)
-		OL = Order_layers(data)
-		order_layer_dict = OL.main()
-		sito = self.comboBox_sito_rappcheck.currentText()
-		area = self.comboBox_area.currentText()
-		order_number = ""
-		us = ""
-		for k,v in order_layer_dict.items():
-			order_number = str(k)
-			us = v
-			search_dict = {'sito' : "'"+unicode(sito)+"'", 'area':"'"+unicode(area)+"'", 'us' : us}
-			records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
-			self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [int(records[0].id_us)], ['order_layer'], [order_number])
-			self.lineEditOrderLayer.setText(unicode(order_number))
+					records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
+
+					self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [int(records[0].id_us)], ['order_layer'], [order_number])
+					self.lineEditOrderLayer.setText(unicode(order_number))
+				except Exception, e:
+					msg_us_mancanti = msg_us_mancanti + "\n"+str(sito) + "area: " + str(area) + " us: " + str(us)
+			
+			#blocco output errori
+			filename_tipo_rapporti_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'tipo_rapporti_mancanti.txt')
+			filename_nr_rapporti_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'nr_rapporti_mancanti.txt')
+			filename_paradosso_rapporti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'paradosso_rapporti.txt')
+			filename_us_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'us_mancanti.txt')
+
+			self.testing(filename_tipo_rapporti_mancanti, str(msg_tipo_rapp))
+			self.testing(filename_nr_rapporti_mancanti, str(msg_nr_rapp))
+			self.testing(filename_paradosso_rapporti, str(msg_paradx_rapp))
+			self.testing(filename_us_mancanti, str(msg_us_mancanti))
+		else:
+			QMessageBox.warning(self,u'ATTENZIONE',u"Sistema di ordinamento US abortito", QMessageBox.Ok)
+		#blocco output errori
 ##
 	def on_toolButtonPan_toggled(self):
 		self.toolPan = QgsMapToolPan(self.mapPreview)
@@ -892,7 +961,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		#save record
 		if self.BROWSE_STATUS == "b":
 			if self.records_equal_check() == 1:
-				self.update_if(QMessageBox.warning(self,u'ATTENZIONE GIGI',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+				self.update_if(QMessageBox.warning(self,u'ATTENZIONE',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 				self.SORT_STATUS = "n"
 				self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 				self.enable_button(1)
@@ -1042,7 +1111,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		elif os.name == 'nt':
 			HOME = os.environ['HOMEPATH']
 		
-		report_path = ('%s%s%s') % (HOME, os.sep, "pyarchinit_PDF_folder")
+		report_path = ('%s%s%s') % (HOME, os.sep, "pyarchinit_Report_folder")
 		filename = ('%s%s%s') % (report_path, os.sep, 'rapporti_US.txt')
 		f = open(filename, "w")
 		f.write(report_rapporti)
@@ -1206,6 +1275,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				self.fill_fields(self.REC_CORR)
 				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 			except Exception, e:
+				QMessageBox.warning(self, "Errore", str(self.REC_CORR),  QMessageBox.Ok)
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 
@@ -1270,14 +1340,15 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			"self.tableWidget_documentazione"], "False")
 
 	def on_pushButton_showLayer_pressed(self):
+		"""
 		for sing_us in range(len(self.DATA_LIST)):
 			sing_layer = [self.DATA_LIST[sing_us]]
 			self.pyQGIS.charge_vector_layers(sing_layer)
 		"""
-		if msg == 1:
-			sing_layer = [self.DATA_LIST[self.REC_CORR]]
-			self.pyQGIS.charge_vector_layers(sing_layer)
-		"""
+
+		sing_layer = [self.DATA_LIST[self.REC_CORR]]
+		self.pyQGIS.charge_vector_layers(sing_layer)
+
 
 	def on_pushButton_crea_codice_periodo_pressed(self):
 		sito = unicode(self.comboBox_sito.currentText())
@@ -1575,20 +1646,23 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			unicode(self.comboBox_colore.setEditText(self.DATA_LIST[self.rec_num].colore))											#24 - colore
 			unicode(self.comboBox_consistenza.setEditText(self.DATA_LIST[self.rec_num].consistenza))								#25 - consistenza
 			unicode(self.lineEdit_struttura.setText(self.DATA_LIST[self.rec_num].struttura))												#26 - struttura
-			unicode(self.lineEdit_codice_periodo.setText(self.DATA_LIST[self.rec_num].cont_per))										#27 - codice periodo
+			if self.DATA_LIST[self.rec_num].cont_per == None:
+				unicode(self.lineEdit_codice_periodo.setText(""))
+			else:
+				unicode(self.lineEdit_codice_periodo.setText(self.DATA_LIST[self.rec_num].cont_per))										#27 - codice periodo
+#27 - codice periodo
 			if self.DATA_LIST[self.rec_num].order_layer == None:
 				self.lineEditOrderLayer.setText("")
 			else:
 				self.lineEditOrderLayer.setText(str(self.DATA_LIST[self.rec_num].order_layer))								#28 - order layer
 
-			#gestione tool
+		#gestione tool
 			if self.toolButtonPreview.isChecked() == True:
 				self.loadMapPreview()
 			if self.toolButtonPreviewMedia.isChecked() == True:
 				self.loadMediaPreview()
 		except Exception, e:
-			if str(e) != 'list index out of range':
-				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+			QMessageBox.warning(self, "Errore Fill Fields", str(e),  QMessageBox.Ok)
 
 	def set_rec_counter(self, t, c):
 		self.rec_tot = t

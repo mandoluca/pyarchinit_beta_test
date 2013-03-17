@@ -44,6 +44,8 @@ from  pyarchinit_error_check import *
 from  pyarchinit_pyqgis import Pyarchinit_pyqgis
 from  sortpanelmain import SortPanelMain
 
+##from 
+
 class pyarchinit_Site(QDialog, Ui_DialogSite):
 	MSG_BOX_TITLE = "PyArchInit - pyarchinit_version 0.4 - Scheda Sito"
 	DATA_LIST = []
@@ -196,6 +198,9 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 
 
 	#buttons functions
+	def on_pushButton_pdf_pressed(self):
+		pass
+	
 	def on_pushButton_sort_pressed(self):
 		dlg = SortPanelMain(self)
 		dlg.insertItems(self.SORT_ITEMS)

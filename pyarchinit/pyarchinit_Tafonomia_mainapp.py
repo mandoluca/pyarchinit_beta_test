@@ -268,6 +268,8 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		self.setComboBoxEditable(["self.comboBox_nr_individuo"],1)
 		self.setComboBoxEnable(["self.lineEdit_nr_scheda"],"False")
 		
+		self.comboBox_schedatore.clear()
+		self.comboBox_schedatore.addItems(['Tommaso Gallo', 'Luca Mandolesi', 'Simona Gugnali'])
 
 		#map prevew system
 		#self.mapPreview = QgsMapCanvas(self)
@@ -683,9 +685,9 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			self.empty_fields()
 
 			self.setComboBoxEditable(["self.comboBox_sito"],0)
-			self.setComboBoxEditable(["self.comboBox_sigla_struttura"],0)
-			self.setComboBoxEditable(["self.comboBox_nr_struttura"],0)
-			self.setComboBoxEditable(["self.comboBox_nr_individuo"],0)
+			self.setComboBoxEditable(["self.comboBox_sigla_struttura"],1)
+			self.setComboBoxEditable(["self.comboBox_nr_struttura"],1)
+			self.setComboBoxEditable(["self.comboBox_nr_individuo"],1)
 			
 			self.setComboBoxEnable(["self.lineEdit_nr_scheda"],"True")
 			self.setComboBoxEnable(["self.comboBox_sito"],"True")
@@ -799,7 +801,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			int(self.lineEdit_nr_scheda.text()),						#2 - nr scheda tafonomica
 			str(self.comboBox_sigla_struttura.currentText()),			#3 - tipo struttura
 			int(self.comboBox_nr_struttura.currentText()),				#4 - nr struttura
-			int(self.comboBox_nr_struttura.currentText()),				#5 - nr struttura
+			int(self.comboBox_nr_individuo.currentText()),				#5 - nr  individuo
 			str(self.comboBox_rito.currentText()),						#6 - rito
 			unicode(self.textEdit_descrizione_taf.toPlainText()),		#7 - descrizione
 			unicode(self.textEdit_interpretazione_taf.toPlainText()),	#8 - interpretazione

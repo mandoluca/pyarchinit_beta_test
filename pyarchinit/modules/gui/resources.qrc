@@ -33,5 +33,6 @@
         <file>images/directoryExp.png</file>
         <file>images/sfondo.png</file>
         <file>images/iconUT.png</file>
+        <file>images/pdf-icon.jpg</file>
     </qresource>
 </RCC>

@@ -225,7 +225,7 @@
    <item row="3" column="4">
     <widget class="QRadioButton" name="radioButtonFrammenti">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="text">
       <string>Frammenti</string>

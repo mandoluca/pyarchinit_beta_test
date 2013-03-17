@@ -472,6 +472,20 @@ class Pyarchinit_db_management:
 
 		return archeozoology
 
+
+	def insert_pdf_administrator_values(self, *arg):
+		"""Istanzia la classe PDF_ADMINISTRATOR da pyarchinit_db_mapper"""
+		pdf_administrator = PDF_ADMINISTRATOR(arg[0],
+																	arg[1],
+																	arg[2],
+																	arg[3],
+																	arg[4])
+
+		return pdf_administrator
+
+
+
+
 	def execute_sql_create_db(self):
 		path = os.path.dirname(__file__)
 		rel_path = os.path.join(os.sep, 'query_sql', 'pyarchinit_create_db.sql')
@@ -809,6 +823,11 @@ class Pyarchinit_db_management:
 
 	def select_us_from_db_sql(self, sito, area, us, stratigraph_index_us):
 		sql_query_string = ("SELECT * FROM pyunitastratigrafiche WHERE scavo_s = '%s' AND area_s = '%s' AND us_s = '%s' AND stratigraph_index_us = '%s'") % (sito, area, us, stratigraph_index_us)
+		res = self.engine.execute(sql_query_string)
+		return res
+
+	def select_db_sql(self, table):
+		sql_query_string = ("SELECT * FROM %s") % table
 		res = self.engine.execute(sql_query_string)
 		return res
 

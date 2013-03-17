@@ -47,6 +47,7 @@ except:
 
 from  sortpanelmain import SortPanelMain
 
+from pyarchinit_PDF_administrator_mainapp import pyarchinit_PDFAdministrator
 class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 	MSG_BOX_TITLE = "PyArchInit - Scheda Periodizzazione"
 	DATA_LIST = []
@@ -196,6 +197,24 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 		sito_vl.sort()
 		self.comboBox_sito.addItems(sito_vl)
 
+	def on_pushButton_pdf_exp_pressed(self):
+		dlg = pyarchinit_PDFAdministrator()
+		dlg.set_table_name(self.TABLE_NAME)
+		dlg.connect()
+		msg = QMessageBox.warning(self,'ATTENZIONE',"Vuoi creare un nuovo layout PFD?", QMessageBox.Cancel,1)
+		dlg.connect()
+##		dlg.on_pushButton_connect_pressed()
+		if msg == 1:
+			dlg.on_pushButton_new_rec_pressed()
+			dlg.charge_list()
+		
+		id_list = []
+
+		for i in self.DATA_LIST:
+			id_list.append(eval("i." + self.ID_TABLE))
+		dlg.add_id_list(id_list)
+
+		dlg.exec_()
 
 	#buttons functions
 	def on_pushButton_sort_pressed(self):

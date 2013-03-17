@@ -39,6 +39,8 @@ class QuantPanelMain(QDialog, Ui_quantPanel):
 		
 		if self.radioButtonFormeMin.isChecked() == True:
 			self.TYPE_QUANT = "Forme minime"
+		elif self.radioButtonFrammenti.isChecked() == True:
+			self.TYPE_QUANT = "Frammenti"
 ##		if self.radioButtonFormeMax.isChecked() == True:
 ##			self.TYPE_ORDER = "Forme massime"
 	

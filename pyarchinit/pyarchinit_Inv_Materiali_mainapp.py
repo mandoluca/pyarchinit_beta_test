@@ -19,6 +19,8 @@
  *                                                                         *
  ***************************************************************************/
 """
+import csv_writer
+from csv_writer import *
 import sys, os
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import *
@@ -52,6 +54,9 @@ from  imageViewer import ImageViewer
 import numpy as np
 import random
 from numpy import *
+
+from media_ponderata_sperimentale import *
+import media_ponderata_sperimentale
 
 class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	MSG_BOX_TITLE = "PyArchInit - Scheda Inventario Materiali"
@@ -102,7 +107,8 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 							'Definizione',
 							'Corpo ceramico',
 							'Rivestimento',
-							"Tipo"]
+							"Tipo",
+							"Datazione reperto"]
 
 	SORT_ITEMS = [
 				ID_TABLE,
@@ -159,6 +165,13 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					'eve_orlo'
 					]
 
+	if os.name == 'posix':
+		HOME = os.environ['HOME']
+	elif os.name == 'nt':
+		HOME = os.environ['HOMEPATH']
+	
+	QUANT_PATH = ('%s%s%s') % (HOME, os.sep, "pyarchinit_Quantificazioni_folder")
+
 	def __init__(self, iface):
 		self.iface = iface
 
@@ -190,30 +203,163 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		if parameter1 == 'Forme minime':
 			for i in range(len(self.DATA_LIST)):
 				temp_dataset = ()
-				misurazioni = eval(self.DATA_LIST[i].misurazioni)
-				if bool(misurazioni) == True:
-
+				try:
 					temp_dataset = (self.parameter_quant_creator(parameters2, i), int(self.DATA_LIST[i].forme_minime))
 					
 					contatore += int(self.DATA_LIST[i].forme_minime) #conteggio totale
 					
 					dataset.append(temp_dataset)
+				except:
+					pass
 
-##				for mis in misurazioni:
-##					if mis[0] == 'forme minime':
-##						try:
-##							temp_dataset = (str(self.DATA_LIST[i].definizione), int(mis[1]))
-##							contatore += int(mis[1])
-##							dataset.append(temp_dataset)
-##						except:
-##							pass
+			#QMessageBox.warning(self, "Totale", str(contatore),  QMessageBox.Ok)
+			if bool(dataset) == True:
+				dataset_sum = self.UTILITY.sum_list_of_tuples_for_value(dataset)
+				csv_dataset = []
+				for sing_tup in dataset_sum:
+					sing_list = [sing_tup[0], str(sing_tup[1])]
+					csv_dataset.append(sing_list)
+
+				filename = ('%s%squant_forme_minime.csv') % (self.QUANT_PATH, os.sep)
+				QMessageBox.warning(self, "Attenzione", str(filename),  QMessageBox.Ok)
+				f = open(filename, 'wb')
+				Uw = UnicodeWriter(f)
+				Uw.writerows(csv_dataset)
+				f.close()
+
+
+				self.plot_chart(dataset_sum, 'Grafico per Forme minime', 'Nr. Forme')
+			else:
+				QMessageBox.warning(self, "Attenzione", "Non ci sono dati da rappresentare",  QMessageBox.Ok)
+
+		elif parameter1 == 'Frammenti':
+			for i in range(len(self.DATA_LIST)):
+				temp_dataset = ()
+
+				temp_dataset = (self.parameter_quant_creator(parameters2, i), int(self.DATA_LIST[i].totale_frammenti))
+				
+				contatore += int(self.DATA_LIST[i].totale_frammenti) #conteggio totale
+				
+				dataset.append(temp_dataset)
 		
-		#QMessageBox.warning(self, "Totale", str(contatore),  QMessageBox.Ok)
-		if bool(dataset) == True:
-			dataset_sum = self.UTILITY.sum_list_of_tuples_for_value(dataset)
-			self.plot_chart(dataset_sum)
-		else:
-			QMessageBox.warning(self, "Attenzione", "Non ci sono dati da rappresentare",  QMessageBox.Ok)
+			#QMessageBox.warning(self, "Totale", str(contatore),  QMessageBox.Ok)
+			if bool(dataset) == True:
+				dataset_sum = self.UTILITY.sum_list_of_tuples_for_value(dataset)
+
+				#csv export block
+				csv_dataset = []
+				for sing_tup in dataset_sum:
+					sing_list = [sing_tup[0], str(sing_tup[1])]
+					csv_dataset.append(sing_list)
+	
+				filename = ('%s%squant_frammenti.csv') % (self.QUANT_PATH, os.sep)
+				f = open(filename, 'wb')
+				Uw = UnicodeWriter(f)
+				Uw.writerows(csv_dataset)
+				f.close()
+
+				self.plot_chart(dataset_sum, 'Grafico per Frammenti', 'Nr. Frammenti')
+			else:
+				QMessageBox.warning(self, "Attenzione", "Non ci sono dati da rappresentare!!",  QMessageBox.Ok)
+		wind = QMessageBox.warning(self, "Attenzione", "Vuoi esportare le medie ponderate?",  QMessageBox.Cancel, 1)
+		if wind == 1:
+			conversion_dict = {"I sec. a.C." : (-99, 0),
+												"II sec. a.C.": (-199, -100),
+												"III sec. a.C.": (-299, -200),
+												"IV sec. a.C.": (-399, -300),
+												"V sec. a.C.": (-499, -400),
+												"VI sec. a.C.": (-599, -500),
+												"VII sec. a.C.": (-699, -600)}
+			data = []
+			for sing_rec in self.DATA_LIST:
+				if sing_rec.tipo != "" and sing_rec.forme_minime != "" and sing_rec.datazione_reperto != "":
+					data.append([sing_rec.tipo, sing_rec.forme_minime, sing_rec.datazione_reperto])
+				#data = [ ["morel 20", 50, "II sec. a.C."], ["morel 22",50, "I sec. a.C."]]
+
+			CC = Cronology_convertion()
+
+			#calcola il totale delle forme minime
+			totale_forme_minime = CC.totale_forme_min(data)
+			#print "totale_forme_minime: ", totale_forme_minime
+			#restituisce una lista di liste con dentro forma e singoli intervalli parziali di tempo
+			lista_forme_dataz = []
+
+			for sing_rec in data:
+				intervalli = CC.convert_data(sing_rec[2])
+				lista_forme_dataz.append([sing_rec[0],intervalli])
+
+			#print "lista_forme_dataz: ", lista_forme_dataz
+			#crea la lista di tuple per avere il totale parziale di ogni forma
+			lista_tuple_forma_valore = []
+			for i in data:
+				lista_tuple_forma_valore.append((i[0], i[1]))
+
+			#ottiene la lista di liste con tutti i totali per forma
+			totali_per_forma = CC.sum_list_of_tuples_for_value(lista_tuple_forma_valore)
+			#print "totali_parziali_per_forma: ", totali_per_forma
+
+			#ottiene la lista di liste con le perc_parziali per forma
+			perc_per_forma = []
+			for i in totali_per_forma:
+				perc = CC.calc_percent(i[1], totale_forme_minime)
+				perc_per_forma.append([i[0], perc])
+				
+			#print "perc per forma: ", perc_per_forma
+
+			#lista valore, crono_iniz, cron_fin_globale
+			lista_intervalli_globali = []
+			valore_temp = ""
+			for i in lista_forme_dataz:
+				if i[0] != valore_temp:
+					intervallo_globale = CC.media_ponderata_perc_intervallo(lista_forme_dataz, i[0])
+					lista_intervalli_globali.append([i[0], intervallo_globale])
+				valore_temp = i[0]
+
+			#print "lista_intervalli_globali", lista_intervalli_globali
+
+			#lista valore / Intervallo numerico
+			intervallo_numerico = CC.intervallo_numerico(lista_intervalli_globali)
+			#print "intervallo_numerico", intervallo_numerico
+
+			#media_ponderata_singoli_valori
+			lista_valori_medie = []
+			for sing_perc in perc_per_forma:
+				for sing_int in intervallo_numerico:
+					if sing_int[0] ==  sing_perc[0]:
+						valore_medio = float(sing_perc[1]) / float(sing_int[1])
+						lista_valori_medie.append([ sing_perc[0], valore_medio])
+
+			#print "lista_valori_medie", lista_valori_medie
+			#assegna valori ai singoli cinquatenni
+			##print CC.check_value_parz_in_rif_value([-170, -150], [-500, -400])
+			diz_medie_pond = {}
+			for forma_parz in lista_valori_medie:
+				valore_riferimento = forma_parz[0]
+				for sing_int in lista_intervalli_globali:
+			##		print "sing_int", sing_int
+					if sing_int[0] == valore_riferimento:
+						for k,v in conversion_dict.items():
+			##				print sing_int[1][0], sing_int[1][1], v[0], v[1]
+							test = CC.check_value_parz_in_rif_value([sing_int[1][0], sing_int[1][1]], [v[0], v[1]])
+							if test == 1:
+								try:
+			##						print k, forma_parz
+									diz_medie_pond[k] =diz_medie_pond[k] + forma_parz[1]
+								except:
+									diz_medie_pond[k] = forma_parz[1]
+
+						#csv export block
+			csv_dataset = []
+			for k,v in diz_medie_pond.items():
+				sing_list = [k, str(v)]
+				csv_dataset.append(sing_list)
+
+			filename = ('%s%squant_medie_pond.csv') % (self.QUANT_PATH, os.sep)
+			f = open(filename, 'wb')
+			Uw = UnicodeWriter(f)
+			Uw.writerows(csv_dataset)
+			f.close()
+
 
 	def parameter_quant_creator(self, par_list, n_rec):
 		self.parameter_list = par_list
@@ -233,9 +379,11 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		
 		
 
-	def plot_chart(self, d):
+	def plot_chart(self, d, t, yl):
 		self.data_list = d
-		
+		self.title = t
+		self.ylabel = yl
+
 		if type(self.data_list) == list:
 			data_diz = {}
 			for item in self.data_list:
@@ -251,8 +399,8 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 		bars = self.widget.canvas.ax.bar(left=x, height=values, width=0.5, align='center', alpha=0.4,picker=5)
 		#guardare il metodo barh per barre orizzontali
-		self.widget.canvas.ax.set_title('Grafico per Forme minime')
-		self.widget.canvas.ax.set_ylabel('Nr. Forme')
+		self.widget.canvas.ax.set_title(self.title)
+		self.widget.canvas.ax.set_ylabel(self.ylabel)
 		l = []
 		for team in teams:
 			l.append('""')
@@ -673,7 +821,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	#rif biblio
 	def on_pushButton_insert_row_rif_biblio_pressed(self):
 		self.insert_new_row('self.tableWidget_rif_biblio')
-	def on_pushButton_remove_row_rif_bibilio_pressed(self):
+	def on_pushButton_remove_row_rif_biblio_pressed(self):
 		self.remove_row('self.tableWidget_rif_biblio')
 
 	def on_pushButton_view_all_pressed(self):
@@ -797,7 +945,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
 	def on_pushButton_new_search_pressed(self):
-		if self.records_equal_check() == 1:
+		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
 			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		else:
 			self.enable_button_search(0)
@@ -950,14 +1098,37 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.enable_button_search(1)
 
 	def on_pushButton_tot_fram_pressed(self):
-		lista_valori = self.table2dict('self.tableWidget_elementi_reperto')
+		self.update_tot_frammenti(QMessageBox.warning(self,'ATTENZIONE',"Vuoi aggiornare tutti i frammenti (OK), oppure solo il record corrente (Cancel)?", QMessageBox.Cancel,1))
+		#blocco per quantificare dalla tabella interna il numero totale di frammenti
+	def update_tot_frammenti(self, c):
+		self.choice = c
+		if self.choice == 1:
+			for i in range(len(self.DATA_LIST)):
+				temp_dataset = ()
+				id_invmat = self.DATA_LIST[i].id_invmat
+				elementi_reperto = eval(self.DATA_LIST[i].elementi_reperto)
+				if bool(elementi_reperto) == True:
+					tot_framm = 0
+					for elrep in elementi_reperto:
+						if elrep[1] == 'frammenti':
+							try:
+								tot_framm += int(elrep[2])
+							except:
+								pass
+					self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [int(id_invmat)], ['totale_frammenti'], [tot_framm])
 
-		tot_framm = 0
-		for sing_fr in lista_valori:
-			if sing_fr[1] == 'frammenti':
-				tot_framm += int(sing_fr[2])
-		
-		self.lineEditTotFram.setText(str(tot_framm))
+			search_dict = {'id_invmat'  : "'"+str(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))+"'"}
+			records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS)
+			self.lineEditTotFram.setText(str(records[0].totale_frammenti))
+		else:
+			lista_valori = self.table2dict('self.tableWidget_elementi_reperto')
+
+			tot_framm = 0
+			for sing_fr in lista_valori:
+				if sing_fr[1] == 'frammenti':
+					tot_framm += int(sing_fr[2])
+			
+			self.lineEditTotFram.setText(str(tot_framm))
 
 	def update_if(self, msg):
 		rec_corr = self.REC_CORR
@@ -1394,7 +1565,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		f = open(str(name_file), 'w')
 		f.write(str(message))
 		f.close()
-
 
 ## Class end
 

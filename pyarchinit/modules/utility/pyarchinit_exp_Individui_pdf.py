@@ -179,7 +179,7 @@ class single_Individui_pdf_sheet:
 		"""
 
 		#0 row
-		intestazione = Paragraph("<b>SCHEDA INDIVIDUII<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
+		intestazione = Paragraph("<b>SCHEDA INDIVIDUI<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
 		intestazione2 = Paragraph("<b>pyArchInit</b>", styNormal)
 
 		#1 row

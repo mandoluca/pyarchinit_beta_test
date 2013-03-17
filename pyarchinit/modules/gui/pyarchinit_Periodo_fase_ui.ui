@@ -865,6 +865,17 @@
            </property>
           </widget>
          </item>
+         <item row="3" column="7">
+          <widget class="QPushButton" name="pushButton_pdf_exp">
+           <property name="text">
+            <string>PDF EXP</string>
+           </property>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/images/pdf-icon.jpg</normaloff>:/images/pdf-icon.jpg</iconset>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
