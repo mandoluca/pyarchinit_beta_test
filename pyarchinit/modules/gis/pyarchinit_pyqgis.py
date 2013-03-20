@@ -82,7 +82,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 			uri.setDataSource('','pyarchinit_us_view', 'Geometry', gidstr, "gid")
 			layerUS=QgsVectorLayer(uri.uri(), 'pyarchinit_us_view', 'spatialite')
-
+###################################################################à
 			if  layerUS.isValid() == True:
 				#self.USLayerId = layerUS.getLayerID()
 				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_caratterizzazioni.qml')

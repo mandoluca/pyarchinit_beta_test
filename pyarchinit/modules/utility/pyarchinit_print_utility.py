@@ -40,12 +40,13 @@ class Print_utility:
 		HOME = os.environ['HOMEPATH']
 	FILEPATH = os.path.dirname(__file__)
 	LAYER_STYLE_PATH = ('%s%s%s%s') % (FILEPATH, os.sep, 'styles', os.sep)
+	LAYER_STYLE_PATH_SPATIALITE = ('%s%s%s%s') % (FILEPATH, os.sep, 'styles_spatialite', os.sep)
 	SRS = 3004
 	
 	layerUS = ""
 	layerQuote = ""
-	layerCL = ""
-	layerGriglia = ""
+##	layerCL = ""
+##	layerGriglia = "" #sperimentale da riattivare
 
 	USLayerId = ""
 	CLayerId = ""
@@ -73,23 +74,38 @@ class Print_utility:
 		self.first_batch_try()
     """
 
-
-	def first_batch_try(self):
+	def first_batch_try(self, server):
 		#f = open("/test_print_2.txt", "w")
 		#f.write(str(self.sito))
 		#f.close()
-		for i in range(len(self.data)):
-			test = self.charge_layer_postgis(self.data[i].sito, self.data[i].area, self.data[i].us)
-			self.us = self.data[i].us
-			if test != 0:
-				if self.layerUS.featureCount() > 0:
-					self.test_bbox()
-					tav_num= i
-					self.print_map(tav_num)
+		if server == 'postgres':
+			for i in range(len(self.data)):
+				test = self.charge_layer_postgis(self.data[i].sito, self.data[i].area, self.data[i].us)
+				self.us = self.data[i].us
+				if test != 0:
+					if self.layerUS.featureCount() > 0:
+						self.test_bbox()
+						tav_num= i
+						self.print_map(tav_num)
+					else:
+						self.remove_layer()
 				else:
-					self.remove_layer()
-			else:
-				pass
+					pass
+		elif server == 'sqlite':
+			for i in range(len(self.data)):
+				test = self.charge_layer_sqlite(self.data[i].sito, self.data[i].area, self.data[i].us)
+				self.us = self.data[i].us
+				if test != 0:
+					if self.layerUS.featureCount() > 0:
+						self.test_bbox()
+						tav_num= i
+						self.print_map(tav_num)
+					else:
+						self.remove_layer()
+				else:
+					pass
+
+
 			"""
 			for i in self.data:
 				self.charge_layer_postgis(i.sito,i.area,i.us)
@@ -128,7 +144,7 @@ class Print_utility:
 
 	def getMapExtentFromMapCanvas(self,	 mapWidth, mapHeight, scale):
 		#code from easyPrint plugin
-		print "in methode: " + str(scale)
+		#print "in methode: " + str(scale)
 
 		xmin = self.canvas.extent().xMinimum()
 		xmax = self.canvas.extent().xMaximum()
@@ -292,37 +308,85 @@ class Print_utility:
 		c.render(pdfPainter, paperRectPixel, paperRectMM)
 		pdfPainter.end()
 		"""
-		
+
+	def open_connection_postis(self):
+		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
+		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
+		conf = open(file_path, "r")
+		con_sett = conf.read()
+		conf.close() 
+		settings = Settings(con_sett)
+		settings.set_configuration()
+		self.uri = QgsDataSourceURI()
+		self.uri.setConnection(settings.HOST, settings.PORT, settings.DATABASE, settings.USER, settings.PASSWORD)
+
 	def remove_layer(self):
 		if self.USLayerId != "":
 			QgsMapLayerRegistry.instance().removeMapLayer(self.USLayerId)
 			self.USLayerId = ""
 
-		if self.CLayerId != "":
-			QgsMapLayerRegistry.instance().removeMapLayer(self.CLayerId)
-			self.CLayerId = ""
+##		if self.CLayerId != "":
+##			QgsMapLayerRegistry.instance().removeMapLayer(self.CLayerId)
+##			self.CLayerId = ""
 
 		if self.QuoteLayerId != "":
 			QgsMapLayerRegistry.instance().removeMapLayer(self.QuoteLayerId)
 			self.QuoteLayerId = ""
+#sperimentale da riattivare
+##		if self.GrigliaLayerId != "":
+##			QgsMapLayerRegistry.instance().removeMapLayer(self.GrigliaLayerId)
+##			self.GrigliaLayerId = ""
 
-		if self.GrigliaLayerId != "":
-			QgsMapLayerRegistry.instance().removeMapLayer(self.GrigliaLayerId)
-			self.GrigliaLayerId = ""
+	def charge_layer_sqlite(self, sito, area, us):
+		sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
+		db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
 
+		gidstr = ("scavo_s = '%s' and area_s = '%s' and us_s = '%d'") % (sito, area, us)
 
-	def open_connection(self):
-		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
-		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
-		conf = open(file_path, "r")
-		con_sett = conf.read()
-		conf.close()        
-		
-		self.uri = QgsDataSourceURI()
-		
-		settings = Settings(con_sett)
-		settings.set_configuration()
-		self.uri.setConnection(settings.HOST, settings.PORT, settings.DATABASE, settings.USER, settings.PASSWORD)
+		uri = QgsDataSourceURI()
+		uri.setDatabase(db_file_path)
+
+		uri.setDataSource('','pyarchinit_us_view', 'the_geom', gidstr, "ROWID")
+		self.layerUS=QgsVectorLayer(uri.uri(), 'pyarchinit_us_view', 'spatialite')
+
+		if self.layerUS.isValid() == True:
+			self.layerUS.setCrs(srs)
+			self.USLayerId = self.layerUS.getLayerID()
+			#self.mapLayerRegistry.append(USLayerId)
+			style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+			self.layerUS.loadNamedStyle(style_path)
+			self.iface.mapCanvas().setExtent(self.layerUS.extent())
+			QgsMapLayerRegistry.instance().addMapLayer( self.layerUS, True)
+		else:
+			return 0
+			#QMessageBox.warning(self, "Messaggio", "Geometria inesistente", QMessageBox.Ok)
+
+		gidstr = ("sito_q = '%s' and area_q = '%s' and us_q = '%d'") % (sito, area, us)
+
+		uri.setDataSource('','pyarchinit_quote_view', 'the_geom', gidstr, "ROWID")
+		self.layerQuote=QgsVectorLayer(uri.uri(), 'pyarchinit_quote_view', 'spatialite')
+
+		if self.layerQuote.isValid() == True:
+			self.layerQuote.setCrs(srs)
+			self.QuoteLayerId = self.layerQuote.getLayerID()
+			#self.mapLayerRegistry.append(QuoteLayerId)
+			style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'stile_quote.qml')
+			self.layerQuote.loadNamedStyle(style_path)
+			QgsMapLayerRegistry.instance().addMapLayer(self.layerQuote, True)
+
+#SPERIMENTALE DA RIATTIVARE
+##		gidstr = ("sito = '%s' AND def_punto = 'Griglia'") % (sito)
+##
+##		self.uri.setDataSource("public", "pyarchinit_punti_rif", "the_geom", gidstr)
+##		self.layerGriglia = QgsVectorLayer(self.uri.uri(), "Quote", "postgres")
+##
+##		if self.layerGriglia.isValid() == True:
+##			self.layerGriglia.setCrs(srs)
+##			self.GrigliaLayerId =  self.layerGriglia.getLayerID()
+##			#self.mapLayerRegistry.append(USLayerId)
+##			style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'stile_griglia.qml')
+##			self.layerGriglia.loadNamedStyle(style_path)
+##			QgsMapLayerRegistry.instance().addMapLayer( self.layerGriglia, True)
 
 	def charge_layer_postgis(self, sito, area, us):
 		self.open_connection()
@@ -333,17 +397,7 @@ class Print_utility:
 
 		self.uri.setDataSource("public", "pyarchinit_us_view", "the_geom", gidstr, 'gid')
 
-		#f = open("/test_uri.txt", "w")
-		#f.write(str(dir(self.uri.setDataSource("public", "pyarchinit_us_view", "the_geom", gidstr, 'gid'))))
-		#f.close()
-
-
 		self.layerUS = QgsVectorLayer(self.uri.uri(), "US", "postgres")
-		
-		#ff = open("/test_layer.txt", "w")
-		#ff.write(str(self.layerUS.featureCount()))
-		#ff.close()
-		
 
 		if self.layerUS.isValid() == True:
 			self.layerUS.setCrs(srs)
@@ -355,12 +409,6 @@ class Print_utility:
 			QgsMapLayerRegistry.instance().addMapLayer( self.layerUS, True)
 		else:
 			return 0
-			#QMessageBox.warning(self, "Messaggio", "Geometria inesistente", QMessageBox.Ok)
-
-		gidstr = ("sito_l = '%s' and area_l = '%s' and us_l = '%d'") % (sito, area, us)
-
-		self.uri.setDataSource("public", "pyarchinit_pyuscarlinee_view", "the_geom", gidstr, 'gid')
-		self.layerCL = QgsVectorLayer(self.uri.uri(), "Caratterizzazioni US linee", "postgres")
 
 		if self.layerCL.isValid() == True:
 			self.layerCL.setCrs(srs)
@@ -368,7 +416,6 @@ class Print_utility:
 			style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'caratterizzazioni_linee.qml')
 			self.layerCL.loadNamedStyle(style_path)
 			QgsMapLayerRegistry.instance().addMapLayer(self.layerCL, True)
-
 
 		gidstr = ("sito_q = '%s' and area_q = '%s' and us_q = '%d'") % (sito, area, us)
 
@@ -383,41 +430,16 @@ class Print_utility:
 			self.layerQuote.loadNamedStyle(style_path)
 			QgsMapLayerRegistry.instance().addMapLayer(self.layerQuote, True)
 
-
-		gidstr = ("sito = '%s' AND def_punto = 'Griglia'") % (sito)
-
-		self.uri.setDataSource("public", "pyarchinit_punti_rif", "the_geom", gidstr)
-		self.layerGriglia = QgsVectorLayer(self.uri.uri(), "Quote", "postgres")
-
-		if self.layerGriglia.isValid() == True:
-			self.layerGriglia.setCrs(srs)
-			self.GrigliaLayerId =  self.layerGriglia.getLayerID()
-			#self.mapLayerRegistry.append(USLayerId)
-			style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'stile_griglia.qml')
-			self.layerGriglia.loadNamedStyle(style_path)
-			QgsMapLayerRegistry.instance().addMapLayer( self.layerGriglia, True)
-
-
-		"""
-		uri.setDataSource("pyarchinit_schema", "pyarchinit_uscaratterizzazioni_view", "the_geom", gidstr)
-		layerCar = QgsVectorLayer(uri.uri(), "Unita' Stratigrafiche", "postgres")
-
-		if	layerCar.isValid() == True:
-			layerCar.setCrs(srs)
-			CARLayerId = layerCar.getLayerID()
-			self.mapLayerRegistry.append(CARLayerId)
-			#style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
-			# self.layerUS.loadNamedStyle(style_path)
-			QgsMapLayerRegistry.instance().addMapLayer(layerCar, True)
-		else:
-			print "Layer Caratterizzazioni is not valid!!!"
-
-		
-		gidstr = "gid = 2257  or gid = 2849 or gid = 2443  or gid = 2370 or gid = 2297	 or gid = 2852	or gid = 2299  or gid = 2225 or gid = 2226	or gid = 2448 or gid = 2862 or gid = 2863 or gid = 2717 or gid = 2718  or gid = 2427  or gid = 2429	 or gid = 2245	or gid = 2652  or gid = 2285 or gid = 2287 or gid = 2288 or gid = 2289 or gid = 2844  or gid = 2290 or gid = 2475 or gid = 2845 or gid = 2328"
-
-
-
-		#Print section
-
-		# create image
-		"""
+#SPERIMENTALE DA RIATTIVARE
+##		gidstr = ("sito = '%s' AND def_punto = 'Griglia'") % (sito)
+##
+##		self.uri.setDataSource("public", "pyarchinit_punti_rif", "the_geom", gidstr)
+##		self.layerGriglia = QgsVectorLayer(self.uri.uri(), "Quote", "postgres")
+##
+##		if self.layerGriglia.isValid() == True:
+##			self.layerGriglia.setCrs(srs)
+##			self.GrigliaLayerId =  self.layerGriglia.getLayerID()
+##			#self.mapLayerRegistry.append(USLayerId)
+##			style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'stile_griglia.qml')
+##			self.layerGriglia.loadNamedStyle(style_path)
+##			QgsMapLayerRegistry.instance().addMapLayer( self.layerGriglia, True)

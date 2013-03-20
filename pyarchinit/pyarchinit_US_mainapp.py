@@ -534,8 +534,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.comboBox_def_strat.addItems(d_stratigrafica_vl)
 
 
-
-
 	def charge_fase_iniz_list(self):
 		try:
 			search_dict = {
@@ -680,8 +678,17 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 
 	def on_pushButton_exp_tavole_pressed(self):
-		PU = Print_utility(self.iface, self.DATA_LIST)
-		PU.first_batch_try()
+		conn = Connection()
+		conn_str = conn.conn_str()
+		if conn_str.find("postgres") == 1:
+			PU = Print_utility(self.iface, self.DATA_LIST)
+			PU.first_batch_try("postgres")
+		elif conn_str.find("sqlite") == 1:
+			PU = Print_utility(self.iface, self.DATA_LIST)
+			PU.first_batch_try("sqlite")
+		else:
+			QMessageBox.warning(self, "Messaggio", "Attenzione il sistema e' sperimentale solo per Postgis", QMessageBox.Ok)
+
 
 	def on_pushButton_pdf_exp_pressed(self):
 		US_pdf_sheet = generate_pdf()
