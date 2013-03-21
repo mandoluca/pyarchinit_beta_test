@@ -339,7 +339,11 @@ class Print_utility:
 
 	def charge_layer_sqlite(self, sito, area, us):
 		sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
+
 		db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
+
+		srs = QgsCoordinateReferenceSystem(3004, QgsCoordinateReferenceSystem.PostgisCrsId)
+
 
 		gidstr = ("scavo_s = '%s' and area_s = '%s' and us_s = '%d'") % (sito, area, us)
 

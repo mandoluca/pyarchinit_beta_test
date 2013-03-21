@@ -683,11 +683,9 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		if conn_str.find("postgres") == 1:
 			PU = Print_utility(self.iface, self.DATA_LIST)
 			PU.first_batch_try("postgres")
-		elif conn_str.find("sqlite") == 1:
+		else :
 			PU = Print_utility(self.iface, self.DATA_LIST)
 			PU.first_batch_try("sqlite")
-		else:
-			QMessageBox.warning(self, "Messaggio", "Attenzione il sistema e' sperimentale solo per Postgis", QMessageBox.Ok)
 
 
 	def on_pushButton_pdf_exp_pressed(self):
