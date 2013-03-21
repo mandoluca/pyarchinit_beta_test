@@ -179,11 +179,11 @@ class single_US_pdf_sheet:
 		if self.documentazione == '':
 			pass
 		else:
-			for sing_doc in eval(self.documentazione):
+			for string_doc in eval(self.documentazione):
 				if len(string_doc) == 2:
-					self.documentazione_print += str(sing_doc[0]) + ": " + str(sing_doc[1]) + "<br/>"
+					self.documentazione_print += str(string_doc[0]) + ": " + str(string_doc[1]) + "<br/>"
 				if len(string_doc) == 1:
-					self.documentazione_print += str(sing_doc[0]) + "<br/>"
+					self.documentazione_print += str(string_doc[0]) + "<br/>"
 	def datestrfdate(self):
 		now = date.today()
 		today = now.strftime("%d-%m-%Y")
