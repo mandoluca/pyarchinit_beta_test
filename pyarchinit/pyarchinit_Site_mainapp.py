@@ -44,6 +44,8 @@ from  pyarchinit_error_check import *
 from  pyarchinit_pyqgis import Pyarchinit_pyqgis
 from  sortpanelmain import SortPanelMain
 
+from test_area import Test_area
+
 ##from 
 
 class pyarchinit_Site(QDialog, Ui_DialogSite):
@@ -103,7 +105,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		except:
 			pass
 			
-	
+
 	def enable_button(self, n):
 		self.pushButton_connect.setEnabled(n)
 
@@ -492,6 +494,22 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 						QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 
 		self.enable_button_search(1)
+
+
+	def on_pushButton_test_pressed(self):
+
+		data = "Sito: " + str(self.comboBox_sito.currentText())
+
+##		data = [
+##		unicode(self.comboBox_sito.currentText()), 								#1 - Sito
+##		unicode(self.comboBox_nazione.currentText()), 						#2 - Nazione
+##		unicode(self.comboBox_regione.currentText()), 						#3 - Regione
+##		unicode(self.comboBox_comune.currentText()), 						#4 - Comune
+##		unicode(self.textEdit_descrizione_site.toPlainText()),    				#5 - Descrizione
+##		unicode(self.comboBox_provincia.currentText())]                     	#6 - Provincia
+
+		test = Test_area(data)
+		test.run_test()
 
 	def update_if(self, msg):
 		rec_corr = self.REC_CORR

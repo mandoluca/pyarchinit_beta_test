@@ -155,7 +155,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
 			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
 
-			gidstr =  id_us = "id_us = '" + str(data[0].id_us) +"'"
+			gidstr =  "id_us = '" + str(data[0].id_us) +"'"
 			if len(data) > 1:
 				for i in range(len(data)):
 					gidstr += " OR id_us = '" + str(data[i].id_us) +"'"

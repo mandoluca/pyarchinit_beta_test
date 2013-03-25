@@ -71,3 +71,6 @@ class pyarchinit_Folder_installation:
 
 		home_QUANT_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_Quantificazioni_folder')
 		OS_utility.create_dir(home_QUANT_path)
+
+		home_TEST_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_Test_folder')
+		OS_utility.create_dir(home_TEST_path)

@@ -67,15 +67,20 @@ class Cronology_convertion:
 									"Fine I sec. a.C." : (-15, 0),
 									"Fine III" : (-215, -200),
 									"Fine IV" : (-315, -300),
+									"Fine IV sec. a.C." : (-315, -300),
 									"Fine III sec. a.C." : (-215, -200),
 									"Fine III - II sec. a.C.": (-275, -100),
 									"inizi I sec. a.C.": (-99, -75),
 									"inizi II sec. a.C.": (-199, -175),
 									"inizi III sec. a.C.": (-299, -275),
+									"Inizi I sec. a.C.": (-99, -75),
+									"Inizi II sec. a.C.": (-199, -175),
+									"Inizi III sec. a.C.": (-299, -275),
+									"meta' II sec. a.C.":(-175, -125),
 									"Meta' II":(-175, -125),
-									"Meta' III sec. a.C.":(-275, -225)}
-
-
+									"Meta' III sec. a.C.":(-275, -225),
+									"Meta' IV sec. a.C.":(-375, -325),
+									"Meta' IV":(-375, -325)}
 
 		datazione_reperto_copy = datazione_reperto
 		dat_iniziale = ""

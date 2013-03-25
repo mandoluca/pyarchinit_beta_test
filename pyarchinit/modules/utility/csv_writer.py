@@ -59,5 +59,5 @@ class UnicodeWriter:
         for row in rows:
             self.writerow(row)
 
-Uw = UnicodeWriter(open('somegigi.csv', 'wb'))
-Uw.writerows([["forma", "nr_forme_minime"], ["coppa", "0.2344"], ["piatto", "20"]])
+##Uw = UnicodeWriter(open('somegigi.csv', 'wb'))
+##Uw.writerows([["forma", "nr_forme_minime"], ["coppa", "0.2344"], ["piatto", "20"]])
