@@ -46,6 +46,7 @@ except:
 
 from  sortpanelmain import SortPanelMain
 from delegateComboBox import *
+from  pyarchinit_exp_Strutturasheet_pdf import *
 
 class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 	MSG_BOX_TITLE = "PyArchInit - Scheda Struttura"
@@ -744,6 +745,82 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 		self.enable_button_search(1)
+
+	def on_pushButton_pdf_exp_pressed(self):
+		Struttura_pdf_sheet = generate_pdf() #deve essere importata la classe
+		data_list = self.generate_list_pdf() #deve essere aggiunta la funzione
+		Struttura_pdf_sheet.build_Struttura_sheets(data_list) #deve essere aggiunto il file per generare i pdf
+
+
+	def generate_list_pdf(self):
+		data_list = []
+		for i in range(len(self.DATA_LIST)):
+			
+			"""Sarebbe utile inserire la quota minima e massima di una struttura?
+
+			#assegnazione valori di quota mn e max
+			sito =  unicode(self.DATA_LIST[i].sito)
+			sigla_struttura = unicode(self.DATA_LIST[i].sigla_struttura)
+			numero_struttura = unicode(self.DATA_LIST[i].numero_struttura)
+			res = self.DB_MANAGER.select_quote_from_db_sql(sito, area, us)
+			quote = []
+
+			for sing_us in res:
+				sing_quota_value = str(sing_us[5])
+				if sing_quota_value[0] == '-':
+					sing_quota_value = sing_quota_value[:7]
+				else:
+					sing_quota_value = sing_quota_value[:6]
+
+				sing_quota = [sing_quota_value, sing_us[4]]
+				quote.append(sing_quota)
+			quote.sort()
+
+			if bool(quote) == True:
+				quota_min = '%s %s' % (quote[0][0], quote[0][1])
+				quota_max = '%s %s' % (quote[-1][0], quote[-1][1])
+			else:
+				quota_min = "Non inserita su GIS"
+				quota_max = "Non inserita su GIS"
+			"""
+			""" Sarebbe utile associare il numero delle piante alle strutture?"""
+			"""
+			#assegnazione numero di pianta
+			resus = self.DB_MANAGER.select_us_from_db_sql(sito, area, us, "2")
+			elenco_record = []
+			for us in resus:
+				elenco_record.append(us)
+
+			if bool(elenco_record) == True:
+				sing_rec = elenco_record[0]
+				elenco_piante = sing_rec[7]
+				if elenco_piante != None:
+					piante = elenco_piante
+				else:
+					piante = "US disegnata su base GIS"
+			else:
+				piante = "US disegnata su base GIS"
+			"""
+			data_list.append([
+			unicode(self.DATA_LIST[i].sito), 									#1 - Sito
+			unicode(self.DATA_LIST[i].sigla_struttura),									#2 - Area
+			int(self.DATA_LIST[i].numero_struttura),												#3 - US
+			unicode(self.DATA_LIST[i].categoria_struttura),				#4 - definizione stratigrafica
+			unicode(self.DATA_LIST[i].tipologia_struttura),						#5 - definizione intepretata
+			unicode(self.DATA_LIST[i].definizione_struttura),							#6 - descrizione
+			unicode(self.DATA_LIST[i].descrizione),						#7 - interpretazione
+			unicode(self.DATA_LIST[i].interpretazione),						#7 - interpretazione
+			unicode(self.DATA_LIST[i].periodo_iniziale),						#8 - periodo iniziale
+			unicode(self.DATA_LIST[i].fase_iniziale),							#9 - fase iniziale
+			unicode(self.DATA_LIST[i].periodo_finale),						#10 - periodo finale iniziale
+			unicode(self.DATA_LIST[i].fase_finale), 							#11 - fase finale
+			unicode(self.DATA_LIST[i].datazione_estesa),								#12 - scavato
+			unicode(self.DATA_LIST[i].materiali_impiegati),									#13 - attivita
+			unicode(self.DATA_LIST[i].elementi_strutturali),							#14 - anno scavo
+			unicode(self.DATA_LIST[i].rapporti_struttura),					#15 - metodo
+			unicode(self.DATA_LIST[i].misure_struttura)									#16 - inclusi
+		])
+		return data_list
 
 
 	def update_if(self, msg):
