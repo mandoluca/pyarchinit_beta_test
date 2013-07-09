@@ -15,7 +15,7 @@ E' possibile installare solamente il database alfanumerico su postgres seguendo 
 
 2012/07/12
 
-Aggiunto un progetto Qgis pyarchinit_qgis_project.qgs e una cartella layer attraverso il plugin Qconsolidate. Dopo che sarà depurato potrà essere importato per creare il DB.
+Aggiunto un progetto Qgis pyarchinit_qgis_project.qgs e una cartella layer attraverso il plugin Qconsolidate. Dopo che sarï¿½ depurato potrï¿½ essere importato per creare il DB.
 
 Aggiunto il pacchetto degli stili da caricare dentro Qgis
 
@@ -29,18 +29,18 @@ Aggiunte le query per le wiev
 
 Aggiornati gli stili
 
-Aggiornata la versione del plugin con funzionalità di stampa in automatico delle tavole delle US
+Aggiornata la versione del plugin con funzionalitï¿½ di stampa in automatico delle tavole delle US
 
-E’ in corso l’elaborazione del dataset per postgres
+Eï¿½ in corso lï¿½elaborazione del dataset per postgres
 
-E’ stata constatata l’effettiva impossibilità di installare pygraphviz sotto windows per l’esportazione del matrix. Al momento chi volesse tale funzionalità, è meglio che installi tutto sotto Linux (Testato su Ubuntu 10.04)
+Eï¿½ stata constatata lï¿½effettiva impossibilitï¿½ di installare pygraphviz sotto windows per lï¿½esportazione del matrix. Al momento chi volesse tale funzionalitï¿½, ï¿½ meglio che installi tutto sotto Linux (Testato su Ubuntu 10.04)
 
 
 2012/07/14
 	
 Bug Scheda Inventario Materiali
 1 - La scheda reperti non riesce ad essere avviata se al suo interno non sono presenti.
-2 – Modificare la lista a tendina del lavato si/no in editable.
+2 ï¿½ Modificare la lista a tendina del lavato si/no in editable.
 
 Da fare Scheda Inventario Materiali
 Modifica del sistema di esportazione in pdf in corso per ceramica a vernice nera
@@ -58,10 +58,12 @@ Modificare lo script del fillfields
 
 2012/10/15
 
-Inventario Materiali: la gui presenta la lista a tendina del sito in modalità aperta, che permette di lasciare vuoto il campo e creare ID duplicati. Aggiungere un controllo sul campo sito e mettere in modalità non editabile il campo sito.
+Inventario Materiali: la gui presenta la lista a tendina del sito in modalitï¿½ aperta, che permette di lasciare vuoto il campo e creare ID duplicati. Aggiungere un controllo sul campo sito e mettere in modalitï¿½ non editabile il campo sito.
 
 2012/12/05
 
 Problema col sistema di ricerca per i campi aperti
 
 Aggiunto il sistema di inserimento di caratteri unicode
+
+Test per il pull request
