@@ -69,3 +69,5 @@ Aggiunto il sistema di inserimento di caratteri unicode
 Test per il pull request
 
 Enzo Cocca modificato
+
+Luca Mandolesi alle ore 23.33
