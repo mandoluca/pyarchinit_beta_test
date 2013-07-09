@@ -66,8 +66,4 @@ Problema col sistema di ricerca per i campi aperti
 
 Aggiunto il sistema di inserimento di caratteri unicode
 
-Test per il pull request
-
-Enzo Cocca modificato
-
-Luca Mandolesi alle ore 23.33
+ultima modifica per test  00.10
