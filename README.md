@@ -67,3 +67,5 @@ Problema col sistema di ricerca per i campi aperti
 Aggiunto il sistema di inserimento di caratteri unicode
 
 Test per il pull request
+
+Enzo Cocca
