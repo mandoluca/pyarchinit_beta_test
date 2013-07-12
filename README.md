@@ -1,13 +1,5 @@
-ciao
-ciao ciao ciao
-
-pyarchinit_beta_test_2
+pyarchinit_beta_test si tratta della versione ufficiale e mantenuta del plugin
 ======================
-
-!!!!! ATTENZIONE !!!!
-
-RICORDARSI DI FARE UNA COPIA DEL CODICE E NON SPOSTARE MAI LA CARTELLA O FILES DAL DROPBOX 
-
 
 
 2012/07/09
@@ -68,10 +60,3 @@ Inventario Materiali: la gui presenta la lista a tendina del sito in modalit� 
 Problema col sistema di ricerca per i campi aperti
 
 Aggiunto il sistema di inserimento di caratteri unicode
-
-Test per il pull request
-
-Enzo Cocca modificato
-
-Luca Mandolesi alle ore 23.33
-msdkjABAxbkj
